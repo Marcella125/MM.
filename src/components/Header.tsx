@@ -11,7 +11,6 @@ import {
   Send,
   Sparkle,
   X,
-  Zap,
 } from "lucide-react";
 import type { MouseEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -21,9 +20,8 @@ import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 const navItems = [
   { label: "HOME", index: "01", href: "#work", Icon: Code2 },
   { label: "ABOUT", index: "02", href: "#about", Icon: Sparkle },
-  { label: "JOURNEY", index: "03", href: "#journey", Icon: Zap },
-  { label: "PROJECTS", index: "04", href: "#playlist", Icon: Music },
-  { label: "CONTACT", index: "05", href: "#contact", Icon: Send },
+  { label: "PROJECTS", index: "03", href: "#projects", Icon: Music },
+  { label: "CONTACT", index: "04", href: "#contact", Icon: Send },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;

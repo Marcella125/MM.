@@ -42,8 +42,6 @@ const notes = [
   },
 ];
 
-const stack = ["React", "Next.js", "Node.js", "Python", "FastAPI", "Azure OpenAI", "Azure AI Search", "Shopify", "Motion", "UI Design"];
-
 export default function AboutSection() {
   const prefersReducedMotion = useHydratedReducedMotion();
 
@@ -58,7 +56,7 @@ export default function AboutSection() {
         transition={{ duration: 0.55, ease }}
       >
         <motion.div className="about-marquee-track">
-          <span>ABOUT ME / MARCELLA MOUSSA</span>
+          <span>ABOUT ME</span>
         </motion.div>
       </motion.div>
 
@@ -133,7 +131,7 @@ export default function AboutSection() {
             }
           >
             <Image
-              src={assetPath("/assets/image%202%20about.png")}
+              src={assetPath("/assets/blue-picture.png")}
               alt=""
               width={260}
               height={260}
@@ -146,55 +144,25 @@ export default function AboutSection() {
             width={46}
             height={46}
           />
-          <Image
-            className="about-sticker about-sticker-hearts"
-            src={assetPath("/assets/hearts.png")}
-            alt=""
-            width={118}
-            height={118}
-          />
         </motion.div>
 
         <motion.div
           className="about-card-stage"
           id="journey"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.18 }}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: { staggerChildren: 0.11, delayChildren: 0.08 },
-            },
-          }}
         >
-          <div className="about-card-stage-label">
-            <span>EXPERIENCE &amp; EDUCATION.</span>
-          </div>
-          {notes.map((note, index) => (
+          {notes.map((note) => (
             <motion.article
               className="about-note-card"
               key={note.index}
-              variants={{
-                hidden: {
-                  opacity: 0,
-                  y: prefersReducedMotion ? 0 : 34,
-                  rotate: prefersReducedMotion ? 0 : index % 2 === 0 ? -2.2 : 2.2,
-                },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  rotate: index % 2 === 0 ? -0.7 : 0.7,
-                  transition: { duration: 0.58, ease },
-                },
-              }}
+              initial={{ opacity: 0, x: prefersReducedMotion ? 0 : -18 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.38 }}
+              transition={{ duration: 0.58, ease }}
               whileHover={
                 prefersReducedMotion
                   ? undefined
                   : {
-                      y: -10,
-                      rotate: 0,
-                      scale: 1.015,
+                      x: 8,
                       transition: { duration: 0.22, ease: "easeOut" },
                     }
               }
@@ -211,19 +179,6 @@ export default function AboutSection() {
               </div>
             </motion.article>
           ))}
-          <motion.div
-            className="about-stack"
-            id="playlist"
-            aria-label="Selected skills"
-            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, delay: 0.15, ease }}
-          >
-            {stack.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </motion.div>
         </motion.div>
       </div>
     </section>
