@@ -2,12 +2,31 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight, MapPin, Phone } from "lucide-react";
+import type { MouseEvent } from "react";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
+function scrollToPageTop() {
+  const root = document.documentElement;
+  const previousScrollBehavior = root.style.scrollBehavior;
+
+  root.style.scrollBehavior = "auto";
+  window.history.replaceState(null, "", window.location.pathname);
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+  window.requestAnimationFrame(() => {
+    root.style.scrollBehavior = previousScrollBehavior;
+  });
+}
+
 export default function ContactSection() {
   const prefersReducedMotion = useHydratedReducedMotion();
+
+  function handleBackToTopClick(event: MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    scrollToPageTop();
+  }
 
   return (
     <section className="contact-section" id="contact" aria-labelledby="contact-heading">
@@ -48,7 +67,7 @@ export default function ContactSection() {
           </motion.a>
           <div className="contact-mini-links" aria-label="Contact options">
             <a href="mailto:marcellamoussa74@gmail.com">MARCELLAMOUSSA74@GMAIL.COM</a>
-            <a href="#work">BACK TO TOP</a>
+            <a href="#work" onClick={handleBackToTopClick}>BACK TO TOP</a>
           </div>
           <div className="contact-social-row" aria-label="Social links and location">
             <a href="#" aria-label="LinkedIn profile">

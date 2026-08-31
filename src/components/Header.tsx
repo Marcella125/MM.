@@ -42,6 +42,18 @@ function supportsHover() {
   return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 }
 
+function scrollToPageTop() {
+  const root = document.documentElement;
+  const previousScrollBehavior = root.style.scrollBehavior;
+
+  root.style.scrollBehavior = "auto";
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+  window.requestAnimationFrame(() => {
+    root.style.scrollBehavior = previousScrollBehavior;
+  });
+}
+
 export default function Header() {
   const prefersReducedMotion = useHydratedReducedMotion();
   const [isSoundOn, setIsSoundOn] = useState(false);
@@ -173,6 +185,14 @@ export default function Header() {
     soundY.set(0);
   }
 
+  function handleTopLinkClick(event: MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    window.history.replaceState(null, "", window.location.pathname);
+    setIsMenuOpen(false);
+    setIsScrolled(false);
+    scrollToPageTop();
+  }
+
   useEffect(() => {
     return () => {
       cancelFade();
@@ -203,8 +223,13 @@ export default function Header() {
     }
 
     function resetScrollState() {
-      window.scrollTo(0, 0);
       setIsScrolled(false);
+      scrollToPageTop();
+
+      window.requestAnimationFrame(() => {
+        setIsScrolled(false);
+        scrollToPageTop();
+      });
     }
 
     resetScrollState();
@@ -229,7 +254,12 @@ export default function Header() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, ease }}
     >
-      <Link className="logo" href="#work" aria-label="Back to top">
+      <Link
+        className="logo"
+        href="#work"
+        aria-label="Back to top"
+        onClick={handleTopLinkClick}
+      >
         <Image
           className="logo-image"
           src={assetPath("/assets/MM. logo.png")}
@@ -252,7 +282,11 @@ export default function Header() {
             initial="rest"
             animate="rest"
             whileHover="hover"
-            onClick={() => setIsMenuOpen(false)}
+            onClick={
+              href === "#work"
+                ? handleTopLinkClick
+                : () => setIsMenuOpen(false)
+            }
           >
             <span className="nav-icon-badge" aria-hidden="true">
               <Icon size={22} strokeWidth={2.4} />
