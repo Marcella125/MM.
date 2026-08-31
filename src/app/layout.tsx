@@ -24,7 +24,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "MM. Portfolio",
-  description: "Creative developer and digital designer portfolio.",
+  description: "Creative developer portfolio.",
 };
 
 const cursorStyles = {

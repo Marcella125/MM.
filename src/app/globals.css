@@ -1827,6 +1827,16 @@ button {
   padding: 0;
 }
 
+.contact-credit {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-family: var(--font-mono), "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
 @media (max-width: 1180px) {
   .homepage {
     padding-inline: 30px;
@@ -2485,6 +2495,10 @@ button {
   .contact-social-row > a {
     width: 34px;
     padding: 0;
+  }
+
+  .contact-credit {
+    font-size: 9px;
   }
 
 }

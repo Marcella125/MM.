@@ -116,6 +116,9 @@ export default function ContactSection() {
               LEBANON
             </span>
           </div>
+          <p className="contact-credit">
+            &copy; 2026 Marcella Moussa.
+          </p>
         </div>
       </motion.div>
     </section>

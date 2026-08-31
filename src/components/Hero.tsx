@@ -70,8 +70,6 @@ export default function Hero() {
 
           <p className="hero-kicker">
             CREATIVE DEVELOPER
-            <br />
-            &amp; DIGITAL DESIGNER
           </p>
         </motion.div>
 
