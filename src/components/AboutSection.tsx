@@ -11,21 +11,33 @@ const notes = [
   {
     index: "01",
     title: "USEK",
-    copy: "Bachelor of Science in Computer Science / Jan 2023 - May 2026 / Kaslik, Lebanon. Studied software engineering, systems thinking, and the technical foundations behind the products I now design and build.",
+    role: "Bachelor of Science in Computer Science",
+    period: "Jan 2023 - May 2026",
+    location: "Kaslik, Lebanon",
+    copy: "Studied software engineering, systems thinking, and the technical foundations behind the products I now design and build.",
   },
   {
     index: "02",
     title: "Kloudr",
-    copy: "Full-Stack Developer Intern / Jun 2025 - Aug 2025 / Beirut. Built an AI-powered web application using React, FastAPI, Azure OpenAI, and Azure AI Search, from backend APIs and interface development to cloud deployment.",
+    role: "Full-Stack Developer Intern",
+    period: "Jun 2025 - Aug 2025",
+    location: "Beirut",
+    copy: "Built an AI-powered web application using React, FastAPI, Azure OpenAI, and Azure AI Search, from backend APIs and interface development to cloud deployment.",
   },
   {
     index: "03",
     title: "Fekra Media Agency",
-    copy: "Web Developer Intern / Nov 2025 - Jan 2026 / Beirut. Built and maintained full-stack websites using React, Next.js, Node.js, and Python; worked with Shopify; designed responsive interfaces; and contributed to digital communication workflows.",
+    role: "Web Developer Intern",
+    period: "Nov 2025 - Jan 2026",
+    location: "Beirut",
+    copy: "Built and maintained full-stack websites using React, Next.js, Node.js, and Python; worked with Shopify; designed responsive interfaces; and contributed to digital communication workflows.",
   },
   {
     index: "04",
     title: "Off-screen",
+    role: "Creative Reset",
+    period: "Always on",
+    location: "Where inspiration shows up",
     copy: "Music playing, camera nearby, hiking when the weather allows, and finding inspiration in places that were not part of the plan.",
   },
 ];
@@ -190,6 +202,11 @@ export default function AboutSection() {
               <span className="about-note-index">{note.index}</span>
               <div className="about-note-content">
                 <h3>{note.title}</h3>
+                <div className="about-note-meta">
+                  <span>{note.role}</span>
+                  <span>{note.period}</span>
+                  <span>{note.location}</span>
+                </div>
                 <p>{note.copy}</p>
               </div>
             </motion.article>

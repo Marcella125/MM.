@@ -1478,6 +1478,21 @@ button {
   text-transform: uppercase;
 }
 
+.about-note-meta {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 12px;
+  color: var(--blue);
+  font-family: var(--font-mono), "Courier New", monospace;
+  font-size: clamp(11px, 0.82vw, 13px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.about-note-meta span {
+  display: block;
+}
+
 .about-note-card p {
   margin: 0;
   color: var(--muted);
@@ -1559,12 +1574,12 @@ button {
   }
 
   .homepage::before {
-    animation: mobile-bg-drift 8s ease-in-out infinite;
+    animation: none;
     will-change: transform;
   }
 
   .homepage::after {
-    animation: mobile-bg-sheen 7s ease-in-out infinite;
+    animation: none;
     will-change: transform, opacity;
   }
 
@@ -1893,7 +1908,7 @@ button {
 
   .about-section {
     margin: 24px -18px 0;
-    padding: 42px 18px 56px;
+    padding: 42px 18px 18px;
   }
 
   .about-marquee {
@@ -1905,7 +1920,6 @@ button {
     grid-template-columns: 1fr;
     grid-template-areas:
       "copy"
-      "visuals"
       "scroll";
     gap: 24px;
   }
@@ -1983,6 +1997,12 @@ button {
 
   .about-note-card h3 {
     font-size: clamp(2rem, 9vw, 3.1rem);
+  }
+
+  .about-note-meta {
+    gap: 4px;
+    font-size: 11px;
+    line-height: 1.3;
   }
 
   .about-stack {
