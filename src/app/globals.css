@@ -2236,6 +2236,8 @@ button {
   .about-marquee {
     top: 22px;
     font-size: clamp(2.6rem, 11vw, 4.5rem);
+    line-height: 1;
+    padding-block: 4px;
   }
 
   .about-shell {
