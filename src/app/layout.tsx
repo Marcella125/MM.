@@ -36,10 +36,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${bebasNeue.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      style={cursorStyles}
     >
-      <body className="min-h-full flex flex-col" style={cursorStyles}>
-        {children}
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }
