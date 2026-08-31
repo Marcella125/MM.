@@ -57,6 +57,14 @@ export default function AboutSection() {
       >
         <motion.div className="about-marquee-track">
           <span>ABOUT ME</span>
+          <Image
+            className="about-marquee-smiley"
+            src={assetPath("/assets/pink%20smiley.png")}
+            alt=""
+            width={120}
+            height={120}
+            aria-hidden="true"
+          />
         </motion.div>
       </motion.div>
 
@@ -80,14 +88,6 @@ export default function AboutSection() {
                 aria-hidden="true"
               />
             </h2>
-            <Image
-              className="about-heading-smiley"
-              src={assetPath("/assets/pink%20smiley.png")}
-              alt=""
-              width={120}
-              height={120}
-              aria-hidden="true"
-            />
           </div>
           <p className="about-lede">
             <mark>Hi!</mark> I am Marcella, a Computer Science graduate who

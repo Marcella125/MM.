@@ -1162,23 +1162,37 @@ button {
   left: 0;
   right: 0;
   z-index: 0;
-  overflow: hidden;
+  overflow: visible;
   color: var(--foreground);
   font-family: var(--font-display), Impact, sans-serif;
   font-size: clamp(52px, 7vw, 96px);
-  line-height: 0.78;
+  line-height: 1;
+  padding-block: 6px;
   white-space: nowrap;
   pointer-events: none;
 }
 
 .about-marquee-track {
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: clamp(8px, 1.2vw, 16px);
   width: 100%;
 }
 
 .about-marquee-track span {
-  padding-right: 0.22em;
+  padding-right: 0;
+}
+
+.about-marquee-smiley {
+  display: block;
+  width: clamp(42px, 4.8vw, 72px);
+  height: auto;
+  flex: 0 0 auto;
+  margin-top: -0.04em;
+  filter: drop-shadow(0 12px 14px rgba(255, 79, 184, 0.18));
+  transform: rotate(10deg);
+  transform-origin: center;
 }
 
 .about-shell {
@@ -1227,17 +1241,6 @@ button {
   display: flex;
   align-items: flex-start;
   gap: clamp(12px, 2vw, 28px);
-}
-
-.about-heading-smiley {
-  flex: 0 0 auto;
-  width: clamp(50px, 5.8vw, 92px);
-  height: auto;
-  margin-top: clamp(4px, 0.8vw, 12px);
-  filter: drop-shadow(0 12px 14px rgba(255, 79, 184, 0.18));
-  transform: rotate(10deg);
-  transform-origin: center;
-  animation: about-smiley-bob 3.8s ease-in-out infinite;
 }
 
 .about-heading-star {
@@ -2026,7 +2029,9 @@ button {
   }
 
   body.is-menu-open .sound-control {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
   }
 
   body.is-menu-open .logo {
@@ -2275,11 +2280,8 @@ button {
     display: block;
   }
 
-  .about-heading-smiley {
-    position: absolute;
-    top: -4px;
-    right: 0;
-    width: clamp(42px, 13vw, 62px);
+  .about-marquee-smiley {
+    width: clamp(34px, 10vw, 46px);
   }
 
   .about-heading-star {
