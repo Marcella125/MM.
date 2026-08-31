@@ -2275,6 +2275,7 @@ button {
   }
 
   .about-lede {
+    margin-top: 28px;
     font-size: 14px;
     line-height: 1.52;
   }
