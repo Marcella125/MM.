@@ -189,15 +189,35 @@ export default function Header() {
   }, [isMenuOpen]);
 
   useEffect(() => {
+    const canControlScrollRestoration = "scrollRestoration" in window.history;
+    const previousScrollRestoration = canControlScrollRestoration
+      ? window.history.scrollRestoration
+      : null;
+
+    if (canControlScrollRestoration) {
+      window.history.scrollRestoration = "manual";
+    }
+
     function updateScrolledState() {
       setIsScrolled(window.scrollY > 4);
     }
 
-    updateScrolledState();
+    function resetScrollState() {
+      window.scrollTo(0, 0);
+      setIsScrolled(false);
+    }
+
+    resetScrollState();
     window.addEventListener("scroll", updateScrolledState, { passive: true });
+    window.addEventListener("pageshow", resetScrollState);
 
     return () => {
       window.removeEventListener("scroll", updateScrolledState);
+      window.removeEventListener("pageshow", resetScrollState);
+
+      if (canControlScrollRestoration && previousScrollRestoration) {
+        window.history.scrollRestoration = previousScrollRestoration;
+      }
     };
   }, []);
 
