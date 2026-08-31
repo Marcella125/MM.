@@ -1237,13 +1237,10 @@ button {
     display: grid;
     order: 3;
     position: relative;
-    z-index: 45;
+    z-index: 65;
   }
 
   body.is-menu-open .menu-button {
-    position: fixed;
-    top: 18px;
-    right: 18px;
     z-index: 80;
   }
 
