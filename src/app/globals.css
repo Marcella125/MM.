@@ -23,7 +23,7 @@ html {
   min-height: 100%;
   background: var(--background);
   scroll-behavior: smooth;
-  cursor: url("/assets/cursor-plane-yellow.svg") 5 4, auto;
+  cursor: var(--cursor-plane), auto;
 }
 
 body {
@@ -45,12 +45,12 @@ body.is-menu-open {
 a {
   color: inherit;
   text-decoration: none;
-  cursor: url("/assets/cursor-plane-yellow.svg") 5 4, pointer;
+  cursor: var(--cursor-plane), pointer;
 }
 
 button {
   font: inherit;
-  cursor: url("/assets/cursor-plane-yellow.svg") 5 4, pointer;
+  cursor: var(--cursor-plane), pointer;
 }
 
 .homepage {
@@ -216,7 +216,7 @@ button {
   background: var(--blue);
   color: #fff;
   outline: none;
-  cursor: url("/assets/cursor-plane-yellow.svg") 5 4, pointer;
+  cursor: var(--cursor-plane), pointer;
   isolation: isolate;
   overflow: visible;
   transition:

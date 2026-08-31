@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import type { MouseEvent } from "react";
+import { assetPath } from "@/src/lib/paths";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 
 type HeroVisualsProps = {
@@ -161,7 +162,7 @@ function VisualAsset({
             >
               <Image
                 className="visual-asset"
-                src={src}
+                src={assetPath(src as `/${string}`)}
                 alt={alt}
                 width={width}
                 height={height}

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import type { CSSProperties } from "react";
+import { assetPath } from "@/src/lib/paths";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -25,13 +27,19 @@ export const metadata: Metadata = {
   description: "Creative developer and digital designer portfolio.",
 };
 
+const cursorStyles = {
+  "--cursor-plane": `url("${assetPath("/assets/cursor-plane-yellow.svg")}") 5 4`,
+} as CSSProperties;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       className={`${bebasNeue.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col" style={cursorStyles}>
+        {children}
+      </body>
     </html>
   );
 }

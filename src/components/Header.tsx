@@ -15,19 +15,21 @@ import {
 } from "lucide-react";
 import type { MouseEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { assetPath } from "@/src/lib/paths";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 
 const navItems = [
-  { label: "WORK", index: "01", href: "#work", Icon: Code2 },
+  { label: "HOME", index: "01", href: "#work", Icon: Code2 },
   { label: "ABOUT", index: "02", href: "#about", Icon: Sparkle },
   { label: "JOURNEY", index: "03", href: "#journey", Icon: Zap },
-  { label: "PLAYLIST", index: "04", href: "#playlist", Icon: Music },
+  { label: "PROJECTS", index: "04", href: "#playlist", Icon: Music },
   { label: "CONTACT", index: "05", href: "#contact", Icon: Send },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const backgroundAudioSrc =
-  "/audio/ALLDAY%20PROJECT%20%E2%80%93%20FAMOUS%20_%20Instrumental.mp3";
+const backgroundAudioSrc = assetPath(
+  "/audio/ALLDAY%20PROJECT%20%E2%80%93%20FAMOUS%20_%20Instrumental.mp3",
+);
 const targetVolume = 0.2;
 const fadeDuration = 450;
 const initialAudioStartTime = 0;
@@ -198,7 +200,7 @@ export default function Header() {
       <Link className="logo" href="/" aria-label="MM home">
         <Image
           className="logo-image"
-          src="/assets/MM. logo.png"
+          src={assetPath("/assets/MM. logo.png")}
           alt="MM."
           width={180}
           height={70}

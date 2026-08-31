@@ -8,6 +8,7 @@ import {
 import { ArrowDown } from "lucide-react";
 import Image from "next/image";
 import type { MouseEvent } from "react";
+import { assetPath } from "@/src/lib/paths";
 import HeroVisuals from "./HeroVisuals";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 
@@ -57,7 +58,7 @@ export default function Hero() {
             <motion.div className="disk-motion">
               <Image
                 className="disk-asset"
-                src="/assets/disk.png"
+                src={assetPath("/assets/disk.png")}
                 alt=""
                 width={140}
                 height={140}

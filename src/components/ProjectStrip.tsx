@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
 import type { MouseEvent } from "react";
+import { assetPath } from "@/src/lib/paths";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 
 const spring = { stiffness: 180, damping: 18, mass: 0.5 };
@@ -77,7 +78,7 @@ export default function ProjectStrip() {
       >
         <Image
           className="project-ticket-image"
-          src="/assets/yellow-ticket.png"
+          src={assetPath("/assets/yellow-ticket.png")}
           alt=""
           width={300}
           height={130}
