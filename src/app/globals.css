@@ -1245,7 +1245,8 @@ button {
   }
 
   body.is-menu-open .sound-control {
-    display: none;
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .hero {
@@ -1366,20 +1367,20 @@ button {
   }
 
   .neon-face {
-    top: clamp(62px, 10svh, 96px);
+    top: clamp(100px, calc(10svh + 38px), 134px);
     right: 4px;
     width: 48px;
   }
 
   .cursor-sticker {
-    top: clamp(138px, 20svh, 178px);
+    top: clamp(176px, calc(20svh + 38px), 216px);
     right: 0;
     width: 78px;
   }
 
   .yellow-x {
     top: clamp(150px, 22svh, 190px);
-    left: 0;
+    left: 45px;
     right: auto;
     width: 48px;
   }
@@ -1395,7 +1396,7 @@ button {
     display: block;
     top: clamp(62px, 9svh, 92px);
     left: 28px;
-    width: 22px;
+    width: 30px;
   }
 
   .blue-picture {
@@ -1408,7 +1409,7 @@ button {
 
   .blue-picture-left-top {
     top: clamp(42px, 7svh, 68px);
-    left: 42px;
+    left: 80px;
     width: 60px;
     transform: rotate(-7deg);
   }
@@ -1484,20 +1485,20 @@ button {
   }
 
   .neon-face {
-    top: 90px;
+    top: 128px;
     right: 4px;
     width: 40px;
   }
 
   .cursor-sticker {
-    top: 152px;
+    top: 190px;
     right: 0;
     width: 66px;
   }
 
   .yellow-x {
     top: 156px;
-    left: 0;
+    left: 45px;
     right: auto;
     width: 42px;
   }
@@ -1512,12 +1513,12 @@ button {
   .star-left {
     top: 92px;
     left: 20px;
-    width: 18px;
+    width: 26px;
   }
 
   .blue-picture-left-top {
     top: 56px;
-    left: 38px;
+    left: 76px;
     width: 50px;
   }
 }
@@ -1595,12 +1596,12 @@ button {
   }
 
   .neon-face {
-    top: 64px;
+    top: 102px;
     width: 40px;
   }
 
   .cursor-sticker {
-    top: 116px;
+    top: 154px;
     width: 62px;
   }
 
@@ -1616,11 +1617,12 @@ button {
 
   .star-left {
     top: 74px;
+    width: 26px;
   }
 
   .blue-picture-left-top {
     top: 42px;
-    left: 36px;
+    left: 80px;
     width: 46px;
   }
 }
