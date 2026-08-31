@@ -1909,14 +1909,7 @@ button {
   }
 
   body.is-menu-open .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
     z-index: 220;
-    width: 100%;
-    margin: 0;
-    padding: var(--page-pad-block) var(--page-pad-inline) 8px;
   }
 
   .logo,
