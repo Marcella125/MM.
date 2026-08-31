@@ -178,7 +178,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.58, ease }}
         >
-          <a className="scroll-cue" href="#work" aria-label="Scroll to explore">
+          <a className="scroll-cue" href="#about" aria-label="Scroll to about section">
             <span className="scroll-copy">
               SCROLL TO EXPLORE
               <span className="scroll-line" />

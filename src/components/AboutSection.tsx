@@ -1,0 +1,214 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { assetPath } from "@/src/lib/paths";
+import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const notes = [
+  {
+    index: "01",
+    title: "USEK",
+    copy: "Bachelor of Science in Computer Science / Jan 2023 - May 2026 / Kaslik, Lebanon. Studied software engineering, systems thinking, and the technical foundations behind the products I now design and build.",
+  },
+  {
+    index: "02",
+    title: "Kloudr",
+    copy: "Full-Stack Developer Intern / Jun 2025 - Aug 2025 / Beirut. Built an AI-powered web application using React, FastAPI, Azure OpenAI, and Azure AI Search, from backend APIs and interface development to cloud deployment.",
+  },
+  {
+    index: "03",
+    title: "Fekra Media Agency",
+    copy: "Web Developer Intern / Nov 2025 - Jan 2026 / Beirut. Built and maintained full-stack websites using React, Next.js, Node.js, and Python; worked with Shopify; designed responsive interfaces; and contributed to digital communication workflows.",
+  },
+  {
+    index: "04",
+    title: "Off-screen",
+    copy: "Music playing, camera nearby, hiking when the weather allows, and finding inspiration in places that were not part of the plan.",
+  },
+];
+
+const stack = ["React", "Next.js", "Node.js", "Python", "FastAPI", "Azure OpenAI", "Azure AI Search", "Shopify", "Motion", "UI Design"];
+
+export default function AboutSection() {
+  const prefersReducedMotion = useHydratedReducedMotion();
+
+  return (
+    <section className="about-section" id="about" aria-labelledby="about-heading">
+      <motion.div
+        className="about-marquee"
+        aria-hidden="true"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 0.55, ease }}
+      >
+        <motion.div className="about-marquee-track">
+          <span>ABOUT ME / MARCELLA MOUSSA</span>
+        </motion.div>
+      </motion.div>
+
+      <div className="about-shell">
+        <motion.div
+          className="about-copy"
+          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease }}
+        >
+          <div className="about-title-row">
+            <h2 className="about-title" id="about-heading">
+              Bringing <span>design</span> and <span>development</span> together.
+              <Image
+                className="about-heading-star"
+                src={assetPath("/assets/black%20star.png")}
+                alt=""
+                width={96}
+                height={96}
+                aria-hidden="true"
+              />
+            </h2>
+            <Image
+              className="about-heading-smiley"
+              src={assetPath("/assets/pink%20smiley.png")}
+              alt=""
+              width={120}
+              height={120}
+              aria-hidden="true"
+            />
+          </div>
+          <p className="about-lede">
+            <mark>Hi!</mark> I am Marcella, a Computer Science graduate who
+            enjoys bringing design and development together. I love creating
+            digital experiences that feel intuitive, expressive, and a little
+            unexpected.
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="about-visual-board"
+          initial={{ opacity: 0, rotate: prefersReducedMotion ? 0 : -2, y: prefersReducedMotion ? 0 : 24 }}
+          whileInView={{ opacity: 1, rotate: 0, y: 0 }}
+          viewport={{ once: true, amount: 0.28 }}
+          transition={{ duration: 0.65, ease }}
+          aria-hidden="true"
+        >
+          <motion.div
+            className="about-polaroid about-polaroid-main"
+            animate={prefersReducedMotion ? undefined : { y: [0, -10, 0], rotate: [-2, 1, -2] }}
+            transition={
+              prefersReducedMotion
+                ? undefined
+                : { duration: 6, repeat: Infinity, ease: "easeInOut" }
+            }
+          >
+            <Image
+              src={assetPath("/assets/image%201%20about.png")}
+              alt=""
+              width={360}
+              height={360}
+            />
+          </motion.div>
+          <motion.div
+            className="about-polaroid about-polaroid-secondary"
+            animate={prefersReducedMotion ? undefined : { y: [0, 8, 0], rotate: [5, 2, 5] }}
+            transition={
+              prefersReducedMotion
+                ? undefined
+                : { duration: 5.4, repeat: Infinity, ease: "easeInOut" }
+            }
+          >
+            <Image
+              src={assetPath("/assets/image%202%20about.png")}
+              alt=""
+              width={260}
+              height={260}
+            />
+          </motion.div>
+          <Image
+            className="about-sticker about-sticker-star"
+            src={assetPath("/assets/star.png")}
+            alt=""
+            width={46}
+            height={46}
+          />
+          <Image
+            className="about-sticker about-sticker-hearts"
+            src={assetPath("/assets/hearts.png")}
+            alt=""
+            width={118}
+            height={118}
+          />
+        </motion.div>
+
+        <motion.div
+          className="about-card-stage"
+          id="journey"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.18 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: { staggerChildren: 0.11, delayChildren: 0.08 },
+            },
+          }}
+        >
+          <div className="about-card-stage-label">
+            <span>EXPERIENCE &amp; EDUCATION.</span>
+          </div>
+          {notes.map((note, index) => (
+            <motion.article
+              className="about-note-card"
+              key={note.index}
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: prefersReducedMotion ? 0 : 34,
+                  rotate: prefersReducedMotion ? 0 : index % 2 === 0 ? -2.2 : 2.2,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  rotate: index % 2 === 0 ? -0.7 : 0.7,
+                  transition: { duration: 0.58, ease },
+                },
+              }}
+              whileHover={
+                prefersReducedMotion
+                  ? undefined
+                  : {
+                      y: -10,
+                      rotate: 0,
+                      scale: 1.015,
+                      transition: { duration: 0.22, ease: "easeOut" },
+                    }
+              }
+            >
+              <span className="about-note-index">{note.index}</span>
+              <div className="about-note-content">
+                <h3>{note.title}</h3>
+                <p>{note.copy}</p>
+              </div>
+            </motion.article>
+          ))}
+          <motion.div
+            className="about-stack"
+            id="playlist"
+            aria-label="Selected skills"
+            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.15, ease }}
+          >
+            {stack.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

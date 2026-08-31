@@ -48,6 +48,7 @@ export default function Header() {
   const prefersReducedMotion = useHydratedReducedMotion();
   const [isSoundOn, setIsSoundOn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fadeFrameRef = useRef<number | null>(null);
   const hasStartedAudioRef = useRef(false);
@@ -189,9 +190,22 @@ export default function Header() {
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    function updateScrolledState() {
+      setIsScrolled(window.scrollY > 4);
+    }
+
+    updateScrolledState();
+    window.addEventListener("scroll", updateScrolledState, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", updateScrolledState);
+    };
+  }, []);
+
   return (
     <motion.header
-      className="site-header"
+      className={`site-header${isScrolled ? " is-scrolled" : ""}`}
       aria-label="Primary navigation"
       initial={{ opacity: 0, y: prefersReducedMotion ? 0 : -12 }}
       animate={{ opacity: 1, y: 0 }}
