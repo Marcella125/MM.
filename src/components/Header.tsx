@@ -209,7 +209,7 @@ export default function Header() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, ease }}
     >
-      <Link className="logo" href="/" aria-label="MM home">
+      <Link className="logo" href="#work" aria-label="Back to top">
         <Image
           className="logo-image"
           src={assetPath("/assets/MM. logo.png")}

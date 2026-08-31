@@ -43,6 +43,7 @@ export default function Hero() {
   return (
     <section
       className="hero"
+      id="work"
       aria-labelledby="hero-heading"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
