@@ -1908,6 +1908,17 @@ button {
     box-shadow: 0 10px 28px rgba(18, 56, 255, 0.1);
   }
 
+  body.is-menu-open .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 220;
+    width: 100%;
+    margin: 0;
+    padding: var(--page-pad-block) var(--page-pad-inline) 8px;
+  }
+
   .logo,
   .sound-control,
   .menu-button {
@@ -1923,7 +1934,7 @@ button {
     display: none;
     position: fixed;
     inset: 0;
-    z-index: 90;
+    z-index: 180;
     justify-content: stretch;
     align-content: start;
     grid-template-columns: 1fr;
@@ -2027,6 +2038,7 @@ button {
 
   body.is-menu-open .logo {
     grid-column: 1;
+    z-index: 240;
   }
 
   .sound-button {
@@ -2055,7 +2067,7 @@ button {
   body.is-menu-open .menu-button {
     grid-column: 3;
     justify-self: end;
-    z-index: 120;
+    z-index: 240;
   }
 
   .hero {
@@ -2230,6 +2242,7 @@ button {
 
   .about-section {
     margin: 0 -18px;
+    min-height: 100svh;
     padding: 56px 24px 24px;
   }
 
@@ -2246,6 +2259,8 @@ button {
       "copy"
       "scroll";
     gap: 24px;
+    min-height: calc(100svh - 80px);
+    align-content: start;
   }
 
   .about-copy {
