@@ -7,6 +7,7 @@
   --blue-deep: #0527df;
   --muted: #344154;
   --line: rgba(5, 39, 223, 0.36);
+  --font-display: var(--font-ui);
 }
 
 @theme inline {
@@ -772,13 +773,13 @@ button {
 }
 
 .hero-title {
-  font-family: var(--font-display), Impact, sans-serif;
+  font-family: var(--font-ui), Arial, Helvetica, sans-serif;
   margin: 0;
   max-width: 820px;
-  font-size: clamp(84px, 6vw, 114px);
-  font-weight: 400;
+  font-size: clamp(60px, 4.6vw, 86px);
+  font-weight: 700;
   line-height: 0.9;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.055em;
   text-transform: uppercase;
 }
 
@@ -2113,7 +2114,7 @@ button {
 
   .hero-title {
     max-width: 100%;
-    font-size: clamp(3.2rem, min(13vw, 8.2svh), 4.2rem);
+    font-size: clamp(2.9rem, min(11.5vw, 7.4svh), 3.75rem);
     line-height: 0.88;
   }
 
@@ -2545,7 +2546,7 @@ button {
   }
 
   .hero-title {
-    font-size: clamp(2.85rem, min(14.6vw, 7.7svh), 3.35rem);
+    font-size: clamp(2.55rem, min(13vw, 7svh), 3rem);
   }
 
   .hero-description {
@@ -2553,34 +2554,35 @@ button {
   }
 
   .hero-visual-layer {
+    height: clamp(270px, 35svh, 300px);
     margin-inline: 0;
   }
 
   .headphones {
-    top: clamp(32px, 6.8svh, 66px);
-    width: min(82vw, 316px);
+    top: clamp(54px, 8svh, 68px);
+    width: min(76vw, 290px);
   }
 
   .pink-ticket {
-    top: 0;
-    right: 2px;
-    width: 116px;
+    top: 26px;
+    right: -4px;
+    width: 108px;
   }
 
   .neon-face {
-    top: 128px;
+    top: 152px;
     right: 4px;
     width: 40px;
   }
 
   .cursor-sticker {
-    top: 190px;
+    top: 214px;
     right: 0;
     width: 66px;
   }
 
   .yellow-x {
-    top: 156px;
+    top: 180px;
     left: 45px;
     right: auto;
     width: 42px;
@@ -2589,18 +2591,18 @@ button {
   .music-note {
     left: 6px;
     right: auto;
-    bottom: 8px;
+    bottom: -16px;
     width: 52px;
   }
 
   .star-left {
-    top: 92px;
+    top: 116px;
     left: 20px;
     width: 26px;
   }
 
   .blue-picture-left-top {
-    top: 56px;
+    top: 80px;
     left: 76px;
     width: 50px;
   }
@@ -2639,7 +2641,7 @@ button {
   }
 
   .hero-title {
-    font-size: clamp(2.6rem, min(13vw, 7.2svh), 3.4rem);
+    font-size: clamp(2.35rem, min(11.8vw, 6.5svh), 3rem);
   }
 
   .hero-description {
@@ -2663,48 +2665,48 @@ button {
   }
 
   .hero-visual-layer {
-    height: clamp(238px, 35svh, 298px);
+    height: clamp(220px, 32svh, 260px);
     bottom: clamp(14px, 2.2svh, 24px);
   }
 
   .headphones {
-    top: 26px;
-    width: min(76vw, 300px);
+    top: 54px;
+    width: min(70vw, 270px);
   }
 
   .pink-ticket {
-    top: 0;
-    right: 0;
-    width: 108px;
+    top: 22px;
+    right: -2px;
+    width: 96px;
   }
 
   .neon-face {
-    top: 102px;
+    top: 126px;
     width: 40px;
   }
 
   .cursor-sticker {
-    top: 154px;
+    top: 178px;
     width: 62px;
   }
 
   .yellow-x {
-    top: 132px;
+    top: 156px;
     width: 38px;
   }
 
   .music-note {
-    bottom: 8px;
+    bottom: -16px;
     width: 48px;
   }
 
   .star-left {
-    top: 74px;
+    top: 98px;
     width: 26px;
   }
 
   .blue-picture-left-top {
-    top: 42px;
+    top: 66px;
     left: 80px;
     width: 46px;
   }

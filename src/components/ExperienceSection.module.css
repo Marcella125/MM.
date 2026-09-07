@@ -1,0 +1,139 @@
+.section {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(20px, 3vh, 34px);
+  height: calc(100svh - 88px);
+  min-height: 650px;
+  margin-inline: calc(-1 * var(--page-pad-inline));
+  padding: clamp(34px, 5vh, 58px) var(--page-pad-inline) clamp(28px, 4vh, 46px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 20%, rgba(255, 238, 231, 0.62), transparent 24%),
+    radial-gradient(circle at 72% 14%, rgba(115, 196, 255, 0.36), transparent 34%),
+    linear-gradient(180deg, #dff1ff 0%, #f8fcff 54%, #e8f5ff 100%);
+  color: #070707;
+  scroll-margin-top: 88px;
+}
+
+.header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 40px;
+  width: min(100%, 1460px);
+  margin-inline: auto;
+}
+
+.header h2 {
+  margin: 0;
+  font-family: var(--font-ui), Arial, sans-serif;
+  font-size: clamp(58px, 6.6vw, 106px);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+.header h2 span { color: var(--blue); }
+.headerCopy { max-width: 330px; margin: 0 0 4px; color: #49566d; font-size: 12px; line-height: 1.55; }
+
+.panels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  width: min(100%, 1460px);
+  min-height: 0;
+  margin-inline: auto;
+}
+
+.panel {
+  display: grid;
+  grid-template-rows: auto minmax(120px, 1fr) auto;
+  min-width: 0;
+  padding: clamp(16px, 1.5vw, 24px);
+  overflow: hidden;
+  border: 1px solid rgba(18, 56, 255, 0.48);
+  background: #f8fcff;
+  color: #070707;
+}
+
+.panel:nth-child(2) { background: var(--blue); color: #fff; }
+.panel:nth-child(3) { background: #dff1ff; color: #071329; }
+
+.cardTop { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.index { font-size: clamp(18px, 1.7vw, 28px); font-weight: 800; line-height: 1; }
+.kind { font-family: var(--font-mono), monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+
+.art {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 8px;
+}
+
+.art img {
+  display: block;
+  width: min(82%, 260px);
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.24));
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.panel:hover .art img { transform: translateY(-6px) rotate(-2deg) scale(1.03); }
+.panel:first-child .art img { width: min(62%, 190px); animation: disc-turn 12s linear infinite; }
+.panel:nth-child(3) .art img { width: min(54%, 180px); image-rendering: pixelated; }
+
+.cardContent h3 {
+  margin: 0;
+  font-family: var(--font-ui), Arial, sans-serif;
+  font-size: clamp(24px, 2.3vw, 38px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.meta {
+  margin: 10px 0 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.meta i { padding-inline: 4px; font-style: normal; }
+.description { max-width: 390px; margin: 14px 0 0; font-size: 10px; line-height: 1.55; opacity: 0.76; }
+
+@keyframes disc-turn { to { transform: rotate(360deg); } }
+
+@media (max-width: 800px) {
+  .section { display: block; height: auto; min-height: 0; padding-block: 60px 76px; overflow: visible; }
+  .header { align-items: start; }
+  .headerCopy { max-width: 220px; }
+  .panels { margin-top: 32px; }
+}
+
+@media (max-width: 560px) {
+  .header { display: grid; gap: 16px; }
+  .header h2 { font-size: clamp(54px, 12vw, 84px); }
+  .headerCopy { max-width: 280px; }
+  .panels { grid-template-columns: 1fr; gap: 5px; }
+  .panel { grid-template-rows: auto 132px auto; min-height: 300px; padding: 16px; }
+  .index { font-size: 19px; }
+  .art { padding: 2px 12px; }
+  .art img { width: min(70%, 210px); filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.2)); }
+  .panel:first-child .art img { width: min(48%, 130px); }
+  .panel:nth-child(3) .art img { width: min(42%, 120px); }
+  .cardContent h3 { font-size: 25px; }
+  .description { max-width: none; font-size: 9px; line-height: 1.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel:first-child .art img { animation: none; }
+  .art img { transition: none; }
+}

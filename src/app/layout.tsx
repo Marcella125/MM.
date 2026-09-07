@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 import type { CSSProperties } from "react";
 import { assetPath } from "@/src/lib/paths";
 import "./globals.css";
-
-const bebasNeue = Bebas_Neue({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-mono",
@@ -35,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${bebasNeue.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      className={`${ibmPlexMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
       style={cursorStyles}
     >
       <body className="min-h-full flex flex-col">{children}</body>

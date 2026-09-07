@@ -1,0 +1,33 @@
+.label {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin: 0 0 18px;
+  padding: 8px 12px;
+  border: 1px solid var(--blue);
+  background: var(--blue);
+  color: #fff;
+  font-family: var(--font-mono), monospace;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.label::before {
+  width: 5px;
+  height: 5px;
+  margin-right: 8px;
+  background: currentColor;
+  border-radius: 50%;
+  content: "";
+}
+
+@media (max-width: 560px) {
+  .label {
+    margin-bottom: 14px;
+    padding: 7px 10px;
+    font-size: 8px;
+  }
+}
