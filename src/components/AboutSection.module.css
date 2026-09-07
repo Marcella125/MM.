@@ -67,7 +67,7 @@
 }
 
 .manifestoHeader h3 { margin: 0; line-height: 1.6; }
-.manifestoHeader > span { font-size: 28px; line-height: 1; }
+.manifestoHeader > svg { width: 28px; height: 28px; flex: 0 0 auto; }
 
 .manifestoStatement {
   margin: 28px 0 18px;
@@ -106,7 +106,7 @@
 }
 
 .journeyHeader h3 { margin: 0; font-size: 20px; font-weight: 500; }
-.journeyHeader > span { font-size: 28px; color: var(--blue); }
+.journeyHeader > svg { width: 28px; height: 28px; flex: 0 0 auto; color: var(--blue); }
 
 .entry {
   display: grid;

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import styles from "./AboutSection.module.css";
 
@@ -70,7 +71,7 @@ export default function AboutSection() {
           <aside className={styles.manifesto} aria-labelledby="approach-heading">
             <div className={styles.manifestoHeader}>
               <h3 className={styles.label} id="approach-heading">How I approach my work</h3>
-              <span aria-hidden="true">↗</span>
+              <ArrowUpRight aria-hidden="true" />
             </div>
             <p className={styles.manifestoStatement}>
               Thoughtfully designed.<br />
@@ -90,7 +91,7 @@ export default function AboutSection() {
         <div className={styles.journey} id="journey" aria-labelledby="journey-heading">
           <div className={styles.journeyHeader}>
             <h3 id="journey-heading">The journey so far</h3>
-            <span aria-hidden="true">↘</span>
+            <ArrowDownRight aria-hidden="true" />
           </div>
           {notes.slice(0, 3).map((note) => (
             <motion.article
