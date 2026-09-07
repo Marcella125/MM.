@@ -1,9 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
-import { assetPath } from "@/src/lib/paths";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
+import styles from "./AboutSection.module.css";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -46,140 +45,84 @@ export default function AboutSection() {
   const prefersReducedMotion = useHydratedReducedMotion();
 
   return (
-    <section className="about-section" id="about" aria-labelledby="about-heading">
-      <motion.div
-        className="about-marquee"
-        aria-hidden="true"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.35 }}
-        transition={{ duration: 0.55, ease }}
-      >
-        <motion.div className="about-marquee-track">
-          <span>ABOUT ME</span>
-          <Image
-            className="about-marquee-smiley"
-            src={assetPath("/assets/pink%20smiley.png")}
-            alt=""
-            width={120}
-            height={120}
-            aria-hidden="true"
-          />
-        </motion.div>
-      </motion.div>
-
-      <div className="about-shell">
+    <section className={styles.section} id="about" aria-labelledby="about-heading">
+      <div className={styles.layout}>
         <motion.div
-          className="about-copy"
+          className={styles.intro}
           initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease }}
         >
-          <div className="about-title-row">
-            <h2 className="about-title" id="about-heading">
-              Bringing <span>design</span> and <span>development</span> together.
-              <Image
-                className="about-heading-star"
-                src={assetPath("/assets/black%20star.png")}
-                alt=""
-                width={96}
-                height={96}
-                aria-hidden="true"
-              />
+          <div>
+            <p className={styles.eyebrow}>Hi, I’m Marcella.</p>
+            <h2 className={styles.title} id="about-heading">
+              A creative eye.<br />
+              <span>A developer’s<br />mind.</span>
             </h2>
           </div>
-          <p className="about-lede">
-            <mark>Hi!</mark> I am Marcella, a Computer Science graduate who
-            enjoys bringing design and development together. I love creating
+          <p className={styles.lede}>
+            I am a Computer Science graduate who enjoys bringing design and
+            development together. I love creating
             digital experiences that feel intuitive, expressive, and a little
             unexpected.
           </p>
+          <aside className={styles.manifesto} aria-labelledby="approach-heading">
+            <div className={styles.manifestoHeader}>
+              <h3 className={styles.label} id="approach-heading">How I approach my work</h3>
+              <span aria-hidden="true">↗</span>
+            </div>
+            <p className={styles.manifestoStatement}>
+              Thoughtfully designed.<br />
+              <span>Carefully built.</span>
+            </p>
+            <p className={styles.manifestoCopy}>
+              I bring ideas to life through code, with an eye for the details
+              that make an experience feel right.
+            </p>
+            <div className={styles.manifestoFooter}>
+              <span>Design meets development</span>
+              <span aria-hidden="true">&lt;/&gt;</span>
+            </div>
+          </aside>
         </motion.div>
 
-        <motion.div
-          className="about-visual-board"
-          initial={{ opacity: 0, rotate: prefersReducedMotion ? 0 : -2, y: prefersReducedMotion ? 0 : 24 }}
-          whileInView={{ opacity: 1, rotate: 0, y: 0 }}
-          viewport={{ once: true, amount: 0.28 }}
-          transition={{ duration: 0.65, ease }}
-          aria-hidden="true"
-        >
-          <motion.div
-            className="about-polaroid about-polaroid-main"
-            animate={prefersReducedMotion ? undefined : { y: [0, -10, 0], rotate: [-2, 1, -2] }}
-            transition={
-              prefersReducedMotion
-                ? undefined
-                : { duration: 6, repeat: Infinity, ease: "easeInOut" }
-            }
-          >
-            <Image
-              src={assetPath("/assets/image%201%20about.png")}
-              alt=""
-              width={360}
-              height={360}
-            />
-          </motion.div>
-          <motion.div
-            className="about-polaroid about-polaroid-secondary"
-            animate={prefersReducedMotion ? undefined : { y: [0, 8, 0], rotate: [5, 2, 5] }}
-            transition={
-              prefersReducedMotion
-                ? undefined
-                : { duration: 5.4, repeat: Infinity, ease: "easeInOut" }
-            }
-          >
-            <Image
-              src={assetPath("/assets/blue-picture.png")}
-              alt=""
-              width={260}
-              height={260}
-            />
-          </motion.div>
-          <Image
-            className="about-sticker about-sticker-star"
-            src={assetPath("/assets/star.png")}
-            alt=""
-            width={46}
-            height={46}
-          />
-        </motion.div>
-
-        <motion.div
-          className="about-card-stage"
-          id="journey"
-        >
-          {notes.map((note) => (
+        <div className={styles.journey} id="journey" aria-labelledby="journey-heading">
+          <div className={styles.journeyHeader}>
+            <h3 id="journey-heading">The journey so far</h3>
+            <span aria-hidden="true">↘</span>
+          </div>
+          {notes.slice(0, 3).map((note) => (
             <motion.article
-              className="about-note-card"
+              className={styles.entry}
               key={note.index}
               initial={{ opacity: 0, x: prefersReducedMotion ? 0 : -18 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.38 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.58, ease }}
-              whileHover={
-                prefersReducedMotion
-                  ? undefined
-                  : {
-                      x: 8,
-                      transition: { duration: 0.22, ease: "easeOut" },
-                    }
-              }
             >
-              <span className="about-note-index">{note.index}</span>
-              <div className="about-note-content">
-                <h3>{note.title}</h3>
-                <div className="about-note-meta">
-                  <span>{note.role}</span>
+              <span className={styles.index}>{note.index}</span>
+              <div className={styles.entryContent}>
+                <div className={styles.entryTop}>
+                  <span>{note.index === "01" ? "Education" : "Experience"}</span>
                   <span>{note.period}</span>
-                  <span>{note.location}</span>
                 </div>
+                <h4>{note.title}</h4>
+                <div className={styles.role}>{note.role}</div>
+                <span className={styles.location}>{note.location}</span>
                 <p>{note.copy}</p>
               </div>
             </motion.article>
           ))}
-        </motion.div>
+          <aside className={styles.offscreen} aria-labelledby="offscreen-heading">
+            <span className={styles.label}>Away from the keyboard</span>
+            <h3 id="offscreen-heading">{notes[3].title} <span aria-hidden="true">✳</span></h3>
+            <p>{notes[3].copy}</p>
+            <ul className={styles.interests} aria-label="Interests">
+              <li>Music</li><li>Photography</li><li>Hiking</li>
+            </ul>
+          </aside>
+        </div>
       </div>
     </section>
   );

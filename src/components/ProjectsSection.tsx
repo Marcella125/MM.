@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
+import styles from "./PortfolioSections.module.css";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -46,50 +47,50 @@ export default function ProjectsSection() {
   const prefersReducedMotion = useHydratedReducedMotion();
 
   return (
-    <section className="projects-section" id="projects" aria-labelledby="projects-heading">
-      <div className="projects-heading-row">
+    <section className={styles.section} id="projects" aria-labelledby="projects-heading">
+      <div className={styles.inner}>
+      <div className={styles.headingRow}>
         <motion.h2
-          className="projects-title"
+          className={styles.title}
           id="projects-heading"
           initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease }}
         >
-          PROJECTS
+          A few things<br /><span>I’ve built.</span>
         </motion.h2>
+        <p className={styles.lede}>
+          From thoughtful interfaces to full-stack applications. A selection of
+          projects where design and development come together.
+        </p>
       </div>
 
-      <div className="projects-atlas">
-        {projects.map((project, index) => (
+      <div className={styles.projectGrid}>
+        {projects.map((project) => (
           <motion.article
-            className="project-atlas-item"
+            className={styles.project}
             key={project.index}
             initial={{
               opacity: 0,
-              y: prefersReducedMotion ? 0 : 34,
-              rotate: prefersReducedMotion ? 0 : index % 2 === 0 ? -1.8 : 1.8,
+              y: prefersReducedMotion ? 0 : 24,
             }}
             whileInView={{
               opacity: 1,
               y: 0,
-              rotate: prefersReducedMotion ? 0 : index % 2 === 0 ? -1.2 : 1.2,
               transition: { duration: 0.58, ease },
             }}
-            viewport={{ once: false, amount: 0.55 }}
-            whileHover={prefersReducedMotion ? undefined : { y: -8 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.24, ease }}
           >
-            <div className="project-atlas-topline">
-              <span>{project.index}</span>
-              <span>{project.type}</span>
+            <div className={styles.projectTop}>
+              <span className={styles.projectNumber}>{project.index}</span>
+              <span className={styles.label}>{project.type}</span>
             </div>
-            <div className="project-atlas-copy">
               <h3>{project.title}</h3>
               <p>{project.copy}</p>
-            </div>
             <div
-              className="project-atlas-tags"
+              className={styles.tags}
               aria-label={`${project.title} technologies`}
             >
               {project.tags.map((tag) => (
@@ -98,6 +99,7 @@ export default function ProjectsSection() {
             </div>
           </motion.article>
         ))}
+      </div>
       </div>
     </section>
   );

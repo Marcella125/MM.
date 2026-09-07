@@ -1,0 +1,175 @@
+.section {
+  composes: section from "./PortfolioSections.module.css";
+  border-top: 1px solid var(--foreground);
+}
+
+.header {
+  composes: header from "./PortfolioSections.module.css";
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.label, .eyebrow, .headerNote, .entryTop, .location, .interests {
+  font-family: var(--font-mono), monospace;
+}
+
+.label {
+  composes: label from "./PortfolioSections.module.css";
+}
+
+.headerNote {
+  composes: headerNote from "./PortfolioSections.module.css";
+}
+
+.smiley {
+  width: 42px;
+  height: auto;
+  transform: rotate(12deg);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(40px, 7vw, 112px);
+  max-width: 1440px;
+  margin: 54px auto 0;
+}
+
+.intro { min-width: 0; }
+
+.eyebrow {
+  margin: 0 0 22px;
+  font-size: 15px;
+  color: var(--blue);
+}
+
+.title {
+  composes: title from "./PortfolioSections.module.css";
+}
+
+.lede {
+  composes: lede from "./PortfolioSections.module.css";
+}
+
+.manifesto {
+  margin-top: 36px;
+  padding: clamp(24px, 3vw, 40px);
+  background: #eef1ff;
+  border: 1px solid #c8cee6;
+}
+
+.manifestoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  color: var(--blue);
+}
+
+.manifestoHeader h3 { margin: 0; line-height: 1.6; }
+.manifestoHeader > span { font-size: 28px; line-height: 1; }
+
+.manifestoStatement {
+  margin: 28px 0 18px;
+  font-family: var(--font-display), Impact, sans-serif;
+  font-size: clamp(32px, 3.7vw, 58px);
+  font-weight: 400;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.manifestoStatement span { color: var(--blue); }
+.manifestoCopy { max-width: 390px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.75; }
+
+.manifestoFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid #c8cee6;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.manifestoFooter > span:last-child { color: var(--blue); font-size: 18px; }
+.journey { min-width: 0; scroll-margin-top: 110px; }
+
+.journeyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--foreground);
+}
+
+.journeyHeader h3 { margin: 0; font-size: 20px; font-weight: 500; }
+.journeyHeader > span { font-size: 28px; color: var(--blue); }
+
+.entry {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 18px;
+  padding: 26px 0;
+  border-bottom: 1px solid #dcdcd1;
+}
+
+.index {
+  display: grid;
+  place-items: center;
+  align-self: start;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--blue);
+  border-radius: 50%;
+  color: var(--blue);
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+}
+
+.entryTop {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-bottom: 10px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.entryTop > span:first-child { color: var(--blue); text-transform: uppercase; letter-spacing: 0.06em; }
+.entryContent h4 { margin: 0 0 8px; font-size: clamp(23px, 2.3vw, 34px); font-weight: 600; line-height: 1.15; letter-spacing: -0.04em; }
+.role { font-size: 13px; font-weight: 600; line-height: 1.5; }
+.location { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+.entryContent p, .offscreen p { margin: 12px 0 0; font-size: 13px; line-height: 1.7; color: var(--muted); }
+
+.offscreen {
+  position: relative;
+  margin-top: 28px;
+  padding: 25px 28px;
+  background: #fbddea;
+  border: 1px solid #dfb4c6;
+  box-shadow: 4px 4px 0 #f0c9dc;
+}
+
+.offscreen h3 { display: flex; justify-content: space-between; align-items: center; margin: 12px 0 0; font-size: 26px; font-weight: 500; }
+.offscreen h3 span { color: var(--blue); font-size: 38px; line-height: 1; }
+.interests { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; font-size: 10px; }
+.interests li { padding: 6px 10px; border: 1px solid #bd829d; border-radius: 999px; }
+
+@media (max-width: 1000px) {
+  .layout { gap: 36px; }
+}
+
+@media (max-width: 760px) {
+  .smiley { width: 30px; }
+  .layout { grid-template-columns: 1fr; margin-top: 32px; gap: 42px; }
+  .manifesto { margin-top: 28px; }
+  .manifestoStatement { font-size: clamp(30px, 7.8vw, 54px); }
+  .journeyHeader h3 { font-size: 19px; }
+  .entry { gap: 12px; padding: 24px 0; }
+  .offscreen { padding: 22px; }
+}
