@@ -31,7 +31,16 @@ export default function ContactSection() {
   return (
     <section className={styles.contactSection} id="contact" aria-labelledby="contact-heading">
       <div className={styles.contactTicker} aria-hidden="true">
-        <span>START A PROJECT</span><i>✦</i><span>SAY HELLO</span><i>✦</i><span>LET&apos;S BUILD SOMETHING</span><i>✦</i><span>START A PROJECT</span>
+        <div className={styles.contactTickerTrack}>
+          {[0, 1].map((group) => (
+            <div className={styles.contactTickerGroup} key={group}>
+              <span>Have an idea?</span><i>✦</i>
+              <span>Let&apos;s talk</span><i>✦</i>
+              <span>Design + development</span><i>✦</i>
+              <span>Let&apos;s make it real</span><i>✦</i>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className={styles.contactInner}>
@@ -55,7 +64,6 @@ export default function ContactSection() {
           <div className={styles.contactCard}>
             <div className={styles.contactCardTop}>
               <span>Start a conversation</span>
-              <span aria-hidden="true">↗</span>
             </div>
             <a className={styles.emailLink} href="mailto:marcellamoussa74@gmail.com">
               <span><Mail aria-hidden="true" /> Email me</span>

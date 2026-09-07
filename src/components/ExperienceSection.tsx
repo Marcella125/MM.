@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { assetPath } from "@/src/lib/paths";
+import { Code2, GraduationCap, PanelsTopLeft } from "lucide-react";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import SectionLabel from "./SectionLabel";
 import styles from "./ExperienceSection.module.css";
@@ -10,9 +9,9 @@ import styles from "./ExperienceSection.module.css";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const entries = [
-  { index: "01", kind: "Education", title: "USEK", role: "Computer Science", period: "2023 — 2026", art: "/assets/disk.png", copy: "A foundation in software engineering, systems thinking, and the technical craft behind the digital products I love to build." },
-  { index: "02", kind: "Experience", title: "KLOUDR", role: "Full-Stack Developer", period: "2025", art: "/assets/headphones.png", copy: "Built an AI-powered product with React, FastAPI, Azure OpenAI, and Azure AI Search — spanning interfaces, APIs, and deployment." },
-  { index: "03", kind: "Experience", title: "FEKRA MEDIA", role: "Web Developer", period: "2025 — 2026", art: "/assets/cursor.png", copy: "Created responsive full-stack websites with React, Next.js, Node.js, Python, and Shopify for real brands and real audiences." },
+  { index: "01", kind: "Education", title: "USEK", role: "Computer Science", period: "2023 — 2026", Icon: GraduationCap, copy: "A foundation in software engineering, systems thinking, and the technical craft behind the digital products I love to build." },
+  { index: "02", kind: "Experience", title: "KLOUDR", role: "Full-Stack Developer", period: "2025", Icon: Code2, copy: "Built an AI-powered product with React, FastAPI, Azure OpenAI, and Azure AI Search — spanning interfaces, APIs, and deployment." },
+  { index: "03", kind: "Experience", title: "FEKRA MEDIA", role: "Web Developer", period: "2025 — 2026", Icon: PanelsTopLeft, copy: "Created responsive full-stack websites with React, Next.js, Node.js, Python, and Shopify for real brands and real audiences." },
 ] as const;
 
 export default function ExperienceSection() {
@@ -43,7 +42,7 @@ export default function ExperienceSection() {
               <span className={styles.kind}>{entry.kind}</span>
             </div>
             <div className={styles.art} aria-hidden="true">
-              <Image src={assetPath(entry.art)} alt="" width={500} height={500} />
+              <entry.Icon strokeWidth={1.35} />
             </div>
             <div className={styles.cardContent}>
               <h3>{entry.title}</h3>

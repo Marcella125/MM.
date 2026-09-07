@@ -11,7 +11,6 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const projects = [
   {
     index: "01",
-    mark: "RC",
     title: "Rushd Center",
     type: "Full-stack app",
     copy: "A smart search experience built around retrieval, clean UX, and fast answers.",
@@ -19,7 +18,6 @@ const projects = [
   },
   {
     index: "02",
-    mark: "K",
     title: "Kira",
     type: "Web experience",
     copy: "A polished storefront concept focused on responsive pages and a clear product journey.",
@@ -27,7 +25,6 @@ const projects = [
   },
   {
     index: "03",
-    mark: "RX",
     title: "Rong Xing",
     type: "Identity site",
     copy: "A personal web system with expressive motion, custom visuals, and tactile interactions.",
@@ -35,7 +32,6 @@ const projects = [
   },
   {
     index: "04",
-    mark: "FM",
     title: "Femi",
     type: "Interaction study",
     copy: "Playful experiments exploring responsive components, visual systems, and digital texture.",
@@ -78,15 +74,11 @@ export default function ProjectsSection() {
               transition={{ duration: 0.68, delay: prefersReducedMotion ? 0 : position * 0.07, ease }}
             >
               <div className={styles.projectTop}>
-                <span className={styles.projectNumber}>{project.index}</span>
-                <span className={styles.projectType}>{project.type}</span>
-                <ArrowUpRight aria-hidden="true" />
-              </div>
-
-              <div className={styles.projectVisual} aria-hidden="true">
-                <span className={styles.projectMark}>{project.mark}</span>
-                <span className={styles.orbit} />
-                <span className={styles.pixelDot} />
+                <div>
+                  <span className={styles.projectNumber}>{project.index}</span>
+                  <span className={styles.projectType}>{project.type}</span>
+                </div>
+                <span className={styles.projectArrow}><ArrowUpRight aria-hidden="true" /></span>
               </div>
 
               <div className={styles.projectContent}>
