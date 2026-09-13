@@ -82,9 +82,11 @@ const contentOffsetValues = [
   [34, 34, 0, 0],
 ];
 
-function ChapterVisual({ index, progress, reducedMotion }: {
+function ChapterVisual({ index, progress, active, animateTransition, reducedMotion }: {
   index: number;
   progress: MotionValue<number>;
+  active: boolean;
+  animateTransition: boolean;
   reducedMotion: boolean;
 }) {
   const clipPath = useTransform(progress, visualFadeStops[index], visualClipValues[index]);
@@ -96,9 +98,10 @@ function ChapterVisual({ index, progress, reducedMotion }: {
     <motion.div
       className={`${styles.visualScene} ${visualClasses[index]}`}
       style={{
-        clipPath,
-        scale: reducedMotion ? 1 : scale,
-        filter: reducedMotion ? "none" : filter,
+        clipPath: animateTransition ? clipPath : "none",
+        visibility: animateTransition || active ? "visible" : "hidden",
+        scale: animateTransition && !reducedMotion ? scale : 1,
+        filter: animateTransition && !reducedMotion ? filter : "none",
         zIndex: index + 1,
         backgroundImage: index === 0 ? `url("${assetPath("/assets/projects%20bg.png")}")` : undefined,
       }}
@@ -291,7 +294,14 @@ export default function AboutSection() {
       >
         <div className={styles.visualPanel} aria-hidden="true">
           {chapters.map((chapter, index) => (
-            <ChapterVisual key={chapter.eyebrow} index={index} progress={progress} reducedMotion={reducedMotion} />
+            <ChapterVisual
+              key={chapter.eyebrow}
+              index={index}
+              progress={progress}
+              active={activeChapter === index}
+              animateTransition={desktopLayout}
+              reducedMotion={reducedMotion}
+            />
           ))}
         </div>
         <div className={styles.contentPanel}>
