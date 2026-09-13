@@ -168,7 +168,7 @@ export default function CinematicSectionStack({ children }: { children: ReactNod
       const stackTop = stack.getBoundingClientRect().top + window.scrollY;
       const travel = stack.offsetHeight - window.innerHeight;
       const sectionProgress = sceneStarts[index] / totalScrollUnits;
-      window.scrollTo({ top: stackTop + travel * sectionProgress, behavior: "smooth" });
+      window.scrollTo({ top: stackTop + travel * sectionProgress, behavior: "auto" });
       return true;
     }
 
@@ -185,14 +185,8 @@ export default function CinematicSectionStack({ children }: { children: ReactNod
       window.history.replaceState(null, "", index === 0 ? window.location.pathname : `#${id}`);
     }
 
-    const initialIndex = sectionIds.indexOf(window.location.hash.slice(1));
-    const initialFrame = window.requestAnimationFrame(() => {
-      if (initialIndex > 0) scrollToSection(initialIndex);
-    });
-
     document.addEventListener("click", handleAnchorClick, true);
     return () => {
-      window.cancelAnimationFrame(initialFrame);
       document.removeEventListener("click", handleAnchorClick, true);
     };
   }, [items.length]);

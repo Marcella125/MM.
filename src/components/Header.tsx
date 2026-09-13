@@ -206,39 +206,6 @@ export default function Header() {
     };
   }, [isMenuOpen]);
 
-  useEffect(() => {
-    // Let the browser preserve the reader's place on mobile.
-    if (!window.matchMedia("(min-width: 1101px)").matches) return;
-
-    const canControlScrollRestoration = "scrollRestoration" in window.history;
-    const previousScrollRestoration = canControlScrollRestoration
-      ? window.history.scrollRestoration
-      : null;
-
-    if (canControlScrollRestoration) {
-      window.history.scrollRestoration = "manual";
-    }
-
-    function resetScrollState() {
-      scrollToPageTop();
-
-      window.requestAnimationFrame(() => {
-        scrollToPageTop();
-      });
-    }
-
-    resetScrollState();
-    window.addEventListener("pageshow", resetScrollState);
-
-    return () => {
-      window.removeEventListener("pageshow", resetScrollState);
-
-      if (canControlScrollRestoration && previousScrollRestoration) {
-        window.history.scrollRestoration = previousScrollRestoration;
-      }
-    };
-  }, []);
-
   return (
     <motion.header
       className="site-header"

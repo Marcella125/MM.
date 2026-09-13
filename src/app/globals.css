@@ -24,7 +24,7 @@
 html {
   min-height: 100%;
   background: var(--background);
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   cursor: var(--cursor-plane), auto;
   scrollbar-width: none;
 }
@@ -1839,7 +1839,6 @@ button {
 
 @media (max-width: 840px) {
   :root { --editorial-heading-size: clamp(2.9rem, min(11.5vw, 7.4svh), 3.75rem); }
-  html { scroll-behavior: auto; }
   html,
   body {
     min-height: 100%;
