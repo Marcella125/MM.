@@ -68,8 +68,10 @@
 }
 
 .portraitScene {
-  background: #dcecff center / cover no-repeat;
+  background: #dcecff;
 }
+.portraitBackground { object-fit: cover; }
+.mobilePortraitBackground { display: none; }
 .portraitFrame {
   position: relative;
   z-index: 1;
@@ -226,6 +228,8 @@
   .contentPanel { background: #f4faff; }
   .visualScene { background-color: #f4faff; }
   .chapterImage { object-fit: cover; }
+  .desktopPortraitBackground { display: none; }
+  .mobilePortraitBackground { display: block; }
   .portraitFrame { max-width: min(46%, 190px); height: 64%; padding: 8px 8px 30px; }
   .sectionLabel { display: none; }
   .contentScene {

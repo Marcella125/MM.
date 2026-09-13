@@ -103,23 +103,40 @@ function ChapterVisual({ index, progress, active, animateTransition, reducedMoti
         scale: animateTransition && !reducedMotion ? scale : 1,
         filter: animateTransition && !reducedMotion ? filter : "none",
         zIndex: index + 1,
-        backgroundImage: index === 0 ? `url("${assetPath("/assets/projects%20bg.png")}")` : undefined,
       }}
       aria-hidden="true"
     >
       {index === 0 && (
-        <div className={styles.portraitFrame}>
-          <div className={styles.portraitPhoto}>
-            <Image
-              className={styles.portraitImage}
-              src={assetPath("/assets/profile.jpeg")}
-              alt=""
-              fill
-              sizes="(max-width: 700px) 62vw, 31vw"
-              priority
-            />
+        <>
+          <Image
+            className={`${styles.portraitBackground} ${styles.desktopPortraitBackground}`}
+            src={assetPath("/assets/projects%20bg.png")}
+            alt=""
+            fill
+            sizes="(max-width: 700px) 100vw, 42vw"
+            priority
+          />
+          <Image
+            className={`${styles.portraitBackground} ${styles.mobilePortraitBackground}`}
+            src={assetPath("/assets/mobile%20about%20me%20bg.png")}
+            alt=""
+            fill
+            sizes="100vw"
+            priority
+          />
+          <div className={styles.portraitFrame}>
+            <div className={styles.portraitPhoto}>
+              <Image
+                className={styles.portraitImage}
+                src={assetPath("/assets/profile.jpeg")}
+                alt=""
+                fill
+                sizes="(max-width: 700px) 62vw, 31vw"
+                priority
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
       {index === 1 && (
         <Image
