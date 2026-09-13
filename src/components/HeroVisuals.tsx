@@ -11,6 +11,7 @@ import Image from "next/image";
 import type { MouseEvent } from "react";
 import { assetPath } from "@/src/lib/paths";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
+import { StoryExit } from "./StoryScroll";
 
 type HeroVisualsProps = {
   pointerX: MotionValue<number>;
@@ -178,7 +179,7 @@ function VisualAsset({
 
 export default function HeroVisuals({ pointerX, pointerY }: HeroVisualsProps) {
   return (
-    <div className="hero-visual-layer" aria-hidden="true">
+    <StoryExit className="hero-visual-layer" start={0.04} end={0.38} lift={44} ariaHidden>
       <VisualAsset
         className="headphones"
         src="/assets/headphones.png"
@@ -276,6 +277,6 @@ export default function HeroVisuals({ pointerX, pointerY }: HeroVisualsProps) {
         pointerX={pointerX}
         pointerY={pointerY}
       />
-    </div>
+    </StoryExit>
   );
 }

@@ -1,94 +1,153 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
-import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
+import { useEffect, useRef, type CSSProperties } from "react";
+import { motion, type MotionValue, useMotionValue, useScroll, useTransform } from "framer-motion";
 import SectionLabel from "./SectionLabel";
+import { useStoryScrollProgress } from "./StoryScroll";
+import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
+import { assetPath } from "@/src/lib/paths";
 import styles from "./PortfolioSections.module.css";
 
-const ease = [0.22, 1, 0.36, 1] as const;
-
 const projects = [
-  {
-    index: "01",
-    title: "Rushd Center",
-    type: "Full-stack app",
-    copy: "A smart search experience built around retrieval, clean UX, and fast answers.",
-    tags: ["React", "FastAPI", "Azure AI"],
-  },
-  {
-    index: "02",
-    title: "Kira",
-    type: "Web experience",
-    copy: "A polished storefront concept focused on responsive pages and a clear product journey.",
-    tags: ["Next.js", "Shopify", "UI"],
-  },
-  {
-    index: "03",
-    title: "Rong Xing",
-    type: "Identity site",
-    copy: "A personal web system with expressive motion, custom visuals, and tactile interactions.",
-    tags: ["Motion", "Design", "Next.js"],
-  },
-  {
-    index: "04",
-    title: "Femi",
-    type: "Interaction study",
-    copy: "Playful experiments exploring responsive components, visual systems, and digital texture.",
-    tags: ["React", "UX", "Prototype"],
-  },
+  { index: "01", title: "Kira", type: "AI product", copy: "AI Knowledge Assistant", tags: ["AI", "Azure", "Full Stack"] },
+  { index: "02", title: "Femi", type: "Health technology", copy: "AI-Powered Health Platform", tags: ["Health Tech", "AI", "Full Stack"] },
+  { index: "03", title: "Rong Xing", type: "Corporate website", copy: "Trading and business website", tags: ["Web", "Frontend", "Responsive"] },
+  { index: "04", title: "Rushd", type: "Interactive experience", copy: "Interactive Bilingual Experience", tags: ["Creative Development", "Three.js", "RTL"] },
 ] as const;
 
-export default function ProjectsSection() {
-  const prefersReducedMotion = useHydratedReducedMotion();
+const cardStops = [
+  [0, 0.20, 0.28, 1],
+  [0, 0.20, 0.28, 0.43, 0.51, 1],
+  [0, 0.43, 0.51, 0.66, 0.74, 1],
+  [0, 0.66, 0.74, 1],
+];
+const opacityStops = [
+  [1, 1, 0, 0],
+  [0, 0, 1, 1, 0, 0],
+  [0, 0, 1, 1, 0, 0],
+  [0, 0, 1, 1],
+];
+const offsetStops = [
+  [0, 0, -56, -56],
+  [56, 56, 0, 0, -56, -56],
+  [56, 56, 0, 0, -56, -56],
+  [56, 56, 0, 0],
+];
+const scaleStops = [
+  [1, 1, 0.95, 0.95],
+  [0.95, 0.95, 1, 1, 0.95, 0.95],
+  [0.95, 0.95, 1, 1, 0.95, 0.95],
+  [0.95, 0.95, 1, 1],
+];
+const blurStops = [
+  [0, 0, 9, 9],
+  [9, 9, 0, 0, 9, 9],
+  [9, 9, 0, 0, 9, 9],
+  [9, 9, 0, 0],
+];
+
+function ProjectCard({ project, index, progress }: {
+  project: (typeof projects)[number];
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const reducedMotion = useHydratedReducedMotion();
+  const opacity = useTransform(progress, cardStops[index], opacityStops[index]);
+  const y = useTransform(progress, cardStops[index], offsetStops[index]);
+  const scale = useTransform(progress, cardStops[index], scaleStops[index]);
+  const blur = useTransform(progress, cardStops[index], blurStops[index]);
+  const filter = useTransform(blur, (value) => `blur(${value}px)`);
+  const pointerEvents = useTransform(opacity, (value) => value > 0.8 ? "auto" : "none");
+  const imagePath = index === 0 ? "/assets/kira.png" : index === 1 ? "/assets/femi.png" : undefined;
+  const card = (
+    <article
+      className={styles.project}
+      data-project-index={project.index}
+      style={imagePath ? { "--project-image": `url("${assetPath(imagePath)}")` } as CSSProperties : undefined}
+    >
+      <div className={styles.projectTop}>
+        <span className={styles.projectNumber}>{project.index}</span>
+        <span className={styles.projectType}>{project.type}</span>
+      </div>
+      <div className={styles.projectContent}>
+        <h3>{project.title}</h3>
+        <p>{project.copy}</p>
+        <div className={styles.tags} aria-label={`${project.title} project details`}>
+          {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+        </div>
+      </div>
+    </article>
+  );
 
   return (
-    <section className={styles.projectsSection} id="projects" aria-labelledby="projects-heading">
-      <div className={styles.inner}>
-        <motion.header
-          className={styles.sectionHeading}
-          initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 26 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.65, ease }}
+    <motion.div
+      className={styles.projectReveal}
+      style={{
+        opacity,
+        y: reducedMotion ? 0 : y,
+        scale: reducedMotion ? 1 : scale,
+        filter: reducedMotion ? "none" : filter,
+        pointerEvents,
+        zIndex: index + 1,
+      }}
+    >
+      {project.index === "04" ? (
+        <a
+          className={styles.projectLink}
+          href="https://rushd.center/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Rushd website in a new tab"
         >
+          {card}
+        </a>
+      ) : card}
+    </motion.div>
+  );
+}
+
+export default function ProjectsSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const desktopProgress = useStoryScrollProgress();
+  const { scrollYProgress: pageProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+  const progress = useMotionValue(0);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1101px)");
+    const sync = () => progress.set(desktop.matches ? desktopProgress.get() : pageProgress.get());
+    const unsubscribeDesktop = desktopProgress.on("change", sync);
+    const unsubscribePage = pageProgress.on("change", sync);
+    desktop.addEventListener("change", sync);
+    sync();
+    return () => {
+      unsubscribeDesktop();
+      unsubscribePage();
+      desktop.removeEventListener("change", sync);
+    };
+  }, [desktopProgress, pageProgress, progress]);
+
+  return (
+    <section className={styles.projectsSection} id="projects" aria-labelledby="projects-heading" ref={sectionRef}>
+      <div className={styles.inner}>
+        <header className={styles.sectionHeading}>
           <div>
             <SectionLabel>Selected work</SectionLabel>
             <h2 className={styles.title} id="projects-heading">
-              Things I&apos;ve<br /><span>built.</span>
+              <span className={styles.titleLine}>Things I&apos;ve</span>
+              <span className={styles.titleAccent}>built.</span>
             </h2>
           </div>
           <p className={styles.lede}>
-            Digital products where development, interaction, and visual direction work as one system.
+            Websites and applications built with clean interfaces, thoughtful interactions, and solid engineering.
           </p>
-        </motion.header>
+        </header>
 
-        <div className={styles.projectGrid}>
-          {projects.map((project, position) => (
-            <motion.article
-              className={styles.project}
-              key={project.index}
-              initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 34 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.18 }}
-              transition={{ duration: 0.68, delay: prefersReducedMotion ? 0 : position * 0.07, ease }}
-            >
-              <div className={styles.projectTop}>
-                <div>
-                  <span className={styles.projectNumber}>{project.index}</span>
-                  <span className={styles.projectType}>{project.type}</span>
-                </div>
-                <span className={styles.projectArrow}><ArrowUpRight aria-hidden="true" /></span>
-              </div>
-
-              <div className={styles.projectContent}>
-                <h3>{project.title}</h3>
-                <p>{project.copy}</p>
-                <div className={styles.tags} aria-label={`${project.title} technologies`}>
-                  {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
-                </div>
-              </div>
-            </motion.article>
+        <div className={styles.projectGrid} aria-label="Selected projects">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.index} project={project} index={index} progress={progress} />
           ))}
         </div>
       </div>

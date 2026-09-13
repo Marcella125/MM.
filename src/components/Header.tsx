@@ -58,7 +58,6 @@ export default function Header() {
   const prefersReducedMotion = useHydratedReducedMotion();
   const [isSoundOn, setIsSoundOn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const fadeFrameRef = useRef<number | null>(null);
   const hasStartedAudioRef = useRef(false);
@@ -189,7 +188,6 @@ export default function Header() {
     event.preventDefault();
     window.history.replaceState(null, "", window.location.pathname);
     setIsMenuOpen(false);
-    setIsScrolled(false);
     scrollToPageTop();
   }
 
@@ -218,26 +216,18 @@ export default function Header() {
       window.history.scrollRestoration = "manual";
     }
 
-    function updateScrolledState() {
-      setIsScrolled(window.scrollY > 4);
-    }
-
     function resetScrollState() {
-      setIsScrolled(false);
       scrollToPageTop();
 
       window.requestAnimationFrame(() => {
-        setIsScrolled(false);
         scrollToPageTop();
       });
     }
 
     resetScrollState();
-    window.addEventListener("scroll", updateScrolledState, { passive: true });
     window.addEventListener("pageshow", resetScrollState);
 
     return () => {
-      window.removeEventListener("scroll", updateScrolledState);
       window.removeEventListener("pageshow", resetScrollState);
 
       if (canControlScrollRestoration && previousScrollRestoration) {
@@ -248,7 +238,7 @@ export default function Header() {
 
   return (
     <motion.header
-      className={`site-header${isScrolled ? " is-scrolled" : ""}`}
+      className="site-header"
       aria-label="Primary navigation"
       initial={{ opacity: 0, y: prefersReducedMotion ? 0 : -12 }}
       animate={{ opacity: 1, y: 0 }}

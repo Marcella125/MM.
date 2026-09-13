@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { MouseEvent } from "react";
 import { assetPath } from "@/src/lib/paths";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
+import { StoryExit } from "./StoryScroll";
 
 const spring = { stiffness: 180, damping: 18, mass: 0.5 };
 
@@ -36,9 +37,10 @@ export default function ProjectStrip() {
   }
 
   return (
+    <StoryExit className="project-strip" start={0.16} end={0.34} lift={30}>
     <aside
-      className="project-strip"
-      aria-label="Design principles"
+      className="project-strip-tilt"
+      aria-hidden="true"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
@@ -50,40 +52,25 @@ export default function ProjectStrip() {
             : { x: smoothMagnetX, y: smoothMagnetY }
         }
         initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.96 }}
-        animate={{
-          opacity: 1,
-          scale: 1,
-          y: prefersReducedMotion ? 0 : [0, -6, 0],
-          rotate: prefersReducedMotion ? 0 : [-1, 1, -1],
-        }}
-        transition={
-          prefersReducedMotion
-            ? { duration: 0.42, delay: 0.38, ease: [0.22, 1, 0.36, 1] }
-            : {
-                opacity: {
-                  duration: 0.42,
-                  delay: 0.38,
-                  ease: [0.22, 1, 0.36, 1],
-                },
-                scale: {
-                  duration: 0.42,
-                  delay: 0.38,
-                  ease: [0.22, 1, 0.36, 1],
-                },
-                y: { duration: 5.8, repeat: Infinity, ease: "easeInOut" },
-                rotate: { duration: 5.8, repeat: Infinity, ease: "easeInOut" },
-              }
-        }
-        whileHover={prefersReducedMotion ? undefined : { y: -5, rotate: 1 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.42, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
       >
-        <Image
-          className="project-ticket-image"
-          src={assetPath("/assets/yellow-ticket.png")}
-          alt=""
-          width={300}
-          height={130}
-        />
+        <motion.div
+          className="ticket-float"
+          animate={prefersReducedMotion ? undefined : { y: [0, -6, 0], rotate: [-1, 1, -1] }}
+          transition={prefersReducedMotion ? undefined : { duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
+          whileHover={prefersReducedMotion ? undefined : { y: -5, rotate: 1 }}
+        >
+          <Image
+            className="project-ticket-image"
+            src={assetPath("/assets/yellow-ticket.png")}
+            alt=""
+            width={300}
+            height={130}
+          />
+        </motion.div>
       </motion.div>
     </aside>
+    </StoryExit>
   );
 }

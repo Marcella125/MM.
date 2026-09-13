@@ -5,11 +5,12 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import { ArrowDown } from "lucide-react";
 import Image from "next/image";
+import { ArrowDown } from "lucide-react";
 import type { MouseEvent } from "react";
 import { assetPath } from "@/src/lib/paths";
 import HeroVisuals from "./HeroVisuals";
+import { StoryExit } from "./StoryScroll";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -49,6 +50,7 @@ export default function Hero() {
       onMouseLeave={handleMouseLeave}
     >
       <div className="hero-copy">
+        <StoryExit start={0.02} end={0.14}>
         <motion.div
           className="intro-cluster"
           initial={{ opacity: 0, x: prefersReducedMotion ? 0 : -15 }}
@@ -72,7 +74,9 @@ export default function Hero() {
             CREATIVE DEVELOPER
           </p>
         </motion.div>
+        </StoryExit>
 
+        <StoryExit start={0.12} end={0.32} lift={34}>
         <motion.h1
           className="hero-title"
           id="hero-heading"
@@ -102,14 +106,12 @@ export default function Hero() {
               }
               transition={{ duration: 0.24, ease }}
             >
-              Design
+              Build
             </motion.span>
           </motion.span>
           <motion.span className="hero-title-line" variants={lineVariants}>
             <motion.span
-              className="hero-title-word hero-title-word-yellow"
-              whileHover={prefersReducedMotion ? undefined : { scaleX: 1.025 }}
-              transition={spring}
+              className="hero-title-word hero-title-word-highlight"
             >
               Digital
             </motion.span>{" "}
@@ -160,17 +162,21 @@ export default function Hero() {
             </motion.span>
           </motion.span>
         </motion.h1>
+        </StoryExit>
 
+        <StoryExit start={0.29} end={0.42}>
         <motion.p
           className="hero-description"
           initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.48, ease }}
         >
-          Crafting websites, brands and interactions that are{" "}
-          <mark>intuitive</mark>, <mark>immersive</mark> and memorable.
+          Developing websites and interactive experiences that are{" "}
+          <mark>intuitive</mark>, <mark>responsive</mark> and easy to use.
         </motion.p>
+        </StoryExit>
 
+        <StoryExit start={0.39} end={0.5}>
         <motion.div
           className="hero-actions"
           initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 16 }}
@@ -178,23 +184,13 @@ export default function Hero() {
           transition={{ duration: 0.55, delay: 0.58, ease }}
         >
           <a className="scroll-cue" href="#about" aria-label="Scroll to about section">
-            <span className="scroll-copy">
-              SCROLL TO EXPLORE
-              <span className="scroll-line" />
+            <span className="scroll-copy">SCROLL TO EXPLORE</span>
+            <span className="scroll-arrow" aria-hidden="true">
+              <ArrowDown />
             </span>
-            <motion.span
-              className="scroll-arrow"
-              animate={prefersReducedMotion ? undefined : { y: [0, 6, 0] }}
-              transition={
-                prefersReducedMotion
-                  ? undefined
-                  : { duration: 1.6, repeat: Infinity, ease: "easeInOut" }
-              }
-            >
-              <ArrowDown size={40} strokeWidth={1.7} />
-            </motion.span>
           </a>
         </motion.div>
+        </StoryExit>
       </div>
 
       <HeroVisuals pointerX={smoothX} pointerY={smoothY} />
