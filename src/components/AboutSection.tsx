@@ -223,56 +223,18 @@ export default function AboutSection() {
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1101px)");
-    let animationFrame = 0;
-    let userScrollIntentUntil = 0;
-
-    const syncLayout = () => {
+    const sync = () => {
       setDesktopLayout(desktop.matches);
+      progress.set(desktop.matches ? desktopProgress.get() : mobileProgress.get());
     };
-
-    const markUserScrollIntent = (duration = 300) => {
-      userScrollIntentUntil = performance.now() + duration;
-    };
-
-    const handleWheelScrollIntent = () => {
-      markUserScrollIntent();
-    };
-
-    const handleTouchScrollIntent = () => {
-      markUserScrollIntent(1000);
-    };
-
-    const handleScrollKeyIntent = (event: KeyboardEvent) => {
-      if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)) {
-        markUserScrollIntent();
-      }
-    };
-
-    const syncProgressAfterScroll = () => {
-      if (performance.now() > userScrollIntentUntil) return;
-
-      cancelAnimationFrame(animationFrame);
-      animationFrame = requestAnimationFrame(() => {
-        progress.set(desktop.matches ? desktopProgress.get() : mobileProgress.get());
-      });
-    };
-
-    desktop.addEventListener("change", syncLayout);
-    window.addEventListener("wheel", handleWheelScrollIntent, { passive: true });
-    window.addEventListener("touchstart", handleTouchScrollIntent, { passive: true });
-    window.addEventListener("touchmove", handleTouchScrollIntent, { passive: true });
-    window.addEventListener("keydown", handleScrollKeyIntent);
-    window.addEventListener("scroll", syncProgressAfterScroll, { passive: true });
-    syncLayout();
-
+    const unsubscribeDesktop = desktopProgress.on("change", sync);
+    const unsubscribeMobile = mobileProgress.on("change", sync);
+    desktop.addEventListener("change", sync);
+    sync();
     return () => {
-      cancelAnimationFrame(animationFrame);
-      desktop.removeEventListener("change", syncLayout);
-      window.removeEventListener("wheel", handleWheelScrollIntent);
-      window.removeEventListener("touchstart", handleTouchScrollIntent);
-      window.removeEventListener("touchmove", handleTouchScrollIntent);
-      window.removeEventListener("keydown", handleScrollKeyIntent);
-      window.removeEventListener("scroll", syncProgressAfterScroll);
+      unsubscribeDesktop();
+      unsubscribeMobile();
+      desktop.removeEventListener("change", sync);
     };
   }, [desktopProgress, mobileProgress, progress]);
 
