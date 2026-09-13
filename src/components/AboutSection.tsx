@@ -240,18 +240,49 @@ export default function AboutSection() {
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1101px)");
-    const sync = () => {
-      setDesktopLayout(desktop.matches);
+    let progressEnabled = false;
+    let animationFrame = 0;
+
+    const syncProgress = () => {
+      if (!progressEnabled) return;
+
       progress.set(desktop.matches ? desktopProgress.get() : mobileProgress.get());
     };
-    const unsubscribeDesktop = desktopProgress.on("change", sync);
-    const unsubscribeMobile = mobileProgress.on("change", sync);
-    desktop.addEventListener("change", sync);
-    sync();
+
+    const syncLayout = () => {
+      setDesktopLayout(desktop.matches);
+      syncProgress();
+    };
+
+    const enableProgress = () => {
+      if (progressEnabled) return;
+
+      progressEnabled = true;
+      animationFrame = requestAnimationFrame(syncProgress);
+    };
+
+    const handleScrollKey = (event: KeyboardEvent) => {
+      if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)) {
+        enableProgress();
+      }
+    };
+
+    const unsubscribeDesktop = desktopProgress.on("change", syncProgress);
+    const unsubscribeMobile = mobileProgress.on("change", syncProgress);
+    desktop.addEventListener("change", syncLayout);
+    window.addEventListener("wheel", enableProgress, { passive: true });
+    window.addEventListener("touchstart", enableProgress, { passive: true });
+    window.addEventListener("keydown", handleScrollKey);
+    syncLayout();
+
     return () => {
+      cancelAnimationFrame(animationFrame);
       unsubscribeDesktop();
       unsubscribeMobile();
-      desktop.removeEventListener("change", sync);
+      desktop.removeEventListener("change", syncLayout);
+      window.removeEventListener("wheel", enableProgress);
+      window.removeEventListener("touchstart", enableProgress);
+      window.removeEventListener("keydown", handleScrollKey);
     };
   }, [desktopProgress, mobileProgress, progress]);
 
