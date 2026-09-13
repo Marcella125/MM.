@@ -228,7 +228,7 @@
 }
 
 @media (max-width: 700px) {
-  .projectsSection { height: auto; padding: 0 16px 20px; }
+  .projectsSection { height: auto; padding: 0 16px 8px; }
   .projectsSection .inner {
     position: relative;
     top: auto;
@@ -251,32 +251,23 @@
   .title { font-size: var(--editorial-heading-size); }
   .lede { font-size: 13px; }
   .projectGrid {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
     height: auto;
-    padding: 6px 18px 20px 4px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-inline: contain;
-    scroll-padding-inline: 4px;
-    scroll-snap-type: x mandatory;
-    touch-action: pan-x;
+    padding: 6px 5px 8px 0;
+    overflow: visible;
   }
   .projectReveal {
-    flex: 0 0 clamp(240px, 72vw, 290px);
     grid-area: auto;
     top: auto;
-    width: clamp(240px, 72vw, 290px);
-    height: clamp(280px, 88vw, 340px);
+    width: 100%;
+    height: clamp(300px, 92vw, 400px);
     margin-inline: 0;
     opacity: 1 !important;
     filter: none !important;
     transform: none !important;
     pointer-events: auto !important;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     will-change: auto;
   }
   .project { padding: 16px; box-shadow: 5px 5px 0 var(--blue); }
@@ -288,7 +279,7 @@
   .tags span { padding: 4px 6px; font-size: 8px; }
 
   .contactSection { height: 100svh; min-height: 0; }
-  .contactInner { height: 100svh; min-height: 0; padding: calc(var(--header-clearance) + 12px) 16px 0; }
+  .contactInner { height: 100svh; min-height: 0; padding: calc(var(--header-clearance) + 4px) 16px 0; }
   .contactLayout { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); align-items: center; gap: 10px; min-height: 0; }
   .contactBody { display: flex; flex-direction: column; align-self: center; gap: 12px; min-width: 0; width: 100%; }
   .contactTitle { font-size: var(--editorial-heading-size); }

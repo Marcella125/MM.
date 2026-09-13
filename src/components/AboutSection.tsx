@@ -220,18 +220,27 @@ export default function AboutSection() {
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1101px)");
-    const sync = () => {
+    let animationFrame = 0;
+
+    const syncLayout = () => {
       setDesktopLayout(desktop.matches);
-      progress.set(desktop.matches ? desktopProgress.get() : mobileProgress.get());
     };
-    const unsubscribeDesktop = desktopProgress.on("change", sync);
-    const unsubscribeMobile = mobileProgress.on("change", sync);
-    desktop.addEventListener("change", sync);
-    sync();
+
+    const syncProgressAfterScroll = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => {
+        progress.set(desktop.matches ? desktopProgress.get() : mobileProgress.get());
+      });
+    };
+
+    desktop.addEventListener("change", syncLayout);
+    window.addEventListener("scroll", syncProgressAfterScroll, { passive: true });
+    syncLayout();
+
     return () => {
-      unsubscribeDesktop();
-      unsubscribeMobile();
-      desktop.removeEventListener("change", sync);
+      cancelAnimationFrame(animationFrame);
+      desktop.removeEventListener("change", syncLayout);
+      window.removeEventListener("scroll", syncProgressAfterScroll);
     };
   }, [desktopProgress, mobileProgress, progress]);
 
