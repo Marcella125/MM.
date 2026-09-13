@@ -57,11 +57,29 @@ const fadeValues = [
   [0, 0, 1, 1, 0, 0],
   [0, 0, 1, 1],
 ];
-const visualOffsetValues = [
-  [0, 0, -36, -36],
-  [36, 36, 0, 0, -36, -36],
-  [36, 36, 0, 0, -36, -36],
-  [36, 36, 0, 0],
+const visualClipValues = [
+  ["inset(0% 0 0 0)", "inset(0% 0 0 0)", "inset(0% 0 0 0)", "inset(0% 0 0 0)"],
+  ["inset(100% 0 0 0)", "inset(100% 0 0 0)", "inset(0% 0 0 0)", "inset(0% 0 0 0)", "inset(0% 0 0 0)", "inset(0% 0 0 0)"],
+  ["inset(100% 0 0 0)", "inset(100% 0 0 0)", "inset(0% 0 0 0)", "inset(0% 0 0 0)", "inset(0% 0 0 0)", "inset(0% 0 0 0)"],
+  ["inset(100% 0 0 0)", "inset(100% 0 0 0)", "inset(0% 0 0 0)", "inset(0% 0 0 0)"],
+];
+const visualScaleValues = [
+  [1, 1, 1.045, 1.045],
+  [1.035, 1.035, 1, 1, 1.045, 1.045],
+  [1.035, 1.035, 1, 1, 1.045, 1.045],
+  [1.035, 1.035, 1, 1],
+];
+const visualBlurValues = [
+  ["blur(0px)", "blur(0px)", "blur(7px)", "blur(7px)"],
+  ["blur(5px)", "blur(5px)", "blur(0px)", "blur(0px)", "blur(7px)", "blur(7px)"],
+  ["blur(5px)", "blur(5px)", "blur(0px)", "blur(0px)", "blur(7px)", "blur(7px)"],
+  ["blur(5px)", "blur(5px)", "blur(0px)", "blur(0px)"],
+];
+const contentOffsetValues = [
+  [0, 0, -34, -34],
+  [34, 34, 0, 0, -34, -34],
+  [34, 34, 0, 0, -34, -34],
+  [34, 34, 0, 0],
 ];
 
 function ChapterVisual({ index, progress, reducedMotion }: {
@@ -69,20 +87,19 @@ function ChapterVisual({ index, progress, reducedMotion }: {
   progress: MotionValue<number>;
   reducedMotion: boolean;
 }) {
-  const opacity = useTransform(progress, visualFadeStops[index], fadeValues[index]);
-  const offset = useTransform(progress, visualFadeStops[index], visualOffsetValues[index]);
-  const scale = useTransform(opacity, [0, 1], [1.075, 1]);
-  const filter = useTransform(opacity, [0, 1], ["blur(12px)", "blur(0px)"]);
+  const clipPath = useTransform(progress, visualFadeStops[index], visualClipValues[index]);
+  const scale = useTransform(progress, visualFadeStops[index], visualScaleValues[index]);
+  const filter = useTransform(progress, visualFadeStops[index], visualBlurValues[index]);
   const visualClasses = [styles.portraitScene, styles.usekScene, styles.kloudrScene, styles.fekraScene];
 
   return (
     <motion.div
       className={`${styles.visualScene} ${visualClasses[index]}`}
       style={{
-        opacity,
-        y: reducedMotion ? 0 : offset,
+        clipPath,
         scale: reducedMotion ? 1 : scale,
         filter: reducedMotion ? "none" : filter,
+        zIndex: index + 1,
         backgroundImage: index === 0 ? `url("${assetPath("/assets/projects%20bg.png")}")` : undefined,
       }}
       aria-hidden="true"
@@ -140,17 +157,19 @@ function ChapterContent({ index, progress, active, reducedMotion }: {
 }) {
   const chapter = chapters[index];
   const opacity = useTransform(progress, contentFadeStops[index], fadeValues[index]);
-  const y = useTransform(opacity, [0, 1], [24, 0]);
+  const y = useTransform(progress, contentFadeStops[index], contentOffsetValues[index]);
   const filter = useTransform(opacity, [0, 1], ["blur(7px)", "blur(0px)"]);
 
   return (
     <motion.article
-      className={styles.contentScene}
+      className={`${styles.contentScene} ${index === 0 ? styles.introContentScene : ""}`}
       style={{ opacity, y: reducedMotion ? 0 : y, filter: reducedMotion ? "none" : filter }}
       aria-hidden={!active}
     >
       <div className={styles.sectionLabel}>ABOUT / THE STORY</div>
-      <div className={`${styles.chapterOverline} ${index === 0 ? styles.introGreeting : ""}`}>{chapter.eyebrow}</div>
+      <div className={`${styles.chapterOverline} ${index === 0 ? styles.introGreeting : ""}`}>
+        {index === 0 ? <>Hi, I’m <span className={styles.marcellaName}>Marcella.</span></> : chapter.eyebrow}
+      </div>
       <h3 className={styles.chapterTitle}>
         <span>{chapter.title[0]}</span>
         <span>{chapter.title[1]}</span>
@@ -160,6 +179,25 @@ function ChapterContent({ index, progress, active, reducedMotion }: {
       <ul className={styles.tags} aria-label={`${chapter.eyebrow} skills and context`}>
         {chapter.tags.map((tag) => <li key={tag}>{tag}</li>)}
       </ul>
+      {index === 0 && (
+        <div className={styles.introStickers} aria-hidden="true">
+          {[
+            { name: "a1.png", width: 200, height: 201 },
+            { name: "a2.png", width: 266, height: 244 },
+            { name: "a3.png", width: 337, height: 423 },
+            { name: "a4.png", width: 137, height: 153 },
+            { name: "a5.png", width: 222, height: 206 },
+          ].map((sticker) => (
+            <Image
+              key={sticker.name}
+              src={assetPath(`/assets/About%20Stickers/${sticker.name}`)}
+              alt=""
+              width={sticker.width}
+              height={sticker.height}
+            />
+          ))}
+        </div>
+      )}
     </motion.article>
   );
 }

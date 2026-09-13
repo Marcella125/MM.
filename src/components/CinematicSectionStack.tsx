@@ -32,10 +32,12 @@ function CinematicPanel({
   children,
   index,
   progress,
+  storyProgressSource = progress,
 }: {
   children: ReactNode;
   index: number;
   progress: MotionValue<number>;
+  storyProgressSource?: MotionValue<number>;
 }) {
   const reducedMotion = useHydratedReducedMotion();
   const arrivalEnd = sceneStarts[index] / totalScrollUnits;
@@ -62,7 +64,7 @@ function CinematicPanel({
     departureStart - 0.05 / totalScrollUnits,
   );
   const storyProgress = useTransform(
-    progress,
+    storyProgressSource,
     [
       index === 0 ? departureStart : arrivalEnd,
       index === 0 ? departureEnd : storyEnd,
@@ -195,6 +197,7 @@ export default function CinematicSectionStack({ children }: { children: ReactNod
             index={index}
             key={sectionIds[index] ?? index}
             progress={smoothProgress}
+            storyProgressSource={index === 1 ? scrollYProgress : smoothProgress}
           >
             {child}
           </CinematicPanel>

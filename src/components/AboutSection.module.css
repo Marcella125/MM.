@@ -56,7 +56,7 @@
   place-items: center;
   overflow: hidden;
   transform-origin: center;
-  will-change: opacity, transform, filter;
+  will-change: clip-path, transform, filter;
 }
 
 .visualScene::before,
@@ -119,6 +119,10 @@
   will-change: opacity, transform, filter;
 }
 
+@media (min-width: 1101px) {
+  .introContentScene { padding-right: clamp(138px, 10vw, 190px); }
+}
+
 .chapterOverline {
   margin-bottom: clamp(24px, 4vh, 44px);
   color: var(--blue);
@@ -129,6 +133,7 @@
   text-transform: uppercase;
 }
 .introGreeting { font-size: clamp(14px, 1.15vw, 18px); letter-spacing: 0; text-transform: none; }
+.marcellaName { color: #ff4fb8; }
 
 .chapterTitle {
   margin: 0;
@@ -168,12 +173,45 @@
 .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
 .tags li { padding: 7px 9px; border: 1px solid rgba(18, 56, 255, 0.32); color: #243785; font-family: var(--font-mono), monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.06em; }
 
+.introStickers {
+  position: absolute;
+  top: 50%;
+  right: clamp(14px, 1.8vw, 34px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(5px, 0.8vh, 9px);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.contentScene[aria-hidden="false"] .introStickers { pointer-events: auto; }
+.introStickers img { display: block; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 8px 12px rgba(15, 40, 105, 0.16)); transform: rotate(var(--sticker-rotation)); }
+.introStickers img:nth-child(1) { --sticker-rotation: -8deg; width: clamp(46px, 3.4vw, 64px); }
+.introStickers img:nth-child(2) { --sticker-rotation: 5deg; width: clamp(68px, 4.8vw, 92px); }
+.introStickers img:nth-child(3) { --sticker-rotation: -4deg; width: clamp(68px, 4.8vw, 92px); }
+.introStickers img:nth-child(4) { --sticker-rotation: 8deg; width: clamp(42px, 2.9vw, 56px); }
+.introStickers img:nth-child(5) { --sticker-rotation: -5deg; width: clamp(64px, 4.5vw, 86px); }
+
+@media (hover: hover) and (pointer: fine) {
+  .introStickers img:hover {
+    z-index: 2;
+    animation: intro-sticker-hover 700ms ease-in-out infinite alternate;
+    filter: drop-shadow(0 14px 16px rgba(18, 56, 255, 0.3));
+  }
+}
+
+@keyframes intro-sticker-hover {
+  from { transform: translateY(0) rotate(var(--sticker-rotation)) scale(1); }
+  to { transform: translateY(-8px) rotate(calc(var(--sticker-rotation) + 6deg)) scale(1.14); }
+}
+
 
 @media (max-width: 1100px) {
   .section { height: 400svh; overflow: visible; }
   .stage { position: sticky; top: var(--header-clearance); height: calc(100svh - var(--header-clearance)); }
   .chapterTitle { font-size: var(--editorial-heading-size); }
   .chapterDescription { font-size: clamp(14px, 1.5vw, 17px); }
+  .introStickers { display: none; }
 }
 
 @media (max-width: 700px) {
@@ -219,4 +257,5 @@
 @media (prefers-reduced-motion: reduce) {
   .visualScene,
   .contentScene { will-change: auto; }
+  .introStickers img:hover { animation: none; }
 }
