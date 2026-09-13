@@ -207,6 +207,9 @@ export default function Header() {
   }, [isMenuOpen]);
 
   useEffect(() => {
+    // Let the browser preserve the reader's place on mobile.
+    if (!window.matchMedia("(min-width: 1101px)").matches) return;
+
     const canControlScrollRestoration = "scrollRestoration" in window.history;
     const previousScrollRestoration = canControlScrollRestoration
       ? window.history.scrollRestoration

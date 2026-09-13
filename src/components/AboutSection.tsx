@@ -165,16 +165,23 @@ function ChapterContent({ index, progress, active, reducedMotion }: {
 }
 
 export default function AboutSection() {
+  const sectionRef = useRef<HTMLElement>(null);
   const mobileTrackRef = useRef<HTMLDivElement>(null);
   const desktopProgress = useStoryScrollProgress();
   const { scrollYProgress: mobileProgress } = useScroll({ target: mobileTrackRef, offset: ["start start", "end end"] });
+  const { scrollYProgress: exitProgress } = useScroll({ target: sectionRef, offset: ["end end", "end start"] });
+  const exitOpacity = useTransform(exitProgress, [0, 0.08, 0.7, 1], [1, 1, 0, 0]);
   const progress = useMotionValue(0);
   const [activeChapter, setActiveChapter] = useState(0);
+  const [desktopLayout, setDesktopLayout] = useState(false);
   const reducedMotion = Boolean(useHydratedReducedMotion());
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1101px)");
-    const sync = () => progress.set(desktop.matches ? desktopProgress.get() : mobileProgress.get());
+    const sync = () => {
+      setDesktopLayout(desktop.matches);
+      progress.set(desktop.matches ? desktopProgress.get() : mobileProgress.get());
+    };
     const unsubscribeDesktop = desktopProgress.on("change", sync);
     const unsubscribeMobile = mobileProgress.on("change", sync);
     desktop.addEventListener("change", sync);
@@ -192,10 +199,10 @@ export default function AboutSection() {
   });
 
   return (
-    <section className={styles.section} id="about" aria-labelledby="about-heading">
+    <section className={styles.section} id="about" aria-labelledby="about-heading" ref={sectionRef}>
       <h2 className={styles.srOnly} id="about-heading">About Marcella Moussa</h2>
       <div className={styles.mobileTrack} ref={mobileTrackRef} aria-hidden="true" />
-      <div className={styles.stage}>
+      <motion.div className={styles.stage} style={{ opacity: desktopLayout ? 1 : exitOpacity }}>
         <div className={styles.visualPanel} aria-hidden="true">
           {chapters.map((chapter, index) => (
             <ChapterVisual key={chapter.eyebrow} index={index} progress={progress} reducedMotion={reducedMotion} />
@@ -206,7 +213,7 @@ export default function AboutSection() {
             <ChapterContent key={chapter.eyebrow} index={index} progress={progress} active={activeChapter === index} reducedMotion={reducedMotion} />
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
