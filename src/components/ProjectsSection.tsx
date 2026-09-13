@@ -58,7 +58,13 @@ function ProjectCard({ project, index, progress }: {
   const blur = useTransform(progress, cardStops[index], blurStops[index]);
   const filter = useTransform(blur, (value) => `blur(${value}px)`);
   const pointerEvents = useTransform(opacity, (value) => value > 0.8 ? "auto" : "none");
-  const imagePath = index === 0 ? "/assets/kira.png" : index === 1 ? "/assets/femi.png" : undefined;
+  const imagePath = index === 0
+    ? "/assets/kira.png"
+    : index === 1
+      ? "/assets/femi.png"
+      : index === 2
+        ? "/assets/rong%20xing.png"
+        : "/assets/rushd.png";
   const card = (
     <article
       className={styles.project}

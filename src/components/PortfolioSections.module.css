@@ -77,6 +77,8 @@
 
 .project[data-project-index="01"] { background: #f3f9ff var(--project-image) center 60% / cover no-repeat; }
 .project[data-project-index="02"] { background: #f3f9ff var(--project-image) 64% 70% / cover no-repeat; }
+.project[data-project-index="03"] { background: #f3f9ff var(--project-image) center / cover no-repeat; }
+.project[data-project-index="04"] { background: #f3f9ff var(--project-image) center / cover no-repeat; }
 
 .project::before {
   position: absolute;
@@ -273,6 +275,8 @@
   .project { padding: 16px; box-shadow: 5px 5px 0 var(--blue); }
   .project[data-project-index="01"] { background-position: 74% center; }
   .project[data-project-index="02"] { background-position: 70% 70%; }
+  .project[data-project-index="03"] { background-position: center; }
+  .project[data-project-index="04"] { background-position: center; }
   .projectContent h3 { font-size: clamp(30px, 8vw, 42px); }
   .projectContent > p { margin-top: 7px; font-size: 11px; }
   .tags { gap: 4px; margin-top: 11px; }
