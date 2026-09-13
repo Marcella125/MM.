@@ -134,7 +134,7 @@
   }
 
   .panel:nth-child(4) {
-    margin-top: calc(var(--header-clearance) - 100svh);
+    margin-top: 0;
   }
 }
 

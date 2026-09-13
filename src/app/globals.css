@@ -1872,6 +1872,8 @@ button {
     gap: 14px;
     min-height: 52px;
     z-index: 100;
+    background: var(--background);
+    box-shadow: 0 1px 0 rgba(18, 56, 255, 0.12);
   }
 
   body.is-menu-open .site-header {
@@ -2145,7 +2147,7 @@ button {
     left: 50%;
     right: auto;
     width: min(76vw, calc(40svh - 42px), 360px);
-    transform: translateX(-50%);
+    transform: translate(-50%, 1.5cm);
   }
 
   .pink-ticket {
@@ -2162,8 +2164,8 @@ button {
 
   .cursor-sticker {
     top: clamp(176px, calc(20svh + 38px), 216px);
-    right: 0;
-    width: 78px;
+    right: 36px;
+    width: 62px;
   }
 
   .yellow-x {
@@ -2534,8 +2536,8 @@ button {
 
   .cursor-sticker {
     top: 214px;
-    right: 0;
-    width: 66px;
+    right: 36px;
+    width: 53px;
   }
 
   .yellow-x {
@@ -2637,7 +2639,7 @@ button {
 
   .cursor-sticker {
     top: min(24svh, 165px);
-    width: 62px;
+    width: 50px;
   }
 
   .yellow-x {
@@ -2681,7 +2683,7 @@ button {
   .headphones { top: 8px; width: min(60vw, calc(31svh - 20px), 190px); }
   .pink-ticket { top: 0; width: 80px; }
   .neon-face { top: 96px; width: 34px; }
-  .cursor-sticker { top: 105px; width: 55px; }
+  .cursor-sticker { top: 105px; width: 44px; }
   .yellow-x { top: 110px; width: 33px; }
   .music-note { top: 36px; width: 40px; }
   .star-left { top: 65px; width: 22px; }

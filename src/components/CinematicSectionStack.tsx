@@ -90,15 +90,11 @@ function CinematicPanel({
         : [arrivalFadeStart, arrivalEnd, departureStart, departureFadeEnd],
     index === 0 ? [1, 0] : index === sceneStarts.length - 1 ? [0, 1] : [0, 1, 1, 0],
   );
-  const reducedPointerEvents = useTransform(progress, (value) => {
+  const panelPointerEvents = useTransform(progress, (value) => {
     const entered = index === 0 || value >= (arrivalStart + arrivalEnd) / 2;
     const left = index !== sceneStarts.length - 1 && value >= (departureStart + departureEnd) / 2;
     return entered && !left ? "auto" : "none";
   });
-  const aboutPointerEvents = useTransform(
-    progress,
-    (value) => value >= (arrivalStart + arrivalEnd) / 2 ? "auto" : "none",
-  );
   const entryScale = useTransform(
     progress,
     [arrivalStart, arrivalEnd],
@@ -124,13 +120,9 @@ function CinematicPanel({
       style={{
         y,
         opacity: index === 0
-          ? undefined
-          : reducedMotion
-            ? reducedOpacity
-            : index === 1 ? opacity : undefined,
-        pointerEvents: reducedMotion
-          ? reducedPointerEvents
-          : index === 1 ? aboutPointerEvents : undefined,
+          ? reducedMotion ? reducedOpacity : undefined
+          : reducedMotion ? reducedOpacity : opacity,
+        pointerEvents: panelPointerEvents,
         scale: entryScale,
         zIndex: index + 1,
       }}

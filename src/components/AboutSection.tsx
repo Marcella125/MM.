@@ -169,8 +169,12 @@ export default function AboutSection() {
   const mobileTrackRef = useRef<HTMLDivElement>(null);
   const desktopProgress = useStoryScrollProgress();
   const { scrollYProgress: mobileProgress } = useScroll({ target: mobileTrackRef, offset: ["start start", "end end"] });
+  const { scrollYProgress: entryProgress } = useScroll({ target: sectionRef, offset: ["start end", "start start"] });
   const { scrollYProgress: exitProgress } = useScroll({ target: sectionRef, offset: ["end end", "end start"] });
+  const entryOpacity = useTransform(entryProgress, [0, 0.5, 1], [0, 0, 1]);
+  const entryScale = useTransform(entryProgress, [0, 1], [0.965, 1]);
   const exitOpacity = useTransform(exitProgress, [0, 0.08, 0.7, 1], [1, 1, 0, 0]);
+  const mobileStageOpacity = useTransform(() => entryOpacity.get() * exitOpacity.get());
   const progress = useMotionValue(0);
   const [activeChapter, setActiveChapter] = useState(0);
   const [desktopLayout, setDesktopLayout] = useState(false);
@@ -202,7 +206,13 @@ export default function AboutSection() {
     <section className={styles.section} id="about" aria-labelledby="about-heading" ref={sectionRef}>
       <h2 className={styles.srOnly} id="about-heading">About Marcella Moussa</h2>
       <div className={styles.mobileTrack} ref={mobileTrackRef} aria-hidden="true" />
-      <motion.div className={styles.stage} style={{ opacity: desktopLayout ? 1 : exitOpacity }}>
+      <motion.div
+        className={styles.stage}
+        style={{
+          opacity: desktopLayout ? 1 : mobileStageOpacity,
+          scale: desktopLayout || reducedMotion ? 1 : entryScale,
+        }}
+      >
         <div className={styles.visualPanel} aria-hidden="true">
           {chapters.map((chapter, index) => (
             <ChapterVisual key={chapter.eyebrow} index={index} progress={progress} reducedMotion={reducedMotion} />

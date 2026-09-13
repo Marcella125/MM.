@@ -179,17 +179,30 @@
 @media (max-width: 700px) {
   .section { height: 480svh; }
   .mobileTrack { height: 400svh; }
-  .stage { grid-template-columns: 1fr; grid-template-rows: 50% 50%; }
+  .stage {
+    grid-template-columns: 1fr;
+    grid-template-rows: 46% 54%;
+    background: #f4faff;
+  }
+  .visualPanel,
+  .contentPanel { background: #f4faff; }
+  .visualScene { background-color: #f4faff; }
+  .chapterImage { object-fit: cover; }
   .portraitFrame { max-width: min(46%, 190px); height: 64%; padding: 8px 8px 30px; }
-  .sectionLabel { margin-bottom: 22px; font-size: 10px; }
-  .contentScene { padding: 16px 24px; }
-  .chapterOverline { margin-bottom: 20px; font-size: 9px; }
+  .sectionLabel { display: none; }
+  .contentScene {
+    justify-content: flex-start;
+    align-items: center;
+    padding: clamp(12px, 2svh, 18px) 22px 16px;
+    text-align: center;
+  }
+  .chapterOverline { margin-bottom: 10px; font-size: 9px; letter-spacing: 0.2em; }
   .introGreeting { font-size: 14px; }
   .chapterTitle { font-size: var(--editorial-heading-size); }
-  .chapterDescription { margin-top: 18px; font-size: 13px; line-height: 1.48; }
-  .chapterDetail { margin-top: 18px; font-size: 8px; }
-  .tags { gap: 5px; margin-top: 10px; }
-  .tags li { padding: 5px 6px; font-size: 7px; }
+  .chapterDescription { max-width: 350px; margin-top: 20px; font-size: 12px; line-height: 1.55; }
+  .chapterDetail { margin-top: 20px; font-size: 8px; letter-spacing: 0.16em; }
+  .tags { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; width: 100%; margin-top: 18px; }
+  .tags li { display: grid; min-height: 42px; padding: 6px 4px; place-items: center; font-size: 7px; }
 }
 
 @media (max-width: 700px) and (max-height: 700px) {

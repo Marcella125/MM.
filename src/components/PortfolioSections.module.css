@@ -228,33 +228,57 @@
 }
 
 @media (max-width: 700px) {
-  .projectsSection { padding: 0 16px; }
+  .projectsSection { height: auto; padding: 0 16px 20px; }
   .projectsSection .inner {
-    position: sticky;
-    top: var(--header-clearance);
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    width: calc(100% + 32px);
-    height: calc(100svh - var(--header-clearance));
+    position: relative;
+    top: auto;
+    display: block;
+    width: 100%;
+    height: auto;
     min-height: 0;
-    margin-inline: -16px;
-    padding-inline: 16px;
+    margin-inline: 0;
+    padding-inline: 0;
   }
   .sectionHeading {
     position: relative;
     z-index: 3;
     top: auto;
     gap: 22px;
-    margin: 0 -16px 8px;
-    padding: 16px 16px 12px;
+    margin: 0 0 20px;
+    padding: 20px 0 12px;
     background: var(--background);
   }
   .title { font-size: var(--editorial-heading-size); }
   .lede { font-size: 13px; }
   .projectGrid {
-    padding: 6px 0 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 16px;
+    height: auto;
+    padding: 6px 18px 20px 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: 4px;
+    scroll-snap-type: x mandatory;
+    touch-action: pan-x;
   }
-  .projectReveal { top: clamp(-38px, calc(640px - 100svh), -8px); width: calc(100% - 8px); height: min(100%, clamp(320px, 47svh, 420px)); margin-inline: 0; }
+  .projectReveal {
+    flex: 0 0 clamp(240px, 72vw, 290px);
+    grid-area: auto;
+    top: auto;
+    width: clamp(240px, 72vw, 290px);
+    height: clamp(280px, 88vw, 340px);
+    margin-inline: 0;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    will-change: auto;
+  }
   .project { padding: 16px; box-shadow: 5px 5px 0 var(--blue); }
   .project[data-project-index="01"] { background-position: 74% center; }
   .project[data-project-index="02"] { background-position: 70% 70%; }
