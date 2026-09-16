@@ -6,6 +6,7 @@ import SectionLabel from "./SectionLabel";
 import { useStoryScrollProgress } from "./StoryScroll";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import { assetPath } from "@/src/lib/paths";
+import Link from "next/link";
 import styles from "./PortfolioSections.module.css";
 
 const projects = [
@@ -97,17 +98,9 @@ function ProjectCard({ project, index, progress }: {
         zIndex: index + 1,
       }}
     >
-      {project.index === "04" ? (
-        <a
-          className={styles.projectLink}
-          href="https://rushd.center/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Open Rushd website in a new tab"
-        >
+      <Link className={styles.projectLink} href={`/projects/${project.index === "03" ? "rong-xing" : project.title.toLowerCase()}`} aria-label={`Explore ${project.title} project`}>
           {card}
-        </a>
-      ) : card}
+      </Link>
     </motion.div>
   );
 }

@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   ArrowRight,
   Code2,
@@ -55,6 +56,7 @@ function scrollToPageTop() {
 }
 
 export default function Header() {
+  const isHome = usePathname() === "/";
   const prefersReducedMotion = useHydratedReducedMotion();
   const [isSoundOn, setIsSoundOn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -185,6 +187,7 @@ export default function Header() {
   }
 
   function handleTopLinkClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (!isHome) return;
     event.preventDefault();
     window.history.replaceState(null, "", window.location.pathname);
     setIsMenuOpen(false);
@@ -216,7 +219,7 @@ export default function Header() {
     >
       <Link
         className="logo"
-        href="#work"
+        href={isHome ? "#work" : "/"}
         aria-label="Back to top"
         onClick={handleTopLinkClick}
       >
@@ -237,13 +240,13 @@ export default function Header() {
         {navItems.map(({ label, index, href, Icon }) => (
           <motion.a
             className="nav-link"
-            href={href}
+            href={isHome ? href : `/${href}`}
             key={`${label}-${index}`}
             initial="rest"
             animate="rest"
             whileHover="hover"
             onClick={
-              href === "#work"
+              href === "#work" && isHome
                 ? handleTopLinkClick
                 : () => setIsMenuOpen(false)
             }
