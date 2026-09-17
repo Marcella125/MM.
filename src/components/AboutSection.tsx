@@ -236,47 +236,30 @@ export default function AboutSection() {
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1101px)");
-    let progressEnabled = false;
+    let lastScrollY = window.scrollY;
     let animationFrame = 0;
 
     const syncProgress = () => {
-      if (!progressEnabled) return;
+      const currentScrollY = window.scrollY;
+      if (Math.abs(currentScrollY - lastScrollY) < 0.5) return;
 
-      progress.set(sectionProgress.get());
+      lastScrollY = currentScrollY;
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => progress.set(sectionProgress.get()));
     };
 
     const syncLayout = () => {
       setDesktopLayout(desktop.matches);
-      syncProgress();
     };
 
-    const enableProgress = () => {
-      if (progressEnabled) return;
-
-      progressEnabled = true;
-      animationFrame = requestAnimationFrame(syncProgress);
-    };
-
-    const handleScrollKey = (event: KeyboardEvent) => {
-      if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)) {
-        enableProgress();
-      }
-    };
-
-    const unsubscribeProgress = sectionProgress.on("change", syncProgress);
     desktop.addEventListener("change", syncLayout);
-    window.addEventListener("wheel", enableProgress, { passive: true });
-    window.addEventListener("touchstart", enableProgress, { passive: true });
-    window.addEventListener("keydown", handleScrollKey);
+    window.addEventListener("scroll", syncProgress, { passive: true });
     syncLayout();
 
     return () => {
       cancelAnimationFrame(animationFrame);
-      unsubscribeProgress();
       desktop.removeEventListener("change", syncLayout);
-      window.removeEventListener("wheel", enableProgress);
-      window.removeEventListener("touchstart", enableProgress);
-      window.removeEventListener("keydown", handleScrollKey);
+      window.removeEventListener("scroll", syncProgress);
     };
   }, [sectionProgress, progress]);
 
