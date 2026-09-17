@@ -37,7 +37,7 @@ jobs:
       - name: Build static site
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /MM.
+          NEXT_PUBLIC_BASE_PATH: ""
 
       - name: Disable Jekyll
         run: touch out/.nojekyll
