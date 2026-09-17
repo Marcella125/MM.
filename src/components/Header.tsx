@@ -194,6 +194,30 @@ export default function Header() {
     scrollToPageTop();
   }
 
+  function handleNavLinkClick(event: MouseEvent<HTMLAnchorElement>, href: string) {
+    setIsMenuOpen(false);
+
+    if (!isHome || href === "#work" || window.matchMedia("(min-width: 1101px)").matches) {
+      return;
+    }
+
+    const target = document.querySelector<HTMLElement>(href);
+    if (!target) return;
+
+    event.preventDefault();
+    window.history.replaceState(null, "", href);
+
+    window.requestAnimationFrame(() => {
+      const root = document.documentElement;
+      const previousScrollBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      target.scrollIntoView({ block: "start", behavior: "auto" });
+      window.requestAnimationFrame(() => {
+        root.style.scrollBehavior = previousScrollBehavior;
+      });
+    });
+  }
+
   useEffect(() => {
     return () => {
       cancelFade();
@@ -213,7 +237,7 @@ export default function Header() {
     <motion.header
       className="site-header"
       aria-label="Primary navigation"
-      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : -12 }}
+      initial={isHome ? { opacity: 0, y: prefersReducedMotion ? 0 : -12 } : false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, ease }}
     >
@@ -245,11 +269,14 @@ export default function Header() {
             initial="rest"
             animate="rest"
             whileHover="hover"
-            onClick={
-              href === "#work" && isHome
-                ? handleTopLinkClick
-                : () => setIsMenuOpen(false)
-            }
+            onClick={(event) => {
+              if (href === "#work" && isHome) {
+                handleTopLinkClick(event);
+                return;
+              }
+
+              handleNavLinkClick(event, href);
+            }}
           >
             <span className="nav-icon-badge" aria-hidden="true">
               <Icon size={22} strokeWidth={2.4} />

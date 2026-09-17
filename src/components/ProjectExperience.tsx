@@ -16,7 +16,7 @@ type ProjectKey = "femi" | "rong-xing" | "rushd";
 const projects = {
   femi: {
     index: "02", title: "FEMI", category: "HEALTH TECHNOLOGY", subtitle: "AI-Powered Health Platform",
-    color: "#ff4fb8", wash: "#ffe1f2", intro: ["A MORE", "THOUGHTFUL", "HEALTH SPACE."],
+    color: "#d91b83", wash: "#ffe1f2", base: "#ffcce6", highlight: "#5d1038", intro: ["A MORE", "THOUGHTFUL", "HEALTH SPACE."],
     description: "An AI-powered platform designed to make the health experience feel clearer and more approachable.",
     facets: ["HEALTH TECH", "AI", "FULL STACK"],
     contributions: [
@@ -35,7 +35,7 @@ const projects = {
   },
   "rong-xing": {
     index: "03", title: "RONG XING", category: "CORPORATE WEBSITE", subtitle: "Trading and Business Website",
-    color: "#1659d9", wash: "#dcecff", intro: ["BUSINESS", "WITHOUT", "BORDERS."],
+    color: "#142747", wash: "#dce5f3", base: "#c8d6eb", highlight: "#bcd5ff", intro: ["BUSINESS", "WITHOUT", "BORDERS."],
     description: "A responsive web presence for a trading and business company.",
     facets: ["TRADING", "FRONTEND", "RESPONSIVE"],
     contributions: [
@@ -54,7 +54,7 @@ const projects = {
   },
   rushd: {
     index: "04", title: "RUSHD", category: "INTERACTIVE EXPERIENCE", subtitle: "Interactive Bilingual Experience",
-    color: "#007c80", wash: "#d9f3f0", intro: ["TWO", "LANGUAGES.", "ONE JOURNEY."],
+    color: "#007c80", wash: "#d9f3f0", base: "#bce7e1", highlight: "#c7f5e9", intro: ["TWO", "LANGUAGES.", "ONE JOURNEY."],
     description: "An expressive web experience designed to be explored in English and Arabic.",
     facets: ["CREATIVE DEVELOPMENT", "THREE.JS", "RTL"],
     contributions: [
@@ -72,7 +72,7 @@ const projects = {
     statement: ["RUSHD", "EXPLORE", "BOTH WAYS."], next: "KIRA", nextHref: "/projects/kira",
   },
 } satisfies Record<ProjectKey, {
-  index: string; title: string; category: string; subtitle: string; color: string; wash: string;
+  index: string; title: string; category: string; subtitle: string; color: string; wash: string; base: string; highlight: string;
   intro: string[]; description: string; facets: string[];
   contributions: { title: string; detail: string }[];
   principle: string[]; principleNote: string; tech: string[];
@@ -107,7 +107,15 @@ export default function ProjectExperience({ project }: { project: ProjectKey }) 
   const theme = {
     "--project-color": data.color,
     "--project-wash": data.wash,
-    ...(project === "rushd" ? { "--footer-accent": data.color, "--footer-start": data.wash, "--footer-end": "#dcecff" } : {}),
+    "--project-base": data.base,
+    "--project-highlight": data.highlight,
+    "--blue": data.color,
+    "--blue-deep": data.color,
+    "--logo-dot-display": "block",
+    "--logo-dot-color": data.color,
+    "--footer-accent": "#ffffff",
+    "--footer-background": data.color,
+    "--footer-highlight": data.highlight,
   } as CSSProperties;
 
   return <main className={styles.page} style={theme}>

@@ -67,7 +67,7 @@ export default function KiraExperience() {
       <div className={styles.whatStage}>
         <div className={styles.whatCopy}>
           <span className={styles.eyebrow}>KNOWLEDGE, MADE ACCESSIBLE.</span>
-          <h2 id="what-title"><span>AN INTERNAL</span><motion.span initial={reduced ? false : { opacity: 0, x: -60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.65 }}>CHATBOT<span className={styles.pinkDot}>.</span></motion.span></h2>
+          <h2 id="what-title"><span>AN INTERNAL</span><motion.span initial={reduced ? false : { opacity: 0, x: -60 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.65 }}>CHATBOT<span className={styles.accentDot}>.</span></motion.span></h2>
           <p>Helping employees find information in company documentation with AI.</p>
         </div>
         <div className={styles.whatWords} aria-label="Documentation to relevant answers">
@@ -78,9 +78,9 @@ export default function KiraExperience() {
       </div>
     </section>
 
-    <section className={styles.pipelineSection} ref={pipelineRef} aria-labelledby="pipeline-title">
+    <section className={styles.pipelineSection} id="how-it-works" ref={pipelineRef} aria-labelledby="pipeline-title">
       <SectionMarker number="02" label="HOW IT WORKS" />
-      <div className={styles.pipelineHeading}><h2 id="pipeline-title">FROM<br /><em>SOURCE</em> TO<br />ANSWER.</h2><p>Seven connected steps.<br />One grounded response.</p></div>
+      <div className={styles.pipelineHeading}><h2 id="pipeline-title"><span>FROM <em>SOURCE</em></span><span>TO ANSWER.</span></h2><p>Seven connected steps.<br />One grounded response.</p></div>
       <div className={styles.pipelineTrack}>
         <div className={styles.connection} aria-hidden="true"><motion.div className={styles.connectionFill} style={reduced ? { scaleX: 1, scaleY: 1 } : { scaleX: connectionProgress, scaleY: connectionProgress }} /></div>
         {pipeline.map((step, index) => <motion.div className={styles.pipelineNode} key={step.title} initial={reduced ? false : { opacity: 0, y: 42 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ duration: 0.5, delay: reduced ? 0 : index * 0.06 }}><span className={styles.nodeIndex}>0{index + 1}</span><span className={styles.nodeLight} aria-hidden="true" /><strong>{step.title}</strong><small>{step.label}</small></motion.div>)}

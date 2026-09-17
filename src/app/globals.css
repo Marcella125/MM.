@@ -167,6 +167,7 @@ button {
 }
 
 .logo {
+  position: relative;
   display: inline-flex;
   align-items: center;
   width: fit-content;
@@ -176,6 +177,20 @@ button {
   display: block;
   width: clamp(108px, 8vw, 140px);
   height: auto;
+}
+
+.logo::after {
+  content: "";
+  display: var(--logo-dot-display, none);
+  position: absolute;
+  top: 58.8%;
+  left: 81.4%;
+  width: 10.8%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--logo-dot-color);
+  box-shadow: 0 0 0 1px #fff;
+  pointer-events: none;
 }
 
 .primary-nav {

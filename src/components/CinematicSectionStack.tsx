@@ -162,7 +162,13 @@ export default function CinematicSectionStack({ children }: { children: ReactNod
       const stackTop = stack.getBoundingClientRect().top + window.scrollY;
       const travel = stack.offsetHeight - window.innerHeight;
       const sectionProgress = sceneStarts[index] / totalScrollUnits;
+      const root = document.documentElement;
+      const previousScrollBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
       window.scrollTo({ top: stackTop + travel * sectionProgress, behavior: "auto" });
+      window.requestAnimationFrame(() => {
+        root.style.scrollBehavior = previousScrollBehavior;
+      });
       return true;
     }
 
@@ -179,9 +185,20 @@ export default function CinematicSectionStack({ children }: { children: ReactNod
       window.history.replaceState(null, "", index === 0 ? window.location.pathname : `#${id}`);
     }
 
+    function syncLocationHash() {
+      const id = window.location.hash.slice(1);
+      const index = sectionIds.indexOf(id);
+      if (index >= 0) scrollToSection(index);
+    }
+
+    const initialHashTimeout = window.setTimeout(syncLocationHash, 160);
+
     document.addEventListener("click", handleAnchorClick, true);
+    window.addEventListener("hashchange", syncLocationHash);
     return () => {
+      window.clearTimeout(initialHashTimeout);
       document.removeEventListener("click", handleAnchorClick, true);
+      window.removeEventListener("hashchange", syncLocationHash);
     };
   }, [items.length]);
 

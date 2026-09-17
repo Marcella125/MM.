@@ -170,7 +170,7 @@
   min-height: calc(100svh - 88px);
   overflow: hidden;
   background: var(--background);
-  scroll-margin-top: 0;
+  scroll-margin-top: var(--header-clearance);
 }
 
 .contactInner { display: grid; grid-template-rows: minmax(0, 1fr) auto; min-height: calc(100svh - 88px); padding: clamp(58px, 9vh, 108px) var(--page-pad-inline) 0; }
