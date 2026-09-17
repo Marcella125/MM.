@@ -102,10 +102,6 @@
   .project[data-project-index] {
     background: radial-gradient(circle at 83% 37%, color-mix(in srgb, var(--project-accent) 23%, transparent), transparent 37%), linear-gradient(135deg, #fff 0%, #eaf3ff 100%);
   }
-  .project[data-project-index="01"] { background: linear-gradient(90deg, #f3f9ff 0%, rgba(243, 249, 255, 0.85) 34%, transparent 70%), var(--project-image) calc(100% + 12px) bottom / 55% auto no-repeat, #f3f9ff; }
-  .project[data-project-index="02"] { background: linear-gradient(90deg, #f3f9ff 0%, rgba(243, 249, 255, 0.85) 34%, transparent 70%), var(--project-image) calc(100% + 22px) bottom / auto 58% no-repeat, #f3f9ff; }
-  .project[data-project-index="03"] { background: linear-gradient(90deg, #f3f9ff 0%, rgba(243, 249, 255, 0.85) 34%, transparent 70%), var(--project-image) calc(100% + 12px) bottom / 55% auto no-repeat, #f3f9ff; }
-  .project[data-project-index="04"] { background: linear-gradient(90deg, #f3f9ff 0%, rgba(243, 249, 255, 0.85) 34%, transparent 70%), var(--project-image) calc(100% + 16px) bottom / 55% auto no-repeat, #f3f9ff; }
   .projectsSection { display: block; height: calc(6 * (100svh - var(--header-clearance))); min-height: 0; padding: 0 var(--page-pad-inline); scroll-margin-top: var(--header-clearance); }
   .projectsSection .inner { position: sticky; top: var(--header-clearance); grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); grid-template-rows: minmax(0, 1fr); column-gap: clamp(36px, 5vw, 88px); align-items: center; width: calc(100% + 2 * var(--page-pad-inline)); height: calc(100svh - var(--header-clearance)); margin-inline: calc(-1 * var(--page-pad-inline)); padding: clamp(24px, 3vh, 36px) var(--page-pad-inline) clamp(32px, 5vh, 48px); background: var(--background); }
   .sectionHeading { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; min-width: 0; margin-bottom: 0; }
