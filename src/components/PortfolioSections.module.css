@@ -54,7 +54,7 @@
 .projectLink:focus-visible { outline: 3px solid var(--blue); outline-offset: -6px; }
 .projectLink:hover .project,
 .projectLink:focus-visible .project { border-color: #070707; box-shadow: 12px 12px 0 var(--blue); }
-.projectLink .projectType::after { content: " â†—"; font-size: 14px; }
+.projectLink .projectType::after { content: " \2197"; font-size: 14px; }
 
 .project {
   position: relative;

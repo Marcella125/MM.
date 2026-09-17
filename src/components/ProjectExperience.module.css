@@ -43,9 +43,14 @@
 .showcaseRail:focus-visible { outline: 3px solid var(--project-color); outline-offset: 4px; }
 .showcaseRail::-webkit-scrollbar { display: none; }
 .showcaseSlide { flex: 0 0 min(80%,1080px); min-width: 0; margin: 0; scroll-snap-align: start; }
-.showcaseFrame { display: grid; place-items: center; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--project-color); background: #fff; box-shadow: 4px 4px 0 var(--project-color); }
+.showcaseFrame { display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9; padding: 0; overflow: hidden; border: 1px solid var(--project-color); background: #fff; box-shadow: 4px 4px 0 var(--project-color); cursor: zoom-in; }
 .showcaseFrame img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .showcaseSlide figcaption { display: flex; justify-content: space-between; gap: 16px; margin-top: 14px; color: var(--project-color); font: 700 10px var(--font-mono),monospace; letter-spacing: .08em; }
+.imageDialog { position: fixed; width: min(96vw, 1500px); max-width: none; max-height: 96dvh; padding: 40px 12px 12px; overflow: auto; border: 1px solid var(--project-color); background: #fff; color: var(--project-color); box-shadow: 8px 8px 0 var(--project-color); }
+.imageDialog::backdrop { background: rgba(5, 13, 32, .85); }
+.imageDialog img { display: block; width: 100%; height: auto; max-height: calc(96dvh - 90px); object-fit: contain; }
+.imageDialog p { margin-top: 10px; font: 700 10px var(--font-mono), monospace; letter-spacing: .08em; }
+.imageDialogClose { position: absolute; top: 4px; right: 8px; width: 32px; height: 32px; padding: 0; border: 0; background: transparent; color: var(--project-color); font-size: 28px; line-height: 1; cursor: pointer; }
 
 .dna { background: var(--project-base); }
 .dnaHeading { display: flex; justify-content: space-between; align-items: end; gap: 30px; }
@@ -113,7 +118,7 @@
   .showcaseControls button { width: 32px; height: 32px; }
   .showcaseControls svg { width: 16px; height: 16px; }
   .showcaseRail { gap: 14px; padding-bottom: 14px; }
-  .showcaseSlide { flex-basis: 90%; }
+  .showcaseSlide { flex-basis: 90%; opacity: 1 !important; transform: none !important; }
   .showcaseSlide figcaption { margin-top: 12px; font-size: 8px; }
   .overview h2,.dna h2,.built h2,.principle h2,.tech h2 { font-size: clamp(48px,12vw,82px); }
   .overviewBottom p { font-size: 18px; }

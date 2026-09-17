@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -53,23 +53,23 @@ const projects = {
     statement: ["RONG XING", "A WORLD IN", "MOTION."], next: "RUSHD", nextHref: "/projects/rushd",
   },
   rushd: {
-    index: "04", title: "RUSHD", category: "INTERACTIVE EXPERIENCE", subtitle: "Interactive Bilingual Experience",
-    color: "#007c80", wash: "#d9f3f0", base: "#bce7e1", highlight: "#c7f5e9", intro: ["TWO", "LANGUAGES.", "ONE JOURNEY."],
-    description: "An expressive web experience designed to be explored in English and Arabic.",
-    facets: ["CREATIVE DEVELOPMENT", "THREE.JS", "RTL"],
+    index: "04", title: "RUSHD", category: "RESEARCH & POLICY WEBSITE", subtitle: "Exploring technology, ethics, and Islamic thought",
+    color: "#007c80", wash: "#d9f3f0", base: "#bce7e1", highlight: "#c7f5e9", intro: ["WHERE", "ETHICS MEETS", "INNOVATION."],
+    description: "Rushd Center brings interdisciplinary research and policy into public view, examining emerging technologies through Islamic ethical thought and contemporary expertise.",
+    facets: ["RESEARCH", "ETHICS", "TECHNOLOGY"],
     contributions: [
-      { title: "Interactive development", detail: "Making the site feel exploratory." },
-      { title: "Bilingual experience", detail: "Supporting English and Arabic paths." },
-      { title: "RTL support", detail: "Building for right-to-left reading." },
-      { title: "Three.js interactions", detail: "Adding motion and depth to the experience." },
+      { title: "Interactive development", detail: "Creating a visual entry point to the center's research and ideas." },
+      { title: "Bilingual experience", detail: "Supporting the site's English and Arabic content." },
+      { title: "RTL support", detail: "Making the Arabic experience natural to read and navigate." },
+      { title: "Three.js interactions", detail: "Adding motion and depth to the landing experience." },
     ],
-    principle: ["EXPLORE", "BOTH", "WAYS."], principleNote: "The experience should feel natural in either language.",
-    tech: ["Creative Development", "Three.js", "RTL"],
+    principle: ["INNOVATION", "WITH", "RESPONSIBILITY."], principleNote: "Research on emerging technology should remain grounded in human dignity and the common good.",
+    tech: ["Bilingual UX", "Three.js", "RTL"],
     gallery: [
-      { src: "/assets/Projects/RUSHD/home.png", label: "INTERACTIVE LANDING", alt: "Rushd landing page with animated teal data waves", width: 1912, height: 912 },
-      { src: "/assets/Projects/RUSHD/home%202.png", label: "BILINGUAL EXPERIENCE", alt: "Rushd page about innovation guided by Islamic values", width: 1917, height: 911 },
+      { src: "/assets/Projects/RUSHD/home.png", label: "INTERACTIVE LANDING", alt: "Rushd Center landing page with teal interactive waves", width: 1912, height: 912 },
+      { src: "/assets/Projects/RUSHD/home%202.png", label: "VISION & VALUES", alt: "Rushd Center page reading Guiding Innovation with Islamic Values", width: 1917, height: 911 },
     ],
-    statement: ["RUSHD", "EXPLORE", "BOTH WAYS."], next: "KIRA", nextHref: "/projects/kira",
+    statement: ["RUSHD", "ETHICS FOR", "WHAT'S NEXT."], next: "KIRA", nextHref: "/projects/kira",
   },
 } satisfies Record<ProjectKey, {
   index: string; title: string; category: string; subtitle: string; color: string; wash: string; base: string; highlight: string;
@@ -89,7 +89,14 @@ export default function ProjectExperience({ project }: { project: ProjectKey }) 
   const reduced = useHydratedReducedMotion();
   const [activeContribution, setActiveContribution] = useState<number | null>(null);
   const [activeShot, setActiveShot] = useState(0);
+  const [openShot, setOpenShot] = useState<number | null>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
+  const imageDialogRef = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const dialog = imageDialogRef.current;
+    if (!dialog) return;
+    if (openShot !== null && !dialog.open) dialog.showModal();
+  }, [openShot]);
   const goToShot = (index: number) => {
     const rail = galleryRef.current;
     const shot = rail?.children[index] as HTMLElement | undefined;
@@ -146,10 +153,17 @@ export default function ProjectExperience({ project }: { project: ProjectKey }) 
       </div>
       <div className={styles.showcaseRail} ref={galleryRef} onScroll={syncActiveShot} role="region" tabIndex={0} aria-label={`${data.title} project images`}>
         {data.gallery.map((shot, index) => <motion.figure className={styles.showcaseSlide} key={shot.src} initial={reduced ? false : { opacity: 0, x: 35 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .25 }} transition={{ duration: .5 }}>
-          <div className={styles.showcaseFrame}><Image src={assetPath(shot.src)} alt={shot.alt} width={shot.width} height={shot.height} sizes="(max-width: 700px) 90vw, 75vw" priority={index === 0} /></div>
+          <button className={styles.showcaseFrame} type="button" onClick={() => setOpenShot(index)} aria-label={`Open ${shot.label} image`}><Image src={assetPath(shot.src)} alt={shot.alt} width={shot.width} height={shot.height} sizes="(max-width: 700px) 90vw, 75vw" priority={index === 0} /></button>
           <figcaption><span>0{index + 1} / {shot.label}</span><span>{data.title}</span></figcaption>
         </motion.figure>)}
       </div>
+      <dialog ref={imageDialogRef} className={styles.imageDialog} onClose={() => setOpenShot(null)} onClick={(event) => { if (event.target === event.currentTarget) event.currentTarget.close(); }} aria-label={`${data.title} image preview`}>
+        {openShot !== null && <>
+          <button className={styles.imageDialogClose} type="button" onClick={() => imageDialogRef.current?.close()} aria-label="Close image">×</button>
+          <Image src={assetPath(data.gallery[openShot].src)} alt={data.gallery[openShot].alt} width={data.gallery[openShot].width} height={data.gallery[openShot].height} sizes="100vw" />
+          <p>{data.gallery[openShot].label}</p>
+        </>}
+      </dialog>
     </section>
 
     <section className={styles.dna} aria-labelledby="dna-title">

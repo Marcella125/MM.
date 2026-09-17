@@ -12,7 +12,7 @@ const projects = [
   { index: "01", title: "Kira", type: "AI product", copy: "AI Knowledge Assistant", tags: ["AI", "Azure", "Full Stack"] },
   { index: "02", title: "Femi", type: "Health technology", copy: "AI-Powered Health Platform", tags: ["Health Tech", "AI", "Full Stack"] },
   { index: "03", title: "Rong Xing", type: "Corporate website", copy: "Trading and business website", tags: ["Web", "Frontend", "Responsive"] },
-  { index: "04", title: "Rushd", type: "Interactive experience", copy: "Interactive Bilingual Experience", tags: ["Creative Development", "Three.js", "RTL"] },
+  { index: "04", title: "Rushd", type: "Research & policy", copy: "Technology, ethics & Islamic thought", tags: ["Bilingual", "Interactive", "RTL"] },
 ] as const;
 
 const cardStops = [
