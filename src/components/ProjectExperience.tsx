@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -89,14 +89,7 @@ export default function ProjectExperience({ project }: { project: ProjectKey }) 
   const reduced = useHydratedReducedMotion();
   const [activeContribution, setActiveContribution] = useState<number | null>(null);
   const [activeShot, setActiveShot] = useState(0);
-  const [openShot, setOpenShot] = useState<number | null>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
-  const imageDialogRef = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    const dialog = imageDialogRef.current;
-    if (!dialog) return;
-    if (openShot !== null && !dialog.open) dialog.showModal();
-  }, [openShot]);
   const goToShot = (index: number) => {
     const rail = galleryRef.current;
     const shot = rail?.children[index] as HTMLElement | undefined;
@@ -153,17 +146,10 @@ export default function ProjectExperience({ project }: { project: ProjectKey }) 
       </div>
       <div className={styles.showcaseRail} ref={galleryRef} onScroll={syncActiveShot} role="region" tabIndex={0} aria-label={`${data.title} project images`}>
         {data.gallery.map((shot, index) => <motion.figure className={styles.showcaseSlide} key={shot.src} initial={reduced ? false : { opacity: 0, x: 35 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .25 }} transition={{ duration: .5 }}>
-          <button className={styles.showcaseFrame} type="button" onClick={() => setOpenShot(index)} aria-label={`Open ${shot.label} image`}><Image src={assetPath(shot.src)} alt={shot.alt} width={shot.width} height={shot.height} sizes="(max-width: 700px) 90vw, 75vw" priority={index === 0} /></button>
+          <div className={styles.showcaseFrame}><Image src={assetPath(shot.src)} alt={shot.alt} width={shot.width} height={shot.height} sizes="(max-width: 700px) 90vw, 75vw" priority={index === 0} /></div>
           <figcaption><span>0{index + 1} / {shot.label}</span><span>{data.title}</span></figcaption>
         </motion.figure>)}
       </div>
-      <dialog ref={imageDialogRef} className={styles.imageDialog} onClose={() => setOpenShot(null)} onClick={(event) => { if (event.target === event.currentTarget) event.currentTarget.close(); }} aria-label={`${data.title} image preview`}>
-        {openShot !== null && <>
-          <button className={styles.imageDialogClose} type="button" onClick={() => imageDialogRef.current?.close()} aria-label="Close image">×</button>
-          <Image src={assetPath(data.gallery[openShot].src)} alt={data.gallery[openShot].alt} width={data.gallery[openShot].width} height={data.gallery[openShot].height} sizes="100vw" />
-          <p>{data.gallery[openShot].label}</p>
-        </>}
-      </dialog>
     </section>
 
     <section className={styles.dna} aria-labelledby="dna-title">
