@@ -1,10 +1,9 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { motion, type MotionValue, useMotionValue, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { assetPath } from "@/src/lib/paths";
-import { useStoryScrollProgress } from "./StoryScroll";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import styles from "./AboutSection.module.css";
 
@@ -225,8 +224,7 @@ function ChapterContent({ index, progress, active, reducedMotion }: {
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const mobileTrackRef = useRef<HTMLDivElement>(null);
-  const desktopProgress = useStoryScrollProgress();
-  const { scrollYProgress: mobileProgress } = useScroll({ target: mobileTrackRef, offset: ["start start", "end end"] });
+  const { scrollYProgress: sectionProgress } = useScroll({ target: mobileTrackRef, offset: ["start start", "end end"] });
   const { scrollYProgress: entryProgress } = useScroll({ target: sectionRef, offset: ["start end", "start start"] });
   const { scrollYProgress: exitProgress } = useScroll({ target: sectionRef, offset: ["end end", "end start"] });
   const entryOpacity = useTransform(entryProgress, [0, 0.5, 1], [0, 0, 1]);
@@ -246,7 +244,7 @@ export default function AboutSection() {
     const syncProgress = () => {
       if (!progressEnabled) return;
 
-      progress.set(desktop.matches ? desktopProgress.get() : mobileProgress.get());
+      progress.set(sectionProgress.get());
     };
 
     const syncLayout = () => {
@@ -267,8 +265,7 @@ export default function AboutSection() {
       }
     };
 
-    const unsubscribeDesktop = desktopProgress.on("change", syncProgress);
-    const unsubscribeMobile = mobileProgress.on("change", syncProgress);
+    const unsubscribeProgress = sectionProgress.on("change", syncProgress);
     desktop.addEventListener("change", syncLayout);
     window.addEventListener("wheel", enableProgress, { passive: true });
     window.addEventListener("touchstart", enableProgress, { passive: true });
@@ -277,14 +274,13 @@ export default function AboutSection() {
 
     return () => {
       cancelAnimationFrame(animationFrame);
-      unsubscribeDesktop();
-      unsubscribeMobile();
+      unsubscribeProgress();
       desktop.removeEventListener("change", syncLayout);
       window.removeEventListener("wheel", enableProgress);
       window.removeEventListener("touchstart", enableProgress);
       window.removeEventListener("keydown", handleScrollKey);
     };
-  }, [desktopProgress, mobileProgress, progress]);
+  }, [sectionProgress, progress]);
 
   useMotionValueEvent(progress, "change", (value) => {
     const nextChapter = Math.min(3, Math.max(0, Math.round(value * 3)));
@@ -309,7 +305,7 @@ export default function AboutSection() {
               index={index}
               progress={progress}
               active={activeChapter === index}
-              animateTransition={desktopLayout}
+              animateTransition={!reducedMotion}
               reducedMotion={reducedMotion}
             />
           ))}

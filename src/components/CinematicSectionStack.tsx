@@ -151,56 +151,35 @@ export default function CinematicSectionStack({ children }: { children: ReactNod
   const smoothProgress = useSpring(scrollYProgress, scrollSpring);
 
   useEffect(() => {
-    function isCinematicLayout() {
-      return window.matchMedia("(min-width: 1101px)").matches;
+    let cancelled = false;
+
+    function alignHashTarget() {
+      if (cancelled || !window.location.hash) return;
+
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      if (!sectionIds.includes(id)) return;
+
+      const target = document.getElementById(id);
+      const homepage = document.querySelector<HTMLElement>(".homepage");
+      if (!target || !homepage) return;
+
+      const clearance = Number.parseFloat(
+        window.getComputedStyle(homepage).getPropertyValue("--header-clearance"),
+      ) || 0;
+      const top = target.getBoundingClientRect().top + window.scrollY - clearance;
+      window.scrollTo({ top: Math.max(0, top), left: 0, behavior: "auto" });
     }
 
-    function scrollToSection(index: number) {
-      const stack = stackRef.current;
-      if (!stack || !isCinematicLayout()) return false;
+    const timeout = window.setTimeout(alignHashTarget, 300);
+    void document.fonts.ready.then(alignHashTarget);
+    window.addEventListener("load", alignHashTarget);
 
-      const stackTop = stack.getBoundingClientRect().top + window.scrollY;
-      const travel = stack.offsetHeight - window.innerHeight;
-      const sectionProgress = sceneStarts[index] / totalScrollUnits;
-      const root = document.documentElement;
-      const previousScrollBehavior = root.style.scrollBehavior;
-      root.style.scrollBehavior = "auto";
-      window.scrollTo({ top: stackTop + travel * sectionProgress, behavior: "auto" });
-      window.requestAnimationFrame(() => {
-        root.style.scrollBehavior = previousScrollBehavior;
-      });
-      return true;
-    }
-
-    function handleAnchorClick(event: MouseEvent) {
-      const target = event.target;
-      if (!(target instanceof Element)) return;
-
-      const anchor = target.closest<HTMLAnchorElement>('a[href^="#"]');
-      const id = anchor?.getAttribute("href")?.slice(1);
-      const index = id ? sectionIds.indexOf(id) : -1;
-      if (index < 0 || !scrollToSection(index)) return;
-
-      event.preventDefault();
-      window.history.replaceState(null, "", index === 0 ? window.location.pathname : `#${id}`);
-    }
-
-    function syncLocationHash() {
-      const id = window.location.hash.slice(1);
-      const index = sectionIds.indexOf(id);
-      if (index >= 0) scrollToSection(index);
-    }
-
-    const initialHashTimeout = window.setTimeout(syncLocationHash, 160);
-
-    document.addEventListener("click", handleAnchorClick, true);
-    window.addEventListener("hashchange", syncLocationHash);
     return () => {
-      window.clearTimeout(initialHashTimeout);
-      document.removeEventListener("click", handleAnchorClick, true);
-      window.removeEventListener("hashchange", syncLocationHash);
+      cancelled = true;
+      window.clearTimeout(timeout);
+      window.removeEventListener("load", alignHashTarget);
     };
-  }, [items.length]);
+  }, []);
 
   const stackStyle = {
     "--stack-scroll-units": totalScrollUnits + 1,

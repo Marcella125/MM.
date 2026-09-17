@@ -1,9 +1,8 @@
-"use client";
+﻿"use client";
 
-import { useEffect, useRef, type CSSProperties } from "react";
-import { motion, type MotionValue, useMotionValue, useScroll, useTransform } from "framer-motion";
+import { useRef, type CSSProperties } from "react";
+import { motion, type MotionValue, useScroll, useTransform } from "framer-motion";
 import SectionLabel from "./SectionLabel";
-import { useStoryScrollProgress } from "./StoryScroll";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import { assetPath } from "@/src/lib/paths";
 import Link from "next/link";
@@ -107,26 +106,10 @@ function ProjectCard({ project, index, progress }: {
 
 export default function ProjectsSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const desktopProgress = useStoryScrollProgress();
-  const { scrollYProgress: pageProgress } = useScroll({
+  const { scrollYProgress: progress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
-  const progress = useMotionValue(0);
-
-  useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 1101px)");
-    const sync = () => progress.set(desktop.matches ? desktopProgress.get() : pageProgress.get());
-    const unsubscribeDesktop = desktopProgress.on("change", sync);
-    const unsubscribePage = pageProgress.on("change", sync);
-    desktop.addEventListener("change", sync);
-    sync();
-    return () => {
-      unsubscribeDesktop();
-      unsubscribePage();
-      desktop.removeEventListener("change", sync);
-    };
-  }, [desktopProgress, pageProgress, progress]);
 
   return (
     <section className={styles.projectsSection} id="projects" aria-labelledby="projects-heading" ref={sectionRef}>

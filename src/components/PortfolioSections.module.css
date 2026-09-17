@@ -1,4 +1,4 @@
-.projectsSection,
+﻿.projectsSection,
 .contactSection {
   position: relative;
   z-index: 2;
@@ -54,7 +54,7 @@
 .projectLink:focus-visible { outline: 3px solid var(--blue); outline-offset: -6px; }
 .projectLink:hover .project,
 .projectLink:focus-visible .project { border-color: #070707; box-shadow: 12px 12px 0 var(--blue); }
-.projectLink .projectType::after { content: " ↗"; font-size: 14px; }
+.projectLink .projectType::after { content: " â†—"; font-size: 14px; }
 
 .project {
   position: relative;
@@ -102,8 +102,8 @@
   .project[data-project-index] {
     background: radial-gradient(circle at 83% 37%, color-mix(in srgb, var(--project-accent) 23%, transparent), transparent 37%), linear-gradient(135deg, #fff 0%, #eaf3ff 100%);
   }
-  .projectsSection { padding-top: clamp(24px, 3vh, 36px); padding-bottom: clamp(32px, 5vh, 48px); }
-  .projectsSection .inner { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); grid-template-rows: minmax(0, 1fr); column-gap: clamp(36px, 5vw, 88px); align-items: center; }
+  .projectsSection { display: block; height: calc(6 * (100svh - var(--header-clearance))); min-height: 0; padding: 0 var(--page-pad-inline); scroll-margin-top: var(--header-clearance); }
+  .projectsSection .inner { position: sticky; top: var(--header-clearance); grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); grid-template-rows: minmax(0, 1fr); column-gap: clamp(36px, 5vw, 88px); align-items: center; width: calc(100% + 2 * var(--page-pad-inline)); height: calc(100svh - var(--header-clearance)); margin-inline: calc(-1 * var(--page-pad-inline)); padding: clamp(24px, 3vh, 36px) var(--page-pad-inline) clamp(32px, 5vh, 48px); background: var(--background); }
   .sectionHeading { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; min-width: 0; margin-bottom: 0; }
   .title { font-size: var(--editorial-heading-size); }
   .lede { max-width: 420px; margin-top: clamp(28px, 5vh, 48px); font-size: clamp(14px, 1.1vw, 17px); }
@@ -337,3 +337,4 @@
   .project,
   .projectNumber { transition: none; }
 }
+
