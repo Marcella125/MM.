@@ -32,6 +32,8 @@
 
 .showcase { padding: 84px var(--page-pad-inline) 64px; background: var(--project-wash); }
 .showcaseHeading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin: 28px 0 26px; }
+.showcaseTitle { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; min-width: 0; }
+.showcaseTitle .liveLink { margin-top: 0; }
 .showcase h2 { margin: 0; font-size: clamp(52px,6.5vw,104px); line-height: .88; letter-spacing: -.075em; }
 .showcase h2 em { color: var(--project-color); font-style: normal; }
 .showcaseControls { display: flex; align-items: center; gap: 8px; flex: none; color: var(--project-color); font: 700 11px var(--font-mono),monospace; letter-spacing: .08em; }

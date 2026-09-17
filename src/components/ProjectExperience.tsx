@@ -86,6 +86,7 @@ function Marker({ number, label, title }: { number: string; label: string; title
 
 export default function ProjectExperience({ project }: { project: ProjectKey }) {
   const data = projects[project];
+  const liveSiteUrl = project === "rushd" ? "https://rushd.center/" : null;
   const reduced = useHydratedReducedMotion();
   const [activeContribution, setActiveContribution] = useState<number | null>(null);
   const [activeShot, setActiveShot] = useState(0);
@@ -137,7 +138,10 @@ export default function ProjectExperience({ project }: { project: ProjectKey }) 
     <section className={styles.showcase} aria-labelledby="showcase-title">
       <Marker number="02" label="IN VIEW" title={data.title} />
       <div className={styles.showcaseHeading}>
-        <h2 id="showcase-title">A LOOK <em>INSIDE.</em></h2>
+        <div className={styles.showcaseTitle}>
+          <h2 id="showcase-title">A LOOK <em>INSIDE.</em></h2>
+          {liveSiteUrl && <a className={styles.liveLink} href={liveSiteUrl} target="_blank" rel="noopener noreferrer">VISIT LIVE SITE <ArrowRight size={17} /></a>}
+        </div>
         <div className={styles.showcaseControls}>
           <span>0{activeShot + 1} / 0{data.gallery.length}</span>
           <button type="button" aria-label={`Previous ${data.title} image`} disabled={activeShot === 0} onClick={() => goToShot(activeShot - 1)}><ArrowLeft size={20} /></button>
@@ -174,7 +178,7 @@ export default function ProjectExperience({ project }: { project: ProjectKey }) 
       <h2 id="tech-title">THE<br /><em>TOOLS.</em></h2>
       <div className={styles.techContent}>
         <div className={styles.techList}>{data.tech.map((name, index) => <div key={name}><span>0{index + 1}</span><strong>{name}</strong><ArrowRight size={18} /></div>)}</div>
-        {project === "rushd" && <a className={styles.liveLink} href="https://rushd.center/" target="_blank" rel="noopener noreferrer">VISIT LIVE SITE <ArrowRight size={17} /></a>}
+        {liveSiteUrl && <a className={styles.liveLink} href={liveSiteUrl} target="_blank" rel="noopener noreferrer">VISIT LIVE SITE <ArrowRight size={17} /></a>}
       </div>
     </section>
 
