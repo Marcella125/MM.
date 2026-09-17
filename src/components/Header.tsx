@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import type { MouseEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { assetPath } from "@/src/lib/paths";
+import { assetPath, pagePath } from "@/src/lib/paths";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 
 const navItems = [
@@ -264,7 +264,7 @@ export default function Header() {
         {navItems.map(({ label, index, href, Icon }) => (
           <motion.a
             className="nav-link"
-            href={isHome ? href : `/${href}`}
+            href={isHome ? href : pagePath(`/${href}`)}
             key={`${label}-${index}`}
             initial="rest"
             animate="rest"
