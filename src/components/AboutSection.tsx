@@ -9,9 +9,9 @@ import styles from "./AboutSection.module.css";
 
 const chapters = [
   {
-    eyebrow: "Hi, I’m Marcella.",
+    eyebrow: "Creative developer",
     title: ["I BUILD", "FOR THE WEB."],
-    description: "Turning ideas into responsive, interactive experiences designed to look sharp, feel intuitive, and work beautifully.",
+    description: "Hi, I’m Marcella, a creative developer turning ideas into responsive, interactive experiences that look sharp, feel intuitive, and work beautifully.",
     detail: "COMPUTER SCIENCE GRADUATE · LEBANON",
     tags: ["CREATIVE DEV", "FRONTEND", "WEB"],
   },
@@ -186,9 +186,7 @@ function ChapterContent({ index, progress, active, reducedMotion }: {
       aria-hidden={!active}
     >
       <div className={styles.sectionLabel}>ABOUT / THE STORY</div>
-      <div className={`${styles.chapterOverline} ${index === 0 ? styles.introGreeting : ""}`}>
-        {index === 0 ? <>Hi, I’m <span className={styles.marcellaName}>Marcella.</span></> : chapter.eyebrow}
-      </div>
+      <div className={styles.chapterOverline}>{chapter.eyebrow}</div>
       <h3 className={styles.chapterTitle}>
         <span>{chapter.title[0]}</span>
         <span>{chapter.title[1]}</span>

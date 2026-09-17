@@ -75,10 +75,10 @@
   transition: border-color 360ms ease, box-shadow 360ms ease;
 }
 
-.project[data-project-index="01"] { background: #f3f9ff var(--project-image) center 60% / cover no-repeat; }
-.project[data-project-index="02"] { background: #f3f9ff var(--project-image) 64% 70% / cover no-repeat; }
-.project[data-project-index="03"] { background: #f3f9ff var(--project-image) center / cover no-repeat; }
-.project[data-project-index="04"] { background: #f3f9ff var(--project-image) center / cover no-repeat; }
+.project[data-project-index="01"] { background: #f3f9ff var(--project-image) calc(100% + 12px) bottom / 58% auto no-repeat; }
+.project[data-project-index="02"] { background: #f3f9ff var(--project-image) calc(100% + 22px) bottom / auto 54% no-repeat; }
+.project[data-project-index="03"] { background: #f3f9ff var(--project-image) calc(100% + 12px) bottom / 58% auto no-repeat; }
+.project[data-project-index="04"] { background: #f3f9ff var(--project-image) calc(100% + 16px) bottom / 58% auto no-repeat; }
 
 .project::before {
   position: absolute;
@@ -102,6 +102,10 @@
   .project[data-project-index] {
     background: radial-gradient(circle at 83% 37%, color-mix(in srgb, var(--project-accent) 23%, transparent), transparent 37%), linear-gradient(135deg, #fff 0%, #eaf3ff 100%);
   }
+  .project[data-project-index="01"] { background: linear-gradient(90deg, #f3f9ff 0%, rgba(243, 249, 255, 0.85) 34%, transparent 70%), var(--project-image) calc(100% + 12px) bottom / 55% auto no-repeat, #f3f9ff; }
+  .project[data-project-index="02"] { background: linear-gradient(90deg, #f3f9ff 0%, rgba(243, 249, 255, 0.85) 34%, transparent 70%), var(--project-image) calc(100% + 22px) bottom / auto 58% no-repeat, #f3f9ff; }
+  .project[data-project-index="03"] { background: linear-gradient(90deg, #f3f9ff 0%, rgba(243, 249, 255, 0.85) 34%, transparent 70%), var(--project-image) calc(100% + 12px) bottom / 55% auto no-repeat, #f3f9ff; }
+  .project[data-project-index="04"] { background: linear-gradient(90deg, #f3f9ff 0%, rgba(243, 249, 255, 0.85) 34%, transparent 70%), var(--project-image) calc(100% + 16px) bottom / 55% auto no-repeat, #f3f9ff; }
   .projectsSection { display: block; height: calc(6 * (100svh - var(--header-clearance))); min-height: 0; padding: 0 var(--page-pad-inline); scroll-margin-top: var(--header-clearance); }
   .projectsSection .inner { position: sticky; top: var(--header-clearance); grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); grid-template-rows: minmax(0, 1fr); column-gap: clamp(36px, 5vw, 88px); align-items: center; width: calc(100% + 2 * var(--page-pad-inline)); height: calc(100svh - var(--header-clearance)); margin-inline: calc(-1 * var(--page-pad-inline)); padding: clamp(24px, 3vh, 36px) var(--page-pad-inline) clamp(32px, 5vh, 48px); background: var(--background); }
   .sectionHeading { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; min-width: 0; margin-bottom: 0; }
@@ -221,6 +225,7 @@
   .sectionHeading { padding-top: clamp(20px, 3vh, 36px); }
   .projectReveal { width: min(100%, 650px); height: min(100%, 440px); }
   .project { min-height: 0; }
+  .project[data-project-index="04"] .projectContent > p { max-width: min(55%, 240px); }
   .contactLayout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 36px 22px; }
   .contactTitle { font-size: var(--editorial-heading-size); }
   .contactLinks { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
@@ -276,10 +281,10 @@
     will-change: auto;
   }
   .project { padding: 16px; box-shadow: 5px 5px 0 var(--blue); }
-  .project[data-project-index="01"] { background-position: 74% center; }
-  .project[data-project-index="02"] { background-position: 70% 70%; }
-  .project[data-project-index="03"] { background-position: center; }
-  .project[data-project-index="04"] { background-position: center; }
+  .project[data-project-index="01"] { background-position: calc(100% + 12px) bottom; }
+  .project[data-project-index="02"] { background-position: calc(100% + 22px) bottom; }
+  .project[data-project-index="03"] { background-position: calc(100% + 12px) bottom; }
+  .project[data-project-index="04"] { background-position: calc(100% + 16px) bottom; }
   .projectContent h3 { font-size: clamp(30px, 8vw, 42px); }
   .projectContent > p { margin-top: 7px; font-size: 11px; }
   .tags { gap: 4px; margin-top: 11px; }
@@ -294,18 +299,18 @@
   .desktopBreak { display: none; }
   .contactVisual { width: min(100%, 410px); margin-inline: auto; }
   .contactDisc { width: min(85vw, clamp(160px, calc(100svh - 505px), 340px)); }
-  .contactLinks { grid-column: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 18px; padding-bottom: 0; }
+  .contactLinks { grid-column: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; padding-bottom: 0; }
   .contactLink,
-  .contactPhone { align-items: center; gap: 8px; min-height: 36px; }
+  .contactPhone { align-items: center; gap: 9px; min-height: 44px; }
   .contactLink > svg,
-  .contactPhone > svg { width: 36px; height: 36px; padding: 5px; border: 1px solid #d8e3f2; border-radius: 8px; background: rgba(255, 255, 255, 0.65); color: #0b0b0b; }
+  .contactPhone > svg { flex: 0 0 42px; width: 42px; height: 42px; padding: 8px; border: 1px solid #cbdcf3; border-radius: 10px; background: #fff; color: #0b0b0b; box-shadow: 2px 2px 0 rgba(18, 56, 255, 0.12); }
   .contactLink span,
-  .contactPhone span { display: grid; align-content: center; gap: 3px; min-width: 0; }
+  .contactPhone span { display: grid; align-content: center; gap: 4px; min-width: 0; }
   .contactLink strong,
-  .contactPhone strong { display: block; font-size: 9px; line-height: 1; text-transform: uppercase; }
+  .contactPhone strong { display: block; font-size: 9px; line-height: 1.1; letter-spacing: 0.07em; text-transform: uppercase; }
   .contactLink small,
-  .contactPhone small { color: var(--blue); font-size: 9px; line-height: 1; white-space: nowrap; }
-  .contactLink:first-child small { font-size: 7.5px; letter-spacing: -0.025em; }
+  .contactPhone small { color: var(--blue); font-size: 9px; line-height: 1.2; white-space: nowrap; }
+  .contactLink:first-child small { overflow-wrap: anywhere; font-size: 9px; letter-spacing: -0.025em; white-space: normal; }
   .contactPhone { display: flex; grid-column: auto; align-self: center; margin-top: 0; }
   .footer { grid-template-columns: 1fr auto; gap: 8px; margin-top: 0; padding: 12px 0; font-size: 9px; }
   .footer p:nth-child(2) { display: none; }
@@ -318,11 +323,12 @@
   .contactDescription { margin-top: 10px; line-height: 1.35; }
   .contactDisc { width: min(42vw, 20svh, 125px); }
   .contactLinks { gap: 11px 10px; }
+  .contactLink > svg,
+  .contactPhone > svg { flex-basis: 38px; width: 38px; height: 38px; padding: 7px; }
 }
 
 @media (max-width: 360px) {
-  .contactLink:first-child { grid-column: 1 / -1; }
-  .contactLink:first-child small { font-size: 9px; }
+  .contactLink:first-child small { font-size: 8.5px; }
   .footer { font-size: 8px; }
 }
 
