@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { FaCss3Alt } from "react-icons/fa6";
 import {
   SiExpress,
@@ -20,6 +23,7 @@ import {
 } from "react-icons/si";
 import { VscAzure, VscOpenai } from "react-icons/vsc";
 import SectionLabel from "./SectionLabel";
+import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import styles from "./SkillsSection.module.css";
 
 const skillGroups = [
@@ -75,6 +79,8 @@ const skillGroups = [
 ] as const;
 
 export default function SkillsSection() {
+  const reducedMotion = useHydratedReducedMotion();
+
   return (
     <section className={styles.section} id="skills" aria-labelledby="skills-heading">
       <div className={styles.inner}>
@@ -87,8 +93,15 @@ export default function SkillsSection() {
         </header>
 
         <div className={styles.grid}>
-          {skillGroups.map((group) => (
-            <article className={styles.card} key={group.number}>
+          {skillGroups.map((group, index) => (
+            <motion.article
+              className={styles.card}
+              key={group.number}
+              initial={reducedMotion ? false : { opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.18 }}
+              transition={{ duration: 0.5, delay: reducedMotion ? 0 : index * 0.07, ease: [0.22, 1, 0.36, 1] }}
+            >
               <div className={styles.cardTop}>
                 <span>{group.number}</span>
               </div>
@@ -104,7 +117,7 @@ export default function SkillsSection() {
                   ))}
                 </ul>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>

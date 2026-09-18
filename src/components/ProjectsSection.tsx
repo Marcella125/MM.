@@ -33,9 +33,13 @@ function ProjectCard({ project, index, progress }: {
   const scale = useTransform(progress, (value) => 1 - Math.min(Math.abs(index - focusedCard(value)), 1) * 0.2);
   const zIndex = useTransform(progress, (value) => Math.round(20 - Math.abs(index - focusedCard(value)) * 4));
   const card = (
-    <article
+    <motion.article
       className={styles.project}
       data-project-index={project.index}
+      initial={reducedMotion ? false : { opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.55, delay: reducedMotion ? 0 : index * 0.06 }}
     >
       <div className={styles.projectTop}>
         <span className={styles.projectType}>{project.type}</span>
@@ -50,7 +54,7 @@ function ProjectCard({ project, index, progress }: {
       <div className={styles.projectArtwork} aria-hidden="true">
         <Image src={assetPath(project.image)} alt="" fill sizes="(max-width: 700px) 36vw, 1px" />
       </div>
-    </article>
+    </motion.article>
   );
 
   return (
@@ -71,6 +75,7 @@ function ProjectCard({ project, index, progress }: {
 
 export default function ProjectsSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = useHydratedReducedMotion();
   const { scrollYProgress: progress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
@@ -79,7 +84,13 @@ export default function ProjectsSection() {
   return (
     <section className={styles.projectsSection} id="projects" aria-labelledby="projects-heading" ref={sectionRef}>
       <div className={styles.inner}>
-        <header className={styles.sectionHeading}>
+        <motion.header
+          className={styles.sectionHeading}
+          initial={reducedMotion ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div>
             <SectionLabel>Selected work</SectionLabel>
             <h2 className={styles.title} id="projects-heading">
@@ -90,7 +101,7 @@ export default function ProjectsSection() {
           <p className={styles.lede}>
             Websites and applications built with clean interfaces, thoughtful interactions, and solid engineering.
           </p>
-        </header>
+        </motion.header>
 
         <div className={styles.projectGrid} aria-label="Selected projects">
           {projects.map((project, index) => (
