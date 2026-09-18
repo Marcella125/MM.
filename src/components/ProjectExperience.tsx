@@ -121,7 +121,7 @@ export default function ProjectExperience({ project }: { project: ProjectKey }) 
     "--blue": data.color,
     "--blue-deep": data.color,
     "--logo-dot-display": "block",
-    "--logo-dot-color": project === "rushd" ? data.highlight : data.color,
+    "--logo-dot-color": project === "femi" ? data.color : data.highlight,
     "--footer-accent": "#ffffff",
     "--footer-background": data.principleBackground,
     "--footer-highlight": data.highlight,
