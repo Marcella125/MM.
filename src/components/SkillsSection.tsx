@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import { FaCss3Alt } from "react-icons/fa6";
 import {
   SiExpress,
@@ -92,7 +91,6 @@ export default function SkillsSection() {
             <article className={styles.card} key={group.number}>
               <div className={styles.cardTop}>
                 <span>{group.number}</span>
-                <ArrowUpRight aria-hidden="true" />
               </div>
               <div className={styles.cardBody}>
                 <h3>{group.title}</h3>

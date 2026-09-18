@@ -172,6 +172,13 @@ button {
   backdrop-filter: none;
 }
 
+@media (min-width: 841px) {
+  .site-header {
+    background: var(--background);
+    box-shadow: 0 1px 0 rgba(18, 56, 255, 0.12);
+  }
+}
+
 .logo {
   position: relative;
   display: inline-flex;
