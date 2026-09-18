@@ -287,19 +287,25 @@
 @media (prefers-reduced-motion: reduce) { .page *, .page *::before,.page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 
 /* Keep every project panel within Kira's light blue palette. */
-.page { --footer-accent: var(--blue); --footer-background: #bdd6ff; --footer-highlight: #3156a6; --logo-dot-display: block; --logo-dot-color: #82b8ff; background: #fff; }
+.page { --footer-accent: var(--blue); --footer-background: #bdd6ff; --footer-highlight: var(--blue); --logo-dot-display: block; --logo-dot-color: var(--blue); background: #fff; color: var(--blue); }
 .page :global(.site-header) { background: #fff; }
 .hero { background: #bdd6ff; color: var(--blue); }
 .heroGrid { background-image: linear-gradient(#1238ff24 1px,transparent 1px),linear-gradient(90deg,#1238ff24 1px,transparent 1px); }
 .heroTop,.heroBottom,.back,.heroBottom a,.hero h1,.eyebrow,.heroTags { color: var(--blue); }
-.hero h1 span { color: #3156a6; }
+.hero h1 span { color: var(--blue); }
 .heroTags span { border-color: #1238ff75; background: #ffffff80; }
 .hero a:focus-visible { outline-color: var(--blue); }
 .what,.built,.tech { background: #fff; }
-.pipelineSection { background: #dcecff; }
+.pipelineSection { background: #bdd6ff; }
+.what h2 > span:first-child,.whatWords > strong,.whatBottom p,.whatCopy p,.pipelineHeading p,.builtHeading p,.contribution,.contributionDetail,.techList strong { color: var(--blue); }
+.pipelineNode { background: #fff; }
+.nodeLight { background: var(--blue); box-shadow: 0 0 0 5px #bdd6ff; }
+.pipelineNode:last-child .nodeLight { background: #fff; box-shadow: 0 0 0 5px #bdd6ff; }
+.contribution:hover,.techList > div:hover { background: #bdd6ff; }
 .principle { background: #bdd6ff; color: var(--blue); }
 .principle .sectionMarker,.principle > p,.principle h2 em,.principle h2 > span { color: var(--blue); }
 .principleRule span { border-color: #1238ff75; }
+.ending { background: #bdd6ff; }
 @media (max-width: 700px) {
   .page :global(.primary-nav) { background: #fff; }
 }

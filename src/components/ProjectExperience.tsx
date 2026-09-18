@@ -16,7 +16,7 @@ type ProjectKey = "femi" | "rong-xing" | "rushd";
 const projects = {
   femi: {
     index: "02", title: "FEMI", category: "HEALTH TECHNOLOGY", subtitle: "AI-Powered Health Platform",
-    color: "#9f2058", wash: "#ffe1f2", base: "#ffcce6", highlight: "#ffd4e7", heroBackground: "#ffe1f2", heroForeground: "#4b2437", heroHighlight: "#9f2058", principleBackground: "#9f2058", intro: ["A MORE", "THOUGHTFUL", "HEALTH SPACE."],
+    color: "#9f2058", wash: "#ffe1f2", base: "#ffffff", highlight: "#ffe1f2", heroBackground: "#ffe1f2", heroForeground: "#9f2058", heroHighlight: "#9f2058", principleBackground: "#9f2058", intro: ["A MORE", "THOUGHTFUL", "HEALTH SPACE."],
     description: "A PCOS companion for tracking cycles, symptoms, and blood tests, with Bloom AI to help users explore their health data.",
     facets: ["PCOS CARE", "BLOOM AI", "FULL STACK"],
     contributions: [
@@ -35,7 +35,7 @@ const projects = {
   },
   "rong-xing": {
     index: "03", title: "RONG XING", category: "CORPORATE WEBSITE", subtitle: "Trading and Business Website",
-    color: "#1c2f4c", wash: "#dce5f3", base: "#c8d6eb", highlight: "#d4ae69", heroBackground: "#1c2f4c", heroForeground: "#ffffff", heroHighlight: "#d4ae69", principleBackground: "#1c2f4c", intro: ["BUSINESS", "WITHOUT", "BORDERS."],
+    color: "#1c2f4c", wash: "#d4ae69", base: "#ffffff", highlight: "#d4ae69", heroBackground: "#1c2f4c", heroForeground: "#ffffff", heroHighlight: "#d4ae69", principleBackground: "#1c2f4c", intro: ["BUSINESS", "WITHOUT", "BORDERS."],
     description: "A responsive company website presenting Guangzhou Rongxing's services, global reach, gallery, and contact information.",
     facets: ["GLOBAL TRADE", "MOTION", "RESPONSIVE"],
     contributions: [
@@ -54,7 +54,7 @@ const projects = {
   },
   rushd: {
     index: "04", title: "RUSHD", category: "RESEARCH & POLICY WEBSITE", subtitle: "Exploring technology, ethics, and Islamic thought",
-    color: "#007c80", wash: "#d9f3f0", base: "#bce7e1", highlight: "#53d8d0", heroBackground: "#081713", heroForeground: "#ffffff", heroHighlight: "#53d8d0", principleBackground: "#081713", intro: ["WHERE", "ETHICS MEETS", "INNOVATION."],
+    color: "#081713", wash: "#53d8d0", base: "#ffffff", highlight: "#53d8d0", heroBackground: "#081713", heroForeground: "#ffffff", heroHighlight: "#53d8d0", principleBackground: "#081713", intro: ["WHERE", "ETHICS MEETS", "INNOVATION."],
     description: "Rushd Center brings interdisciplinary research and policy into public view, examining emerging technologies through Islamic ethical thought and contemporary expertise.",
     facets: ["RESEARCH", "ETHICS", "TECHNOLOGY"],
     contributions: [
@@ -117,13 +117,13 @@ export default function ProjectExperience({ project }: { project: ProjectKey }) 
     "--blue": data.color,
     "--blue-deep": data.color,
     "--logo-dot-display": "block",
-    "--logo-dot-color": data.color,
+    "--logo-dot-color": project === "rushd" ? data.highlight : data.color,
     "--footer-accent": "#ffffff",
     "--footer-background": data.principleBackground,
     "--footer-highlight": data.highlight,
   } as CSSProperties;
 
-  return <main className={styles.page} style={theme}>
+  return <main className={styles.page} data-project={project} style={theme}>
     <Header />
 
     <section className={styles.hero} aria-labelledby="project-title">

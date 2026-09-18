@@ -8,7 +8,7 @@
 }
 .top,.bottom { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
 .top,.next > span,.all { font: 700 11px/1.3 var(--font-mono),monospace; letter-spacing: .1em; }
-.footer h2 { margin: clamp(44px,6vw,86px) 0 clamp(52px,7vw,96px); font-size: clamp(60px,8vw,125px); font-weight: 700; line-height: .86; letter-spacing: -.075em; }
+.footer.footer h2 { margin: clamp(44px,6vw,86px) 0 clamp(52px,7vw,96px); font-size: clamp(60px,8vw,125px); font-weight: 700; line-height: .92; letter-spacing: -.075em; }
 .footer h2 em { color: var(--footer-highlight,var(--footer-accent,var(--blue))); font-style: normal; }
 .bottom { align-items: end; padding-top: 25px; border-top: 2px solid var(--footer-accent,var(--blue)); }
 .next { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; color: var(--footer-accent,var(--blue)); text-decoration: none; }
@@ -21,7 +21,7 @@
 @media (max-width: 700px) {
   .footer { padding: clamp(48px,13vw,56px) 20px 36px; }
   .top,.next > span,.all { font-size: 9px; }
-  .footer h2 { margin: 32px 0 40px; font-size: clamp(48px,12vw,86px); }
+  .footer.footer h2 { margin: 36px 0 44px; font-size: clamp(42px,11vw,78px); line-height: .94; }
   .bottom { align-items: flex-start; }
   .next strong { font-size: clamp(26px,7vw,42px); }
 }

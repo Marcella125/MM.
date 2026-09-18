@@ -1,4 +1,4 @@
-.page { --page-pad-inline: clamp(20px,4vw,72px); --page-pad-block: 16px; width: 100%; overflow: clip; background: #fff; color: #080a14; }
+.page { --page-pad-inline: clamp(20px,4vw,72px); --page-pad-block: 16px; width: 100%; overflow: clip; background: #fff; color: var(--project-color); }
 .page :global(.site-header) { background: #fff; box-shadow: 0 1px 0 color-mix(in srgb,var(--project-color) 20%,transparent); }
 .page h1,.page h2,.page p { margin: 0; }
 .page a { text-decoration: none; }
@@ -28,9 +28,19 @@
 .overview h2 { display: flex; flex-direction: column; }
 .overview h2 .accentText { color: var(--project-color); }
 .overviewBottom { display: flex; justify-content: space-between; align-items: end; gap: 20px; }
-.overviewBottom p { max-width: 590px; color: #344154; font-size: clamp(18px,2vw,28px); line-height: 1.35; letter-spacing: -.04em; }
+.overviewBottom p { max-width: 590px; color: var(--project-color); font-size: clamp(18px,2vw,28px); line-height: 1.35; letter-spacing: -.04em; }
 
 .showcase { padding: 84px var(--page-pad-inline) 64px; background: var(--project-wash); }
+.page[data-project="rushd"] .showcase { border-top: 4px solid var(--project-highlight); background: #000; color: #fff; }
+.page[data-project="rushd"] .showcase .marker,
+.page[data-project="rushd"] .showcaseControls,
+.page[data-project="rushd"] .showcaseSlide figcaption,
+.page[data-project="rushd"] .showcaseTitle .liveLink { color: #fff; }
+.page[data-project="rushd"] .showcase h2 em { color: var(--project-highlight); }
+.page[data-project="rushd"] .showcaseControls button { border-color: var(--project-highlight); }
+.page[data-project="rushd"] .showcaseControls button:hover:not(:disabled) { background: var(--project-highlight); color: var(--project-color); }
+.page[data-project="rushd"] .showcaseRail:focus-visible { outline-color: var(--project-highlight); }
+.page[data-project="rushd"] .showcaseFrame { border-color: var(--project-highlight); box-shadow: 4px 4px 0 var(--project-highlight); }
 .showcaseHeading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin: 28px 0 26px; }
 .showcaseTitle { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; min-width: 0; }
 .showcaseTitle .liveLink { margin-top: 0; }
@@ -53,9 +63,9 @@
 .dnaHeading { display: flex; justify-content: space-between; align-items: end; gap: 30px; }
 .dna h2 { font-size: clamp(58px,7.4vw,122px); }
 .dna h2 em,.built h2 em,.tech h2 em { color: var(--project-color); font-style: normal; }
-.dnaHeading p { max-width: 230px; padding-bottom: 5px; color: #435471; font-size: 16px; line-height: 1.45; }
+.dnaHeading p { max-width: 230px; padding-bottom: 5px; color: var(--project-color); font-size: 16px; line-height: 1.45; }
 .dnaGrid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
-.dnaGrid > div { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; min-height: 190px; padding: 20px; border: 1px solid var(--project-color); background: #ffffffd9; color: var(--project-color); box-shadow: 4px 4px 0 var(--project-color); }
+.dnaGrid > div { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; min-height: 190px; padding: 20px; border: 1px solid var(--project-color); background: #fff; color: var(--project-color); box-shadow: 4px 4px 0 var(--project-color); }
 .dnaGrid > div > span { font-size: 11px; }
 .dnaGrid > div > span:last-child { align-self: flex-end; font-size: 28px; }
 .dnaGrid strong { overflow-wrap: anywhere; font-size: clamp(24px,3vw,46px); line-height: .95; letter-spacing: -.06em; }
@@ -63,14 +73,14 @@
 .builtLayout { display: flex; flex: 1; flex-direction: column; justify-content: center; gap: 34px; }
 .builtHeading { display: flex; justify-content: space-between; align-items: end; gap: 30px; }
 .built h2 { font-size: clamp(60px,7vw,122px); }
-.builtHeading p { max-width: 310px; color: #50617e; font-size: 16px; line-height: 1.45; }
+.builtHeading p { max-width: 310px; color: var(--project-color); font-size: 16px; line-height: 1.45; }
 .contributionGrid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 12px; }
-.contribution { display: flex; flex-direction: column; align-items: stretch; min-width: 0; min-height: 215px; padding: 18px; border: 1.5px solid var(--project-color); background: white; color: #080a14; text-align: left; cursor: pointer; box-shadow: 4px 4px 0 var(--project-color); transition: background .25s,transform .25s,box-shadow .25s; }
+.contribution { display: flex; flex-direction: column; align-items: stretch; min-width: 0; min-height: 215px; padding: 18px; border: 1.5px solid var(--project-color); background: #fff; color: var(--project-color); text-align: left; cursor: pointer; box-shadow: 4px 4px 0 var(--project-color); transition: background .25s,transform .25s,box-shadow .25s; }
 .contribution:hover { transform: translate(-3px,-3px); box-shadow: 7px 7px 0 var(--project-color); }
 .contribution[aria-expanded="true"] { background: var(--project-wash); }
 .contribution > span { color: var(--project-color); font-size: 10px; }
 .contribution strong { margin-top: auto; font-size: clamp(20px,2.1vw,31px); line-height: 1.03; letter-spacing: -.055em; }
-.contribution small { max-height: 0; overflow: hidden; color: #435471; font-size: 13px; line-height: 1.35; transition: max-height .3s,margin-top .3s; }
+.contribution small { max-height: 0; overflow: hidden; color: var(--project-color); font-size: 13px; line-height: 1.35; transition: max-height .3s,margin-top .3s; }
 .contribution[aria-expanded="true"] small { max-height: 70px; margin-top: 12px; }
 
 .principle { background: var(--project-principle-background); color: #fff; }
@@ -83,7 +93,7 @@
 .techContent { width: 100%; }
 .techList { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0 35px; }
 .techList > div { display: flex; align-items: center; gap: 15px; padding: 25px 0; border-bottom: 1px solid color-mix(in srgb,var(--project-color) 35%,transparent); color: var(--project-color); font-size: 10px; }
-.techList strong { margin-right: auto; color: #080a14; font: 600 clamp(17px,1.8vw,26px) var(--font-ui),sans-serif; letter-spacing: -.04em; }
+.techList strong { margin-right: auto; color: var(--project-color); font: 600 clamp(17px,1.8vw,26px) var(--font-ui),sans-serif; letter-spacing: -.04em; }
 .techList svg { flex: none; }
 .liveLink { display: inline-flex; align-items: center; align-self: flex-start; gap: 9px; color: var(--project-color); border-bottom: 2px solid currentColor; padding-bottom: 8px; font-size: 11px; }
 
