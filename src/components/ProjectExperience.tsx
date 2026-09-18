@@ -16,7 +16,7 @@ type ProjectKey = "femi" | "rong-xing" | "rushd";
 const projects = {
   femi: {
     index: "02", title: "FEMI", category: "HEALTH TECHNOLOGY", subtitle: "AI-Powered Health Platform",
-    color: "#9f2058", wash: "#ffe1f2", base: "#ffffff", highlight: "#ffe1f2", heroBackground: "#ffe1f2", heroForeground: "#9f2058", heroHighlight: "#9f2058", principleBackground: "#9f2058", intro: ["A MORE", "THOUGHTFUL", "HEALTH SPACE."],
+    color: "#9f2058", wash: "#ffe1f2", base: "#ffffff", highlight: "#ffe1f2", heroBackground: "#9f2058", heroForeground: "#ffffff", heroHighlight: "#ffe1f2", principleBackground: "#9f2058", intro: ["A MORE", "THOUGHTFUL", "HEALTH SPACE."],
     description: "A PCOS companion with a home dashboard, cycle calendar, health insights, reminders, blood test tools, and Bloom AI to help users explore their health data.",
     facets: ["PCOS CARE", "BLOOM AI", "FULL STACK"],
     contributions: [

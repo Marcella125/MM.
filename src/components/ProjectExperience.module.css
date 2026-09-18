@@ -14,9 +14,10 @@
 .eyebrow { color: var(--project-hero-foreground); font-size: 11px; }
 .hero h1 { max-width: 100%; margin: 26px 0 22px -.07em; color: var(--project-hero-foreground); font-size: clamp(80px,min(19vw,30svh),350px); font-weight: 700; line-height: .78; letter-spacing: -.09em; }
 .hero h1 span { color: var(--project-hero-highlight); }
-.page[data-project="femi"] .hero h1 { color: #fff; -webkit-text-stroke: 2px var(--project-color); text-shadow: 3px 4px 0 var(--project-color); }
+.page[data-project="femi"] .hero h1 { color: #fff; }
+.page[data-project="femi"] .hero h1 span { color: var(--project-hero-highlight); -webkit-text-stroke: 0; text-shadow: none; }
 .page[data-project="rong-xing"] .hero h1,
-.page[data-project="rushd"] .hero h1 { color: #fff; -webkit-text-stroke: 2px var(--project-hero-highlight); text-shadow: 3px 4px 0 var(--project-color); }
+.page[data-project="rushd"] .hero h1 { color: #fff; }
 .heroMain > p { font-size: clamp(19px,2vw,30px); font-weight: 600; letter-spacing: -.04em; }
 .heroTags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; color: var(--project-hero-foreground); font-size: 10px; }
 .heroTags span { padding: 9px 12px; border: 1px solid currentColor; border-radius: 20px; background: #ffffff24; }
