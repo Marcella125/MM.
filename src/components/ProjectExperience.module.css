@@ -184,6 +184,10 @@
   .techList > div { padding: clamp(19px,3svh,28px) 0; }
   .liveLink { margin-top: 24px; }
 }
+@media (min-width: 1200px) {
+  .page[data-project="femi"] .contributionGrid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .page[data-project="femi"] .contribution { min-height: clamp(128px,17svh,158px); }
+}
 @media (max-width: 1000px) {
   .overview,.dna,.built,.principle,.tech {
     justify-content: flex-start;

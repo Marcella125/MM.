@@ -17,12 +17,16 @@ const projects = {
   femi: {
     index: "02", title: "FEMI", category: "HEALTH TECHNOLOGY", subtitle: "AI-Powered Health Platform",
     color: "#9f2058", wash: "#ffe1f2", base: "#ffffff", highlight: "#ffe1f2", heroBackground: "#ffe1f2", heroForeground: "#9f2058", heroHighlight: "#9f2058", principleBackground: "#9f2058", intro: ["A MORE", "THOUGHTFUL", "HEALTH SPACE."],
-    description: "A PCOS companion for tracking cycles, symptoms, and blood tests, with Bloom AI to help users explore their health data.",
+    description: "A PCOS companion with a home dashboard, cycle calendar, health insights, reminders, blood test tools, and Bloom AI to help users explore their health data.",
     facets: ["PCOS CARE", "BLOOM AI", "FULL STACK"],
     contributions: [
-      { title: "Cycle and symptom tracking", detail: "Built daily logs, cycle views, reminders, and monthly recaps." },
+      { title: "Home dashboard", detail: "Brought daily check-ins, cycle context, and key health information into one view." },
+      { title: "Calendar and tracking", detail: "Built cycle views and daily logs for symptoms and health patterns." },
+      { title: "Health insights", detail: "Turned logged activity into readable trends and monthly recaps." },
       { title: "Bloom AI", detail: "Connected a Gemini-powered assistant to the user's logged health context." },
+      { title: "Reminders", detail: "Added reminders to support regular check-ins and health routines." },
       { title: "Blood test insights", detail: "Built upload, marker extraction, interpretation, and test comparison flows." },
+      { title: "Settings", detail: "Added a dedicated place for account and experience preferences." },
     ],
     principle: ["CARE", "WITH", "CLARITY."], principleNote: "Technology should make a complex space feel easier to navigate.",
     tech: ["React", "Vite", "Tailwind CSS", "Express", "PostgreSQL", "Google Gemini"],

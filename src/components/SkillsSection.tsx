@@ -8,7 +8,7 @@ import {
   SiFramer,
   SiGit,
   SiGooglegemini,
-  SiGreensock,
+  SiGsap,
   SiHtml5,
   SiJavascript,
   SiNextdotjs,
@@ -21,7 +21,9 @@ import {
   SiTypescript,
   SiVite,
 } from "react-icons/si";
-import { VscAzure, VscOpenai } from "react-icons/vsc";
+import { VscAzure } from "react-icons/vsc";
+import AzureAISearchIcon from "./icons/AzureAISearchIcon";
+import AzureOpenAIIcon from "./icons/AzureOpenAIIcon";
 import SectionLabel from "./SectionLabel";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import styles from "./SkillsSection.module.css";
@@ -59,8 +61,8 @@ const skillGroups = [
     description: "Useful intelligence, connected to real products.",
     skills: [
       { name: "Azure", Icon: VscAzure, color: "#0078d4" },
-      { name: "Azure OpenAI", Icon: VscOpenai, color: "#087f70" },
-      { name: "Azure AI Search", Icon: VscAzure, color: "#0078d4" },
+      { name: "Azure OpenAI", Icon: AzureOpenAIIcon, color: "#0078d4" },
+      { name: "Azure AI Search", Icon: AzureAISearchIcon, color: "#0078d4" },
       { name: "Google Gemini", Icon: SiGooglegemini, color: "#8867d8" },
     ],
   },
@@ -70,7 +72,7 @@ const skillGroups = [
     description: "Details that make digital work feel alive.",
     skills: [
       { name: "Framer Motion", Icon: SiFramer, color: "#171717" },
-      { name: "GSAP", Icon: SiGreensock, color: "#72a712" },
+      { name: "GSAP", Icon: SiGsap, color: "#0b8f3b" },
       { name: "Vite", Icon: SiVite, color: "#8163e8" },
       { name: "Git", Icon: SiGit, color: "#f05032" },
       { name: "Shopify", Icon: SiShopify, color: "#7ab55c" },
