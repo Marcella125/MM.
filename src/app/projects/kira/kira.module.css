@@ -113,14 +113,14 @@
   .pipelineHeading { flex-direction: column; align-items: start; gap: 22px; margin: 34px 0 36px; }
   .pipelineHeading h2 { font-size: clamp(38px,11.25vw,54px); line-height: .9; letter-spacing: -.065em; }
   .pipelineHeading p { max-width: 240px; padding: 0 0 0 13px; border-left: 2px solid var(--blue); font-size: 14px; }
-  .pipelineTrack { grid-template-columns: 1fr; gap: 0; padding-left: 0; border-top: 1px solid #1238ff70; }
+  .pipelineTrack { grid-template-columns: 1fr; gap: 10px; padding-left: 0; border-top: 0; }
   .connection { display: none; }
-  .pipelineNode { min-height: 78px; display: grid; grid-template-columns: 34px minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 16px 4px; border: 0; border-bottom: 1px solid #1238ff70; background: transparent; box-shadow: none; }
+  .pipelineNode { min-height: 76px; display: grid; grid-template-columns: 30px minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 14px; border: 1px solid var(--blue); border-radius: 8px; background: #fff; box-shadow: none; }
   .pipelineNode .nodeLight { display: none; }
-  .nodeIndex { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid currentColor; border-radius: 50%; }
-  .pipelineNode strong { margin: 0; font-size: 20px; line-height: 1; }
-  .pipelineNode small { margin: 0; font-size: 8px; }
-  .pipelineNode:last-child { margin-top: 10px; padding-inline: 14px; border: 0; background: var(--blue); color: white; }
+  .nodeIndex { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid currentColor; border-radius: 50%; }
+  .pipelineNode strong { margin: 0; font-size: clamp(16px, 4.6vw, 19px); line-height: 1.15; letter-spacing: -.035em; }
+  .pipelineNode small { margin: 0; font-size: 9px; line-height: 1.2; text-align: right; white-space: nowrap; opacity: 1; }
+  .pipelineNode:last-child { margin-top: 0; border-color: var(--blue); background: var(--blue); color: #fff; }
   .pipelineNode { opacity: 1 !important; transform: none !important; }
   .pipelineFooter { display: none; }
   .builtLayout { gap: 22px; margin-top: 28px; }.builtHeading p { font-size: 14px; }.contribution { min-height: 78px; }.contribution strong { font-size: 21px; }
@@ -128,7 +128,7 @@
   .tech h2 { margin: 42px 0; }.techTrack span { font-size: 35px; }.techList { grid-template-columns: 1fr 1fr; gap: 0 15px; margin-top: 55px; }.techList > div { gap: 7px; padding: 16px 0; font-size: 8px; }.techList strong { font-size: 13px; }.techList svg { width: 13px; }
   .ending { min-height: 100svh; padding-top: 90px; }.ending h2 { font-size: clamp(48px,12vw,86px); }.nextProject { font-size: 10px; }.nextProject span { font-size: 28px; }
 }
-@media (max-width: 380px) { .hero h1 { font-size: 28vw; }.pipelineNode strong { font-size: 19px; }.techList { grid-template-columns: 1fr; } }
+@media (max-width: 380px) { .hero h1 { font-size: 28vw; }.techList { grid-template-columns: 1fr; } }
 
 /* The seven contributions form one balanced, viewport-sized panel. */
 .builtLayout { display: flex; flex-direction: column; justify-content: center; align-items: stretch; gap: clamp(24px,3svh,38px); margin-top: 34px; }

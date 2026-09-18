@@ -4,6 +4,7 @@ import Hero from "@/src/components/Hero";
 import ProjectStrip from "@/src/components/ProjectStrip";
 import ProjectsSection from "@/src/components/ProjectsSection";
 import ContactSection from "@/src/components/ContactSection";
+import SkillsSection from "@/src/components/SkillsSection";
 import CinematicSectionStack from "@/src/components/CinematicSectionStack";
 import stackStyles from "@/src/components/CinematicSectionStack.module.css";
 
@@ -17,6 +18,7 @@ export default function Home() {
           <ProjectStrip />
         </div>
         <AboutSection />
+        <SkillsSection />
         <ProjectsSection />
         <ContactSection />
       </CinematicSectionStack>

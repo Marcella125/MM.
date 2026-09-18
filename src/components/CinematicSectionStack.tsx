@@ -18,8 +18,8 @@ import { StoryScrollProvider } from "./StoryScroll";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import styles from "./CinematicSectionStack.module.css";
 
-const sectionIds = ["work", "about", "projects", "contact"];
-const sceneDurations: number[] = [1.35, 4.3, 5, 0];
+const sectionIds = ["work", "about", "skills", "projects", "contact"];
+const sceneDurations: number[] = [1.35, 4.3, 1.4, 5, 0];
 const totalScrollUnits = sceneDurations.reduce((sum, duration) => sum + duration, 0);
 const sceneStarts = sceneDurations.map((_, index) =>
   sceneDurations.slice(0, index).reduce((sum, duration) => sum + duration, 0),

@@ -1,0 +1,67 @@
+.section {
+  min-height: calc(100svh - var(--header-clearance));
+  padding: clamp(58px, 8vh, 100px) var(--page-pad-inline) clamp(64px, 9vh, 110px);
+  background: var(--background);
+  color: #070707;
+  scroll-margin-top: var(--header-clearance);
+}
+
+.inner { width: min(100%, 1460px); margin-inline: auto; }
+
+.heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(220px, 0.7fr);
+  align-items: end;
+  gap: 36px;
+  margin-bottom: clamp(30px, 5vh, 56px);
+}
+
+.heading h2 {
+  margin: 18px 0 0;
+  font-family: var(--font-ui), Arial, sans-serif;
+  font-size: var(--editorial-heading-size);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+}
+
+.heading h2 span { color: var(--blue); }
+.heading > p { max-width: 400px; margin: 0 0 4px; color: #435068; font-size: clamp(13px, 1.1vw, 17px); line-height: 1.6; }
+
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 22px); }
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 248px;
+  padding: clamp(20px, 2.2vw, 30px);
+  overflow: hidden;
+  border: 1px solid #dce9fb;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #fff 0%, #f5faff 100%);
+  box-shadow: 0 8px 28px rgba(46, 98, 163, 0.045);
+}
+
+.cardTop { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; color: #4d71b9; font: 700 10px var(--font-mono), monospace; letter-spacing: 0.08em; }
+.cardTop svg { width: 19px; height: 19px; stroke-width: 1.4; }
+.cardBody { display: flex; flex: 1; flex-direction: column; }
+.card h3 { margin: clamp(22px, 3vh, 34px) 0 6px; font-size: clamp(28px, 2.8vw, 42px); font-weight: 500; line-height: 1; letter-spacing: -0.055em; text-transform: uppercase; }
+.cardBody > p { max-width: 360px; margin: 0; color: #55627d; font: 500 clamp(11px, 0.9vw, 13px)/1.5 var(--font-mono), monospace; }
+.card ul { display: flex; flex-wrap: wrap; column-gap: 18px; row-gap: 13px; margin: auto 0 0; padding: 20px 0 0; list-style: none; }
+.card li { display: inline-flex; align-items: center; gap: 7px; color: #2c3850; font: 500 10px/1.2 var(--font-mono), monospace; white-space: nowrap; }
+.card li svg { width: 16px; height: 16px; flex: none; }
+
+@media (max-width: 700px) {
+  .section { min-height: 0; padding: 54px 16px 72px; }
+  .heading { grid-template-columns: 1fr; gap: 18px; margin-bottom: 28px; }
+  .heading h2 { margin-top: 12px; font-size: clamp(48px, 12vw, 70px); }
+  .heading > p { max-width: 470px; font-size: 13px; }
+  .grid { grid-template-columns: 1fr; gap: 14px; }
+  .card { min-height: 220px; padding: 20px; }
+  .card h3 { margin-top: 22px; font-size: 32px; }
+  .card ul { padding-top: 17px; }
+  .card li { font-size: 9px; }
+}
