@@ -12,8 +12,8 @@
 .heroMain { display: flex; align-items: center; margin: clamp(54px,7vw,100px) 0 clamp(44px,6vw,82px); }
 .heroCopy { position: relative; z-index: 2; min-width: 0; }
 .eyebrow { display: inline-block; color: var(--blue); font-size: 11px; }
-.hero h1 { margin: 26px 0 22px -.07em; color: var(--blue); font-size: clamp(110px,min(23vw,37svh),420px); font-weight: 700; line-height: .76; letter-spacing: -.095em; white-space: nowrap; }
-.hero h1 span { color: var(--blue); }
+.hero h1 { margin: 26px 0 22px; color: var(--blue); font-size: clamp(100px,min(21vw,35svh),390px); font-weight: 700; line-height: .82; letter-spacing: -.045em; white-space: nowrap; }
+.hero h1 span,.accentDot { color: var(--kira-accent); text-shadow: 1px 1px 0 var(--blue), -1px -1px 0 var(--blue), 1px -1px 0 var(--blue), -1px 1px 0 var(--blue); }
 .heroCopy p { font-size: clamp(19px,2vw,30px); font-weight: 600; letter-spacing: -.045em; }
 .heroTags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; font-size: 10px; color: var(--blue); }
 .heroTags span { padding: 9px 12px; border: 1px solid #1238ff75; border-radius: 20px; background: #ffffff80; }
@@ -99,7 +99,7 @@
   .heroTop > span { text-align: right; }
   .heroMain { position: relative; display: flex; align-items: center; }
   .heroCopy { width: 100%; }
-  .hero h1 { font-size: 29vw; }
+  .hero h1 { font-size: 26vw; }
   .heroCopy p { max-width: 300px; font-size: 18px; }
   .heroTags { margin-top: 22px; font-size: 9px; }
   .heroBottom { align-items: end; }
@@ -128,7 +128,7 @@
   .tech h2 { margin: 42px 0; }.techTrack span { font-size: 35px; }.techList { grid-template-columns: 1fr 1fr; gap: 0 15px; margin-top: 55px; }.techList > div { gap: 7px; padding: 16px 0; font-size: 8px; }.techList strong { font-size: 13px; }.techList svg { width: 13px; }
   .ending { min-height: 100svh; padding-top: 90px; }.ending h2 { font-size: clamp(48px,12vw,86px); }.nextProject { font-size: 10px; }.nextProject span { font-size: 28px; }
 }
-@media (max-width: 380px) { .hero h1 { font-size: 28vw; }.techList { grid-template-columns: 1fr; } }
+@media (max-width: 380px) { .hero h1 { font-size: 25vw; }.techList { grid-template-columns: 1fr; } }
 
 /* The seven contributions form one balanced, viewport-sized panel. */
 .builtLayout { display: flex; flex-direction: column; justify-content: center; align-items: stretch; gap: clamp(24px,3svh,38px); margin-top: 34px; }
@@ -287,13 +287,15 @@
 @media (prefers-reduced-motion: reduce) { .page *, .page *::before,.page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 
 /* Keep every project panel within Kira's light blue palette. */
-.page { --footer-accent: var(--blue); --footer-background: #bdd6ff; --footer-highlight: var(--blue); --logo-dot-display: block; --logo-dot-color: var(--blue); background: #fff; color: var(--blue); }
+.page { --kira-accent: #d7f40c; --footer-accent: var(--blue); --footer-background: #bdd6ff; --footer-highlight: var(--blue); --logo-dot-display: block; --logo-dot-color: var(--blue); background: #fff; color: var(--blue); }
 .page :global(.site-header) { background: #fff; }
 .hero { background: #bdd6ff; color: var(--blue); }
 .heroGrid { background-image: linear-gradient(#1238ff24 1px,transparent 1px),linear-gradient(90deg,#1238ff24 1px,transparent 1px); }
-.heroTop,.heroBottom,.back,.heroBottom a,.hero h1,.eyebrow,.heroTags { color: var(--blue); }
-.hero h1 span { color: var(--blue); }
+.heroTop,.heroBottom,.back,.heroBottom a,.eyebrow,.heroTags { color: var(--blue); }
+.hero h1 { color: #fff; -webkit-text-stroke: 2px var(--blue); text-shadow: 3px 4px 0 var(--blue); }
+.hero h1 span { display: inline-block; margin-left: .035em; color: var(--kira-accent); }
 .heroTags span { border-color: #1238ff75; background: #ffffff80; }
+.heroTags span:nth-child(2) { border-color: var(--blue); background: var(--kira-accent); }
 .hero a:focus-visible { outline-color: var(--blue); }
 .what,.built,.tech { background: #fff; }
 .pipelineSection { background: #bdd6ff; }
@@ -301,11 +303,14 @@
 .pipelineNode { background: #fff; }
 .nodeLight { background: var(--blue); box-shadow: 0 0 0 5px #bdd6ff; }
 .pipelineNode:last-child .nodeLight { background: #fff; box-shadow: 0 0 0 5px #bdd6ff; }
+.pipelineNode:last-child .nodeLight { background: var(--kira-accent); }
 .contribution:hover,.techList > div:hover { background: #bdd6ff; }
 .principle { background: #bdd6ff; color: var(--blue); }
 .principle .sectionMarker,.principle > p,.principle h2 em,.principle h2 > span { color: var(--blue); }
 .principleRule span { border-color: #1238ff75; }
+.principleRule span:last-child { border-color: var(--blue); background: var(--kira-accent); }
 .ending { background: #bdd6ff; }
+.techList > div:nth-child(3) { box-shadow: 4px 4px 0 var(--kira-accent); }
 @media (max-width: 700px) {
   .page :global(.primary-nav) { background: #fff; }
 }
