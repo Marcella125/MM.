@@ -53,10 +53,10 @@
 .projectLink:focus-visible .project { border-color: #070707; }
 
 .project {
-  --card-background: #c8dcff;
+  --card-background: #f9fcff;
   --card-text: #071c4e;
   --card-muted: #344154;
-  --card-tag-background: rgba(255, 255, 255, 0.8);
+  --card-tag-background: #f3f9ff;
   --card-line: rgba(18, 56, 255, 0.3);
   --card-secondary: #d7f40c;
   position: relative;
@@ -111,7 +111,7 @@
   .lede { max-width: 420px; margin-top: clamp(28px, 5vh, 48px); font-size: clamp(14px, 1.1vw, 17px); }
   .projectGrid { width: 100%; padding: 8px 12px 12px; isolation: isolate; }
   .projectReveal { width: 100%; height: auto; max-height: 100%; aspect-ratio: 16 / 9; transform-origin: center center; }
-  .project { padding: clamp(24px, 2.2vw, 36px); border: 0; border-radius: 14px; }
+  .project { padding: clamp(24px, 2.2vw, 36px); border-radius: 14px; }
   .projectTop { padding-bottom: 16px; border-bottom: 1px solid var(--card-line); }
   .projectContent { width: 100%; margin-top: 24px; }
   .projectContent h3 { font-size: clamp(54px, 4.4vw, 76px); }
