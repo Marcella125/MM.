@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 import type { CSSProperties } from "react";
 import { assetPath } from "@/src/lib/paths";
+import SoundProvider from "@/src/components/SoundProvider";
 import "./globals.css";
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -32,7 +33,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${ibmPlexMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
       style={cursorStyles}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <SoundProvider>{children}</SoundProvider>
+      </body>
     </html>
   );
 }

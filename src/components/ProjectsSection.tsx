@@ -1,50 +1,27 @@
 ﻿"use client";
 
-import { useRef, type CSSProperties } from "react";
+import { useRef } from "react";
 import { motion, type MotionValue, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import SectionLabel from "./SectionLabel";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
-import { assetPath } from "@/src/lib/paths";
 import Link from "next/link";
+import { assetPath } from "@/src/lib/paths";
 import styles from "./PortfolioSections.module.css";
 
 const projects = [
-  { index: "01", title: "Kira", type: "AI product", copy: "AI Knowledge Assistant", tags: ["AI", "Azure", "Full Stack"] },
-  { index: "02", title: "Femi", type: "Health technology", copy: "AI-Powered Health Platform", tags: ["Health Tech", "AI", "Full Stack"] },
-  { index: "03", title: "Rong Xing", type: "Corporate website", copy: "Trading and business website", tags: ["Web", "Frontend", "Responsive"] },
-  { index: "04", title: "Rushd", type: "Research & policy", copy: "Islamic ethics & technology", tags: ["Bilingual", "Interactive", "RTL"] },
+  { index: "01", title: "Kira", type: "AI product", copy: "AI Knowledge Assistant", tags: ["AI", "Azure", "Full Stack"], image: "/assets/kira.png" },
+  { index: "02", title: "Femi", type: "Health technology", copy: "AI-Powered Health Platform", tags: ["Health Tech", "AI", "Full Stack"], image: "/assets/femi.png" },
+  { index: "03", title: "Rong Xing", type: "Corporate website", copy: "Trading and business website", tags: ["Web", "Frontend", "Responsive"], image: "/assets/rong%20xing.png" },
+  { index: "04", title: "Rushd", type: "Research & policy", copy: "Islamic ethics & technology", tags: ["Bilingual", "Interactive", "RTL"], image: "/assets/rushd.png" },
 ] as const;
 
-const cardStops = [
-  [0, 0.20, 0.28, 1],
-  [0, 0.20, 0.28, 0.43, 0.51, 1],
-  [0, 0.43, 0.51, 0.66, 0.74, 1],
-  [0, 0.66, 0.74, 1],
-];
-const opacityStops = [
-  [1, 1, 0, 0],
-  [0, 0, 1, 1, 0, 0],
-  [0, 0, 1, 1, 0, 0],
-  [0, 0, 1, 1],
-];
-const offsetStops = [
-  [0, 0, -56, -56],
-  [56, 56, 0, 0, -56, -56],
-  [56, 56, 0, 0, -56, -56],
-  [56, 56, 0, 0],
-];
-const scaleStops = [
-  [1, 1, 0.95, 0.95],
-  [0.95, 0.95, 1, 1, 0.95, 0.95],
-  [0.95, 0.95, 1, 1, 0.95, 0.95],
-  [0.95, 0.95, 1, 1],
-];
-const blurStops = [
-  [0, 0, 9, 9],
-  [9, 9, 0, 0, 9, 9],
-  [9, 9, 0, 0, 9, 9],
-  [9, 9, 0, 0],
-];
+const focusedCard = (progress: number) => progress * (projects.length - 1);
+
+function stackOffset(distance: number) {
+  const depth = Math.abs(distance);
+  return Math.sign(distance) * (depth <= 1 ? depth * 190 : 190 + (depth - 1) * 80);
+}
 
 function ProjectCard({ project, index, progress }: {
   project: (typeof projects)[number];
@@ -52,27 +29,15 @@ function ProjectCard({ project, index, progress }: {
   progress: MotionValue<number>;
 }) {
   const reducedMotion = useHydratedReducedMotion();
-  const opacity = useTransform(progress, cardStops[index], opacityStops[index]);
-  const y = useTransform(progress, cardStops[index], offsetStops[index]);
-  const scale = useTransform(progress, cardStops[index], scaleStops[index]);
-  const blur = useTransform(progress, cardStops[index], blurStops[index]);
-  const filter = useTransform(blur, (value) => `blur(${value}px)`);
-  const pointerEvents = useTransform(opacity, (value) => value > 0.8 ? "auto" : "none");
-  const imagePath = index === 0
-    ? "/assets/kira.png"
-    : index === 1
-      ? "/assets/femi.png"
-      : index === 2
-        ? "/assets/rong%20xing.png"
-        : "/assets/rushd.png";
+  const y = useTransform(progress, (value) => stackOffset(index - focusedCard(value)));
+  const scale = useTransform(progress, (value) => 1 - Math.min(Math.abs(index - focusedCard(value)), 1) * 0.2);
+  const zIndex = useTransform(progress, (value) => Math.round(20 - Math.abs(index - focusedCard(value)) * 4));
   const card = (
     <article
       className={styles.project}
       data-project-index={project.index}
-      style={imagePath ? { "--project-image": `url("${assetPath(imagePath)}")` } as CSSProperties : undefined}
     >
       <div className={styles.projectTop}>
-        <span className={styles.projectNumber}>{project.index}</span>
         <span className={styles.projectType}>{project.type}</span>
       </div>
       <div className={styles.projectContent}>
@@ -82,6 +47,9 @@ function ProjectCard({ project, index, progress }: {
           {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
         </div>
       </div>
+      <div className={styles.projectArtwork} aria-hidden="true">
+        <Image src={assetPath(project.image)} alt="" fill sizes="(max-width: 700px) 36vw, 1px" />
+      </div>
     </article>
   );
 
@@ -89,12 +57,9 @@ function ProjectCard({ project, index, progress }: {
     <motion.div
       className={styles.projectReveal}
       style={{
-        opacity,
         y: reducedMotion ? 0 : y,
         scale: reducedMotion ? 1 : scale,
-        filter: reducedMotion ? "none" : filter,
-        pointerEvents,
-        zIndex: index + 1,
+        zIndex,
       }}
     >
       <Link className={styles.projectLink} href={`/projects/${project.index === "03" ? "rong-xing" : project.title.toLowerCase()}`} aria-label={`Explore ${project.title} project`}>

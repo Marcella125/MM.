@@ -29,6 +29,12 @@ html {
   scrollbar-width: none;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after {
+    cursor: var(--cursor-plane), auto !important;
+  }
+}
+
 body {
   min-height: 100%;
   margin: 0;

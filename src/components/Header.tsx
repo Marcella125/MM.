@@ -14,9 +14,10 @@ import {
   X,
 } from "lucide-react";
 import type { MouseEvent } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { assetPath, pagePath } from "@/src/lib/paths";
+import { useEffect, useState } from "react";
+import { assetPath } from "@/src/lib/paths";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
+import { useSound } from "./SoundProvider";
 
 const navItems = [
   { label: "HOME", index: "01", href: "#work", Icon: Code2 },
@@ -26,18 +27,9 @@ const navItems = [
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
-const backgroundAudioSrc = assetPath(
-  "/audio/ALLDAY%20PROJECT%20%E2%80%93%20FAMOUS%20_%20Instrumental.mp3",
-);
-const targetVolume = 0.2;
-const fadeDuration = 450;
-const initialAudioStartTime = 0;
 const spring = { stiffness: 180, damping: 18, mass: 0.5 };
 const waveformBars = Array.from({ length: 11 });
-
-function clampVolume(volume: number) {
-  return Math.min(Math.max(volume, 0), 1);
-}
+const MotionLink = motion.create(Link);
 
 function supportsHover() {
   return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -58,117 +50,12 @@ function scrollToPageTop() {
 export default function Header() {
   const isHome = usePathname() === "/";
   const prefersReducedMotion = useHydratedReducedMotion();
-  const [isSoundOn, setIsSoundOn] = useState(false);
+  const { isSoundOn, toggleSound } = useSound();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const fadeFrameRef = useRef<number | null>(null);
-  const hasStartedAudioRef = useRef(false);
   const soundX = useMotionValue(0);
   const soundY = useMotionValue(0);
   const smoothSoundX = useSpring(soundX, spring);
   const smoothSoundY = useSpring(soundY, spring);
-
-  const cancelFade = useCallback(() => {
-    if (fadeFrameRef.current === null) return;
-
-    window.cancelAnimationFrame(fadeFrameRef.current);
-    fadeFrameRef.current = null;
-  }, []);
-
-  const fadeVolume = useCallback(
-    (
-      audio: HTMLAudioElement,
-      fromVolume: number,
-      toVolume: number,
-      onComplete?: () => void,
-    ) => {
-      const startTime = performance.now();
-
-      cancelFade();
-
-      function tick(now: number) {
-        const progress = Math.min(
-          Math.max((now - startTime) / fadeDuration, 0),
-          1,
-        );
-        const easedProgress = 1 - Math.pow(1 - progress, 3);
-
-        audio.volume = clampVolume(
-          fromVolume + (toVolume - fromVolume) * easedProgress,
-        );
-
-        if (progress < 1) {
-          fadeFrameRef.current = window.requestAnimationFrame(tick);
-          return;
-        }
-
-        fadeFrameRef.current = null;
-        onComplete?.();
-      }
-
-      fadeFrameRef.current = window.requestAnimationFrame(tick);
-    },
-    [cancelFade],
-  );
-
-  const getAudio = useCallback(() => {
-    if (audioRef.current) return audioRef.current;
-
-    const audio = new Audio(backgroundAudioSrc);
-
-    audio.loop = true;
-    audio.preload = "auto";
-    audio.volume = 0;
-    audioRef.current = audio;
-
-    return audio;
-  }, []);
-
-  const stopSound = useCallback(() => {
-    const audio = audioRef.current;
-
-    if (!audio) return;
-
-    setIsSoundOn(false);
-    fadeVolume(audio, audio.volume, 0, () => {
-      audio.pause();
-    });
-  }, [fadeVolume]);
-
-  const startSound = useCallback(async () => {
-    const audio = getAudio();
-
-    if (!audio.paused) {
-      cancelFade();
-      setIsSoundOn(true);
-      fadeVolume(audio, audio.volume, targetVolume);
-      return;
-    }
-
-    if (!hasStartedAudioRef.current) {
-      audio.currentTime = initialAudioStartTime;
-    }
-
-    audio.volume = 0;
-
-    try {
-      await audio.play();
-      hasStartedAudioRef.current = true;
-      setIsSoundOn(true);
-      fadeVolume(audio, audio.volume, targetVolume);
-    } catch {
-      setIsSoundOn(false);
-    }
-  }, [cancelFade, fadeVolume, getAudio]);
-
-  const toggleSound = useCallback(() => {
-    if (isSoundOn) {
-      stopSound();
-      return;
-    }
-
-    void startSound();
-  }, [isSoundOn, startSound, stopSound]);
 
   function handleSoundMouseMove(event: MouseEvent<HTMLButtonElement>) {
     if (prefersReducedMotion || !supportsHover()) return;
@@ -219,13 +106,6 @@ export default function Header() {
   }
 
   useEffect(() => {
-    return () => {
-      cancelFade();
-      audioRef.current?.pause();
-    };
-  }, [cancelFade]);
-
-  useEffect(() => {
     document.body.classList.toggle("is-menu-open", isMenuOpen);
 
     return () => {
@@ -262,9 +142,9 @@ export default function Header() {
         id="primary-navigation"
       >
         {navItems.map(({ label, index, href, Icon }) => (
-          <motion.a
+          <MotionLink
             className="nav-link"
-            href={isHome ? href : pagePath(`/${href}`)}
+            href={isHome ? href : `/${href}`}
             key={`${label}-${index}`}
             initial="rest"
             animate="rest"
@@ -305,7 +185,7 @@ export default function Header() {
             <span className="nav-mobile-arrow" aria-hidden="true">
               <ArrowRight size={28} strokeWidth={2.2} />
             </span>
-          </motion.a>
+          </MotionLink>
         ))}
       </nav>
 

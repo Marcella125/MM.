@@ -16,16 +16,16 @@ type ProjectKey = "femi" | "rong-xing" | "rushd";
 const projects = {
   femi: {
     index: "02", title: "FEMI", category: "HEALTH TECHNOLOGY", subtitle: "AI-Powered Health Platform",
-    color: "#d91b83", wash: "#ffe1f2", base: "#ffcce6", highlight: "#5d1038", intro: ["A MORE", "THOUGHTFUL", "HEALTH SPACE."],
-    description: "An AI-powered platform designed to make the health experience feel clearer and more approachable.",
-    facets: ["HEALTH TECH", "AI", "FULL STACK"],
+    color: "#9f2058", wash: "#ffe1f2", base: "#ffcce6", highlight: "#ffd4e7", heroBackground: "#ffe1f2", heroForeground: "#4b2437", heroHighlight: "#9f2058", principleBackground: "#9f2058", intro: ["A MORE", "THOUGHTFUL", "HEALTH SPACE."],
+    description: "A PCOS companion for tracking cycles, symptoms, and blood tests, with Bloom AI to help users explore their health data.",
+    facets: ["PCOS CARE", "BLOOM AI", "FULL STACK"],
     contributions: [
-      { title: "Full-stack development", detail: "Bringing the experience together across the stack." },
-      { title: "AI-powered features", detail: "Making AI part of the product experience." },
-      { title: "Health-focused interface", detail: "Keeping clarity and care at the center." },
+      { title: "Cycle and symptom tracking", detail: "Built daily logs, cycle views, reminders, and monthly recaps." },
+      { title: "Bloom AI", detail: "Connected a Gemini-powered assistant to the user's logged health context." },
+      { title: "Blood test insights", detail: "Built upload, marker extraction, interpretation, and test comparison flows." },
     ],
     principle: ["CARE", "WITH", "CLARITY."], principleNote: "Technology should make a complex space feel easier to navigate.",
-    tech: ["Health Tech", "AI", "Full Stack"],
+    tech: ["React", "Vite", "Tailwind CSS", "Express", "PostgreSQL", "Google Gemini"],
     gallery: [
       { src: "/assets/Projects/FEMI/home.png", label: "HOME / CYCLE OVERVIEW", alt: "Femi home dashboard with cycle tracking and daily check-in cards", width: 1907, height: 906 },
       { src: "/assets/Projects/FEMI/bloom.png", label: "BLOOM AI", alt: "Femi Bloom AI assistant page with suggested health questions", width: 1627, height: 907 },
@@ -35,16 +35,16 @@ const projects = {
   },
   "rong-xing": {
     index: "03", title: "RONG XING", category: "CORPORATE WEBSITE", subtitle: "Trading and Business Website",
-    color: "#142747", wash: "#dce5f3", base: "#c8d6eb", highlight: "#bcd5ff", intro: ["BUSINESS", "WITHOUT", "BORDERS."],
-    description: "A responsive web presence for a trading and business company.",
-    facets: ["TRADING", "FRONTEND", "RESPONSIVE"],
+    color: "#1c2f4c", wash: "#dce5f3", base: "#c8d6eb", highlight: "#d4ae69", heroBackground: "#1c2f4c", heroForeground: "#ffffff", heroHighlight: "#d4ae69", principleBackground: "#1c2f4c", intro: ["BUSINESS", "WITHOUT", "BORDERS."],
+    description: "A responsive company website presenting Guangzhou Rongxing's services, global reach, gallery, and contact information.",
+    facets: ["GLOBAL TRADE", "MOTION", "RESPONSIVE"],
     contributions: [
-      { title: "Frontend development", detail: "Building the site experience in the browser." },
-      { title: "Responsive layouts", detail: "Making the experience work across screen sizes." },
-      { title: "Business presentation", detail: "Giving the company a clear digital presence." },
+      { title: "Company website", detail: "Built sections for services, global reach, company information, and contact." },
+      { title: "Interactive gallery", detail: "Built an image gallery with a keyboard and touch-friendly lightbox." },
+      { title: "Responsive motion", detail: "Added scroll animation and layouts that adapt across screen sizes." },
     ],
     principle: ["CLEAR", "ACROSS", "BORDERS."], principleNote: "A business story should remain easy to explore on every screen.",
-    tech: ["Web", "Frontend", "Responsive"],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Framer Motion"],
     gallery: [
       { src: "/assets/Projects/RONG%20XING/home.png", label: "HOME / GLOBAL TRADE", alt: "Rong Xing website hero showing global shipping and trade", width: 1917, height: 902 },
       { src: "/assets/Projects/RONG%20XING/goal.png", label: "GLOBAL REACH", alt: "Rong Xing global reach section with a world map", width: 1911, height: 811 },
@@ -54,7 +54,7 @@ const projects = {
   },
   rushd: {
     index: "04", title: "RUSHD", category: "RESEARCH & POLICY WEBSITE", subtitle: "Exploring technology, ethics, and Islamic thought",
-    color: "#007c80", wash: "#d9f3f0", base: "#bce7e1", highlight: "#c7f5e9", intro: ["WHERE", "ETHICS MEETS", "INNOVATION."],
+    color: "#007c80", wash: "#d9f3f0", base: "#bce7e1", highlight: "#53d8d0", heroBackground: "#081713", heroForeground: "#ffffff", heroHighlight: "#53d8d0", principleBackground: "#081713", intro: ["WHERE", "ETHICS MEETS", "INNOVATION."],
     description: "Rushd Center brings interdisciplinary research and policy into public view, examining emerging technologies through Islamic ethical thought and contemporary expertise.",
     facets: ["RESEARCH", "ETHICS", "TECHNOLOGY"],
     contributions: [
@@ -64,7 +64,7 @@ const projects = {
       { title: "Three.js interactions", detail: "Adding motion and depth to the landing experience." },
     ],
     principle: ["INNOVATION", "WITH", "RESPONSIBILITY."], principleNote: "Research on emerging technology should remain grounded in human dignity and the common good.",
-    tech: ["Bilingual UX", "Three.js", "RTL"],
+    tech: ["Next.js", "React", "Framer Motion", "Lucide React"],
     gallery: [
       { src: "/assets/Projects/RUSHD/home.png", label: "INTERACTIVE LANDING", alt: "Rushd Center landing page with teal interactive waves", width: 1912, height: 912 },
       { src: "/assets/Projects/RUSHD/home%202.png", label: "VISION & VALUES", alt: "Rushd Center page reading Guiding Innovation with Islamic Values", width: 1917, height: 911 },
@@ -72,7 +72,7 @@ const projects = {
     statement: ["RUSHD", "ETHICS FOR", "WHAT'S NEXT."], next: "KIRA", nextHref: "/projects/kira",
   },
 } satisfies Record<ProjectKey, {
-  index: string; title: string; category: string; subtitle: string; color: string; wash: string; base: string; highlight: string;
+  index: string; title: string; category: string; subtitle: string; color: string; wash: string; base: string; highlight: string; heroBackground: string; heroForeground: string; heroHighlight: string; principleBackground: string;
   intro: string[]; description: string; facets: string[];
   contributions: { title: string; detail: string }[];
   principle: string[]; principleNote: string; tech: string[];
@@ -110,12 +110,16 @@ export default function ProjectExperience({ project }: { project: ProjectKey }) 
     "--project-wash": data.wash,
     "--project-base": data.base,
     "--project-highlight": data.highlight,
+    "--project-hero-background": data.heroBackground,
+    "--project-hero-foreground": data.heroForeground,
+    "--project-hero-highlight": data.heroHighlight,
+    "--project-principle-background": data.principleBackground,
     "--blue": data.color,
     "--blue-deep": data.color,
     "--logo-dot-display": "block",
     "--logo-dot-color": data.color,
     "--footer-accent": "#ffffff",
-    "--footer-background": data.color,
+    "--footer-background": data.principleBackground,
     "--footer-highlight": data.highlight,
   } as CSSProperties;
 
