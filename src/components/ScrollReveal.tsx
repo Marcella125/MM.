@@ -1,16 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
-import type { ReactNode } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { useRef, type ReactNode } from "react";
+import { entrance } from "./motionFoundation";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
-
-const revealEase = [0.16, 1, 0.3, 1] as const;
 
 export default function ScrollReveal({
   children,
   className,
   delay = 0,
-  lift = 42,
+  lift = entrance.lift,
 }: {
   children: ReactNode;
   className?: string;
@@ -18,26 +17,19 @@ export default function ScrollReveal({
   lift?: number;
 }) {
   const prefersReducedMotion = useHydratedReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.98", "start 0.7"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 260, damping: 32, mass: 0.55 });
+  const start = Math.min(delay * 0.4, 0.12);
+  const opacity = useTransform(progress, [start, Math.min(start + 0.72, 1)], [entrance.opacity, 1]);
+  const y = useTransform(progress, [start, 1], [Math.min(lift, 26), 0]);
+  const scale = useTransform(progress, [start, 1], [entrance.scale, 1]);
 
   return (
     <motion.div
+      ref={ref}
       className={className}
-      initial={
-        prefersReducedMotion
-          ? false
-          : {
-              opacity: 0,
-              y: lift,
-              filter: "blur(10px)",
-            }
-      }
-      whileInView={{
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-      }}
-      viewport={{ once: true, amount: 0.45 }}
-      transition={{ duration: 0.82, delay, ease: revealEase }}
+      style={prefersReducedMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity, y, scale }}
     >
       {children}
     </motion.div>

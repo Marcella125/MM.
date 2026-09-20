@@ -9,7 +9,7 @@
 }
 
 
-.srOnly {
+.mobileHeading {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -18,14 +18,6 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-
-.mobileTrack {
-  position: absolute;
-  inset: 0 auto auto 0;
-  width: 1px;
-  height: 100%;
-  pointer-events: none;
 }
 
 .stage {
@@ -37,6 +29,8 @@
   min-height: 0;
   overflow: hidden;
 }
+
+.mobileScroller { display: none; }
 
 .visualPanel,
 .contentPanel {
@@ -56,7 +50,7 @@
   place-items: center;
   overflow: hidden;
   transform-origin: center;
-  will-change: clip-path, transform, filter;
+  will-change: clip-path, transform;
 }
 
 .visualScene::before,
@@ -66,6 +60,8 @@
   content: "";
   pointer-events: none;
 }
+
+.artworkDepth { position: absolute; inset: 0; }
 
 .portraitScene {
   background: #dcecff;
@@ -90,7 +86,7 @@
 .portraitImage { object-fit: cover; object-position: 50% 42%; filter: saturate(0.8) contrast(1.04); }
 
 @media (min-width: 1101px) {
-  .section { height: 400svh; overflow: visible; }
+  .section { height: 330svh; overflow: visible; }
   .stage { position: sticky; top: var(--header-clearance); height: calc(100svh - var(--header-clearance)); }
   .portraitFrame { max-width: min(56%, 400px); height: 64%; }
 }
@@ -120,7 +116,7 @@
   align-items: flex-start;
   padding: clamp(62px, 8vh, 112px) clamp(48px, 5vw, 98px);
   pointer-events: none;
-  will-change: opacity, transform, filter;
+  will-change: opacity, transform;
 }
 
 @media (min-width: 1101px) {
@@ -186,6 +182,7 @@
   transform: translateY(-50%);
   pointer-events: none;
 }
+.stickerDepth { position: absolute; inset: 0; pointer-events: none; }
 .contentScene[aria-hidden="false"] .introStickers { pointer-events: auto; }
 .introStickers img { display: block; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 8px 12px rgba(15, 40, 105, 0.16)); transform: rotate(var(--sticker-rotation)); }
 .introStickers img:nth-child(1) { --sticker-rotation: -8deg; width: clamp(46px, 3.4vw, 64px); }
@@ -209,7 +206,7 @@
 
 
 @media (max-width: 1100px) {
-  .section { height: 400svh; overflow: visible; }
+  .section { height: 330svh; overflow: visible; }
   .stage { position: sticky; top: var(--header-clearance); height: calc(100svh - var(--header-clearance)); }
   .chapterTitle { font-size: var(--editorial-heading-size); }
   .chapterDescription { font-size: clamp(14px, 1.5vw, 17px); }
@@ -217,27 +214,84 @@
 }
 
 @media (max-width: 700px) {
-  .section { height: 480svh; }
-  .mobileTrack { height: 400svh; }
-  .stage {
-    grid-template-columns: 1fr;
-    grid-template-rows: 46% 54%;
+  .section {
+    height: auto;
+    left: 50%;
+    width: 100vw;
+    margin-left: -50vw;
+    overflow: visible;
+  }
+  .mobileHeading {
+    position: relative;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 30px 18px 24px;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+  .mobileHeading h2 {
+    margin: 0;
+    color: #070707;
+    font-family: var(--font-ui), Arial, sans-serif;
+    font-size: var(--editorial-heading-size);
+    font-weight: 750;
+    line-height: 0.9;
+    letter-spacing: -0.065em;
+    text-transform: uppercase;
+    white-space: normal;
+  }
+  .mobileHeading h2 span { color: var(--blue); }
+  .stage { display: none; }
+  .mobileScroller {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    width: 100%;
+    padding: 0 18px 36px;
+  }
+  .mobileCard {
+    display: grid;
+    grid-template-rows: min(42svh, 390px) auto;
+    min-width: 0;
+    min-height: calc(100svh - var(--header-clearance) - 18px);
+    overflow: hidden;
+    border: 1px solid rgba(18, 56, 255, 0.16);
     background: #f4faff;
   }
-  .visualPanel,
-  .contentPanel { background: #f4faff; }
-  .visualScene { background-color: #f4faff; }
-  .chapterImage { object-fit: cover; }
-  .desktopPortraitBackground { display: none; }
-  .mobilePortraitBackground { display: block; }
-  .portraitFrame { max-width: min(46%, 190px); height: 64%; padding: 8px 8px 30px; }
-  .sectionLabel { display: none; }
-  .contentScene {
-    justify-content: flex-start;
+  .mobileCardVisual {
+    position: relative;
+    min-height: 0;
+    overflow: hidden;
+    background: #dcecff;
+  }
+  .mobilePortraitVisual {
+    display: grid;
+    place-items: center;
+  }
+  .mobilePortraitFrame {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: min(46%, 190px);
+    height: 64%;
+    aspect-ratio: 0.78;
+    padding: 8px 8px 30px;
+    background: #fff;
+    box-shadow: 0 18px 38px rgba(15, 55, 119, 0.22);
+    transform: rotate(-3deg);
+  }
+  .mobileCardContent {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: clamp(12px, 2svh, 18px) 22px 16px;
+    padding: clamp(18px, 2.8svh, 26px) 22px 22px;
     text-align: center;
   }
+  .chapterImage { object-fit: cover; }
+  .sectionLabel { display: none; }
   .chapterOverline { margin-bottom: 10px; font-size: 9px; letter-spacing: 0.2em; }
   .chapterTitle { font-size: var(--editorial-heading-size); }
   .chapterDescription { max-width: 350px; margin-top: 20px; font-size: 12px; line-height: 1.55; }
@@ -247,18 +301,26 @@
 }
 
 @media (max-width: 700px) and (max-height: 700px) {
-  .stage { grid-template-rows: 44% 56%; }
+  .mobileCard { grid-template-rows: min(38svh, 300px) auto; }
   .chapterTitle { font-size: var(--editorial-heading-size); }
   .chapterDescription { margin-top: 14px; font-size: 12px; }
   .chapterDetail { margin-top: 12px; }
 }
 
 @media (max-width: 700px) and (max-height: 600px) {
-  .stage { grid-template-rows: 34% 66%; }
+  .mobileCard { grid-template-rows: min(34svh, 220px) auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .visualScene,
   .contentScene { will-change: auto; }
   .introStickers img:hover { animation: none; }
+
+  .visualScene[data-active="true"],
+  .contentScene[aria-hidden="false"] { opacity: 1 !important; visibility: visible !important; }
+
+  .visualScene[data-active="false"],
+  .contentScene[aria-hidden="true"] { opacity: 0 !important; visibility: hidden !important; }
+
+  .chapterTitle { clip-path: none !important; }
 }

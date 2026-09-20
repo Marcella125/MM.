@@ -24,14 +24,28 @@
 html {
   min-height: 100%;
   background: var(--background);
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   cursor: var(--cursor-plane), auto;
   scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
 @media (hover: hover) and (pointer: fine) {
   *, *::before, *::after {
     cursor: var(--cursor-plane), auto !important;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  html,
+  body,
+  *,
+  *::before,
+  *::after {
+    cursor: auto !important;
   }
 }
 
@@ -2804,5 +2818,37 @@ button {
 
   :where(h1, h2, h3, h4, h5, h6):hover {
     transform: translateY(-4px);
+  }
+}
+
+/* Hero idle motion is coordinated by HeroVisuals after its entrance. */
+.hero .visual-asset {
+  animation: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hero .hero-title-word,
+  .hero .hero-title-different {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .disk-motion {
+    animation: none;
+  }
+
+  .hero .hero-title-word,
+  .hero .hero-title-different {
+    clip-path: none !important;
+    transform: none !important;
+  }
+
+  .hero .intro-cluster,
+  .hero .hero-description,
+  .hero .hero-actions,
+  .hero .visual-motion {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

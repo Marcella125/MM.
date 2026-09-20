@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 import type { CSSProperties } from "react";
 import { assetPath } from "@/src/lib/paths";
 import SoundProvider from "@/src/components/SoundProvider";
+import SmoothScroll from "@/src/components/SmoothScroll";
 import "./globals.css";
 
 const ibmPlexMono = IBM_Plex_Mono({
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       style={cursorStyles}
     >
       <body className="min-h-full flex flex-col">
+        <SmoothScroll />
         <SoundProvider>{children}</SoundProvider>
       </body>
     </html>

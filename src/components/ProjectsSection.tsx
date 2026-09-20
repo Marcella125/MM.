@@ -43,6 +43,7 @@ function ProjectCard({ project, index, progress }: {
     >
       <div className={styles.projectTop}>
         <span className={styles.projectType}>{project.type}</span>
+        <span className={styles.projectIndex}>PROJECT / {project.index}</span>
       </div>
       <div className={styles.projectContent}>
         <h3>{project.title}</h3>
@@ -50,6 +51,7 @@ function ProjectCard({ project, index, progress }: {
         <div className={styles.tags} aria-label={`${project.title} project details`}>
           {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
         </div>
+        <span className={styles.projectCta}>Explore project <span aria-hidden="true">↗</span></span>
       </div>
       <div className={styles.projectArtwork} aria-hidden="true">
         <Image src={assetPath(project.image)} alt="" fill sizes="(max-width: 700px) 36vw, 1px" />
