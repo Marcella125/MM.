@@ -1,7 +1,6 @@
 ﻿"use client";
 
-import { useRef } from "react";
-import { motion, type MotionValue, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import SectionLabel from "./SectionLabel";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
@@ -16,22 +15,11 @@ const projects = [
   { index: "04", title: "Rushd", type: "Research & policy", copy: "Islamic ethics & technology", tags: ["Bilingual", "Interactive", "RTL"], image: "/assets/rushd.png" },
 ] as const;
 
-const focusedCard = (progress: number) => progress * (projects.length - 1);
-
-function stackOffset(distance: number) {
-  const depth = Math.abs(distance);
-  return Math.sign(distance) * (depth <= 1 ? depth * 190 : 190 + (depth - 1) * 80);
-}
-
-function ProjectCard({ project, index, progress }: {
+function ProjectCard({ project, index }: {
   project: (typeof projects)[number];
   index: number;
-  progress: MotionValue<number>;
 }) {
   const reducedMotion = useHydratedReducedMotion();
-  const y = useTransform(progress, (value) => stackOffset(index - focusedCard(value)));
-  const scale = useTransform(progress, (value) => 1 - Math.min(Math.abs(index - focusedCard(value)), 1) * 0.2);
-  const zIndex = useTransform(progress, (value) => Math.round(20 - Math.abs(index - focusedCard(value)) * 4));
   const card = (
     <motion.article
       className={styles.project}
@@ -60,31 +48,19 @@ function ProjectCard({ project, index, progress }: {
   );
 
   return (
-    <motion.div
-      className={styles.projectReveal}
-      style={{
-        y: reducedMotion ? 0 : y,
-        scale: reducedMotion ? 1 : scale,
-        zIndex,
-      }}
-    >
+    <div className={styles.projectReveal}>
       <Link className={styles.projectLink} href={`/projects/${project.index === "03" ? "rong-xing" : project.title.toLowerCase()}`} aria-label={`Explore ${project.title} project`}>
           {card}
       </Link>
-    </motion.div>
+    </div>
   );
 }
 
 export default function ProjectsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = useHydratedReducedMotion();
-  const { scrollYProgress: progress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
 
   return (
-    <section className={styles.projectsSection} id="projects" aria-labelledby="projects-heading" ref={sectionRef}>
+    <section className={styles.projectsSection} id="projects" aria-labelledby="projects-heading">
       <div className={styles.inner}>
         <motion.header
           className={styles.sectionHeading}
@@ -107,7 +83,7 @@ export default function ProjectsSection() {
 
         <div className={styles.projectGrid} aria-label="Selected projects">
           {projects.map((project, index) => (
-            <ProjectCard key={project.index} project={project} index={index} progress={progress} />
+            <ProjectCard key={project.index} project={project} index={index} />
           ))}
         </div>
       </div>

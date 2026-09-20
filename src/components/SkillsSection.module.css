@@ -89,12 +89,12 @@
 .cardBody > p { max-width: 360px; margin: 0; color: #55627d; font: 500 clamp(11px, 0.9vw, 13px)/1.5 var(--font-mono), monospace; }
 .card ul { display: flex; flex-wrap: wrap; gap: 8px; margin: auto 0 0; padding: 24px 0 0; list-style: none; }
 .card li { display: inline-flex; color: #243785; font: 700 9px/1.2 var(--font-mono), monospace; white-space: nowrap; }
-.skillSurface { display: inline-flex; align-items: center; gap: 7px; min-height: 31px; padding: 6px 9px; border: 1px solid rgba(18, 56, 255, 0.28); background: rgba(255, 255, 255, 0.72); transform: translate(var(--magnet-x, 0px), var(--magnet-y, 0px)); transition: transform 180ms ease, background-color 180ms ease; }
+.skillSurface { display: inline-flex; align-items: center; gap: 7px; min-height: 31px; padding: 6px 2px; border: 0; background: transparent; transform: translate(var(--magnet-x, 0px), var(--magnet-y, 0px)); transition: transform 180ms ease; }
 .card li svg { width: 16px; height: 16px; flex: none; transition: transform 220ms ease; }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .card:hover::before { opacity: 1; }
-  .card li:hover .skillSurface { background: #fff; transform: translate(var(--magnet-x, 0px), var(--magnet-y, 0px)) scale(1.08) rotate(-1deg); }
+  .card li:hover .skillSurface { transform: translate(var(--magnet-x, 0px), var(--magnet-y, 0px)) scale(1.08) rotate(-1deg); }
   .card li:hover svg { transform: rotate(-7deg); }
 }
 
