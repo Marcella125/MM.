@@ -72,6 +72,7 @@ const projects = {
     gallery: [
       { src: "/assets/Projects/RUSHD/home.png", label: "INTERACTIVE LANDING", alt: "Rushd Center landing page with teal interactive waves", width: 1912, height: 912 },
       { src: "/assets/Projects/RUSHD/home%202.png", label: "VISION & VALUES", alt: "Rushd Center page reading Guiding Innovation with Islamic Values", width: 1917, height: 911 },
+      { src: "/assets/Projects/RUSHD/image.png", label: "CONTENT DASHBOARD", alt: "Rushd CMS dashboard overview with research, media, and editorial tools", width: 1917, height: 911 },
     ],
     statement: ["RUSHD", "ETHICS FOR", "WHAT'S NEXT."], next: "KIRA", nextHref: "/projects/kira",
   },
