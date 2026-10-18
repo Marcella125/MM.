@@ -63,11 +63,14 @@ function GameSurface() {
   const messageIdRef = useRef(0);
   const gestureRef = useRef<{ pointerId: number; startX: number; startY: number; lastX: number; lastY: number; startedAt: number; moved: boolean } | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const soundEnabledRef = useRef(soundEnabled);
   const soundStateRef = useRef({ status: state.status, x: state.board?.x, rotate: state.board?.rotate, shape: state.board?.shape, cleared: state.cleared });
+
+  useEffect(() => { soundEnabledRef.current = soundEnabled; }, [soundEnabled]);
 
   const unlockAudio = useCallback(() => {
     if (typeof window === "undefined") return;
-    const AudioContextClass = window.AudioContext;
+    const AudioContextClass = window.AudioContext ?? (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!AudioContextClass) return;
     const context = audioContextRef.current ?? new AudioContextClass();
     audioContextRef.current = context;
@@ -76,32 +79,37 @@ function GameSurface() {
 
   const playSound = useCallback((kind: "move" | "rotate" | "lock" | "line" | "pause" | "start" | "over") => {
     const context = audioContextRef.current;
-    if (!soundEnabled || !context || context.state !== "running") return;
-    const now = context.currentTime;
+    if (!soundEnabledRef.current || !context || context.state === "closed") return;
     const notes: Record<typeof kind, [number, number, number]> = {
-      move: [300, 0.045, 0.025], rotate: [510, 0.075, 0.04], lock: [180, 0.09, 0.05],
-      line: [760, 0.2, 0.06], pause: [240, 0.1, 0.045], start: [440, 0.18, 0.05], over: [130, 0.28, 0.055],
+      move: [300, 0.055, 0.09], rotate: [510, 0.09, 0.11], lock: [180, 0.11, 0.12],
+      line: [760, 0.22, 0.15], pause: [240, 0.12, 0.11], start: [440, 0.2, 0.12], over: [130, 0.3, 0.13],
     };
     const [frequency, duration, volume] = notes[kind];
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.type = kind === "line" || kind === "start" ? "square" : "triangle";
-    oscillator.frequency.setValueAtTime(frequency, now);
-    if (kind === "line" || kind === "start") oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.5, now + duration);
-    if (kind === "over") oscillator.frequency.exponentialRampToValueAtTime(70, now + duration);
-    gain.gain.setValueAtTime(volume, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-    oscillator.connect(gain);
-    gain.connect(context.destination);
-    oscillator.start(now);
-    oscillator.stop(now + duration);
-  }, [soundEnabled]);
+    const playTone = () => {
+      if (!soundEnabledRef.current || context.state !== "running") return;
+      const now = context.currentTime;
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      oscillator.type = kind === "line" || kind === "start" ? "square" : "triangle";
+      oscillator.frequency.setValueAtTime(frequency, now);
+      if (kind === "line" || kind === "start") oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.5, now + duration);
+      if (kind === "over") oscillator.frequency.exponentialRampToValueAtTime(70, now + duration);
+      gain.gain.setValueAtTime(volume, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start(now);
+      oscillator.stop(now + duration);
+    };
+    if (context.state === "suspended") void context.resume().then(playTone).catch(() => {});
+    else playTone();
+  }, []);
 
   useEffect(() => {
     const previous = soundStateRef.current;
     const current = { status: state.status, x: state.board?.x, rotate: state.board?.rotate, shape: state.board?.shape, cleared: state.cleared };
     soundStateRef.current = current;
-    if (!soundEnabled || !audioContextRef.current || audioContextRef.current.state !== "running") return;
+    if (!soundEnabled || !audioContextRef.current) return;
     if (current.cleared > previous.cleared) playSound("line");
     else if (current.status === GameStatus.PLAYING && previous.status !== GameStatus.PLAYING) playSound("start");
     else if (current.status === GameStatus.PAUSED && previous.status !== GameStatus.PAUSED) playSound("pause");
@@ -459,13 +467,13 @@ function GameSurface() {
           <div className={styles.buttonRow}>
             <button type="button" className={styles.gameButton} onClick={restart} aria-label="Restart game">RESTART</button>
             <button type="button" className={styles.gameButton} onClick={() => { togglePause(); gameRef.current?.focus(); }} disabled={!active && !paused} aria-label={paused ? "Resume game" : "Pause game"}>{paused ? "RESUME" : "PAUSE"}</button>
-            <button type="button" className={styles.gameButton} onClick={() => { setSoundEnabled((enabled) => !enabled); if (!soundEnabled) unlockAudio(); }} aria-label={soundEnabled ? "Turn sound off" : "Turn sound on"}>{soundEnabled ? "SOUND ON" : "SOUND OFF"}</button>
+            <button type="button" className={styles.gameButton} onClick={() => { setSoundEnabled((enabled) => !enabled); if (!soundEnabled) { unlockAudio(); window.setTimeout(() => playSound("start"), 80); } }} aria-label={soundEnabled ? "Turn sound off" : "Turn sound on"}>{soundEnabled ? "SOUND ON" : "SOUND OFF"}</button>
           </div>
         </aside>
       </main>
 
       <div className={styles.mobileFooter}>
-        <button type="button" className={styles.soundButton} onClick={() => { setSoundEnabled((enabled) => !enabled); if (!soundEnabled) unlockAudio(); }} aria-label={soundEnabled ? "Turn sound off" : "Turn sound on"} aria-pressed={soundEnabled}>{soundEnabled ? <Volume2 aria-hidden="true" /> : <VolumeX aria-hidden="true" />}<span>{soundEnabled ? "SOUND" : "MUTED"}</span></button>
+        <button type="button" className={styles.soundButton} onClick={() => { setSoundEnabled((enabled) => !enabled); if (!soundEnabled) { unlockAudio(); window.setTimeout(() => playSound("start"), 80); } }} aria-label={soundEnabled ? "Turn sound off" : "Turn sound on"} aria-pressed={soundEnabled}>{soundEnabled ? <Volume2 aria-hidden="true" /> : <VolumeX aria-hidden="true" />}<span>{soundEnabled ? "SOUND" : "MUTED"}</span></button>
         <button type="button" className={styles.pauseButton} onClick={() => { unlockAudio(); togglePause(); }} disabled={!active && (!paused || victory)} aria-label={victory ? "Game complete" : paused ? "Resume game" : "Pause game"}>
           {paused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
         </button>
