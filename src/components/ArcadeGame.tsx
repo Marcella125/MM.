@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -12,6 +12,11 @@ const TetrisGame = dynamic(() => import("./tetris/TetrisGame"), {
   ssr: false,
   loading: () => <div className={styles.loading} role="status">LOADING GAME...</div>,
 });
+
+const arcadeBackgroundStyles = {
+  "--arcade-desktop-bg": `url("${assetPath("/assets/game-bg-desktop.png")}")`,
+  "--arcade-mobile-bg": `url("${assetPath("/assets/mobile%20bg%20game.png")}")`,
+} as CSSProperties;
 
 export default function ArcadeGame() {
   const [open, setOpen] = useState(false);
@@ -80,7 +85,7 @@ export default function ArcadeGame() {
   };
 
   const dialog = open ? (
-    <section className={styles.experience} role="dialog" aria-modal="true" aria-label="Tetris by Mars">
+    <section className={styles.experience} style={arcadeBackgroundStyles} role="dialog" aria-modal="true" aria-label="Tetris by Mars">
       <header className={styles.topbar}>
         <Image
           className={styles.logo}

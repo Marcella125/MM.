@@ -12,14 +12,14 @@
 .mobileBrand { display: none; }
 
 @media (min-width: 701px) {
-  .experience { background: #dcebff url("/assets/game-bg-desktop.png") center / cover no-repeat; }
+  .experience { background: #dcebff var(--arcade-desktop-bg) center / cover no-repeat; }
   .topbar { background: transparent; }
 }
 
 @keyframes arcade-enter { from { opacity: 0; } to { opacity: 1; } }
 
 @media (max-width: 700px) {
-  .experience { width: 100%; height: 100vh; height: 100dvh; min-height: 100vh; min-height: 100dvh; overflow: hidden; overscroll-behavior: none; background: #dcebff url("/assets/mobile%20bg%20game.png") center bottom / auto 125% no-repeat; }
+  .experience { width: 100%; height: 100vh; height: 100dvh; min-height: 100vh; min-height: 100dvh; overflow: hidden; overscroll-behavior: none; background: #dcebff var(--arcade-mobile-bg) center bottom / auto 125% no-repeat; }
   .topbar { min-height: calc(44px + env(safe-area-inset-top)); grid-template-columns: 1fr auto; gap: 10px; padding: env(safe-area-inset-top) 16px 0; background: transparent; }
   .logo { display: none; }
   .mobileBrand { display: block; width: clamp(142px, 42vw, 176px); height: auto; max-height: 40px; object-fit: contain; object-position: left center; }
