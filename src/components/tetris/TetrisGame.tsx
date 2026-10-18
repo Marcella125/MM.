@@ -42,7 +42,7 @@ function readLeaderboard(): LocalScore[] {
 }
 
 function cleanNickname(value: string) {
-  return value.replace(/[^\p{L}\p{N}_ -]/gu, "").trim().slice(0, 16) || "MARS PLAYER";
+  return value.replace(/[^\p{L}\p{N}_ -]/gu, "").trim().slice(0, 16) || "PLAYER";
 }
 
 export default function TetrisGame() {
@@ -607,10 +607,10 @@ function GameSurface() {
       </div>
       {confirmRestart && (
         <div className={styles.confirmBackdrop} role="presentation">
-          <section className={styles.confirmDialog} role="dialog" aria-modal="true" aria-labelledby="restart-confirm-title">
+          <section className={styles.confirmDialog} role="dialog" aria-modal="true" aria-labelledby="restart-confirm-title" aria-describedby="restart-confirm-description">
             <p className={styles.eyebrow}>NEW RUN</p>
             <h2 id="restart-confirm-title">RESTART THIS GAME?</h2>
-            <p>Your current run will end. Your saved best score stays safe.</p>
+            <p id="restart-confirm-description">Your current run will end. Your saved best score stays safe.</p>
             <div className={styles.overlayActions}><button type="button" className={styles.overlayButton} onClick={() => startGame(mode)}>RESTART</button><button type="button" className={styles.secondaryButton} onClick={cancelRestart}>KEEP PLAYING</button></div>
           </section>
         </div>
