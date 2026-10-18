@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { ArrowDownToLine, ArrowLeft, ArrowRight, Pause, Play, RotateCw, Share2 } from "lucide-react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import { AppProvider } from "./vendor/src/context/app/provider";
 import { useGameCallbacks, useOnPlay } from "./vendor/src/context/game/callbacks";
@@ -17,13 +17,32 @@ import { useTick } from "./vendor/src/modules/game/use-tick";
 import styles from "./TetrisGame.module.css";
 
 const shapes = Object.values(Shape);
+type GameMode = "classic" | "challenge";
+type LocalScore = { id: string; name: string; score: number; mode: GameMode; createdAt: number };
+const LEADERBOARD_KEY = "portfolio-tetris-local-leaderboard-v1";
+const CHALLENGE_SECONDS = 60;
 
-function readBestScore() {
+function readBestScore(mode: GameMode = "classic") {
   try {
-    return typeof window === "undefined" ? 0 : Number(window.localStorage.getItem("portfolio-tetris-best")) || 0;
+    if (typeof window === "undefined") return 0;
+    const score = window.localStorage.getItem(`portfolio-tetris-best-${mode}`) ?? (mode === "classic" ? window.localStorage.getItem("portfolio-tetris-best") : null);
+    return Number(score) || 0;
   } catch {
     return 0;
   }
+}
+
+function readLeaderboard(): LocalScore[] {
+  try {
+    const parsed: unknown = JSON.parse(window.localStorage.getItem(LEADERBOARD_KEY) ?? "[]");
+    return Array.isArray(parsed) ? parsed.filter((entry): entry is LocalScore => Boolean(entry && typeof entry === "object" && typeof entry.name === "string" && typeof entry.score === "number" && (entry.mode === "classic" || entry.mode === "challenge"))) : [];
+  } catch {
+    return [];
+  }
+}
+
+function cleanNickname(value: string) {
+  return value.replace(/[^\p{L}\p{N}_ -]/gu, "").trim().slice(0, 16) || "MARS PLAYER";
 }
 
 export default function TetrisGame() {
@@ -43,12 +62,20 @@ function GameSurface() {
   const score = useScore();
   const level = useLevel();
   const boardCells = useMemo(() => getBoardCells(state), [state]);
-  const [best, setBest] = useState(readBestScore);
+  const [best, setBest] = useState(() => readBestScore());
   const [motivation, setMotivation] = useState<{ id: number; text: string } | null>(null);
-  const [moves, setMoves] = useState(0);
-  const [victory, setVictory] = useState(false);
   const [boardSize, setBoardSize] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [mode, setMode] = useState<GameMode>("classic");
+  const [nickname, setNickname] = useState("");
+  const [hasStarted, setHasStarted] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [leaderboard, setLeaderboard] = useState<LocalScore[]>(() => typeof window === "undefined" ? [] : readLeaderboard());
+  const [challengeRemaining, setChallengeRemaining] = useState(CHALLENGE_SECONDS);
+  const [challengeCountdown, setChallengeCountdown] = useState("");
+  const [challengeComplete, setChallengeComplete] = useState(false);
+  const [confirmRestart, setConfirmRestart] = useState(false);
+  const [shareNotice, setShareNotice] = useState("");
   const active = state.status === GameStatus.PLAYING;
   const paused = state.status === GameStatus.PAUSED;
   const finished = state.status === GameStatus.FINISHED;
@@ -56,7 +83,10 @@ function GameSurface() {
   const boardColumnRef = useRef<HTMLElement>(null);
   const bestRef = useRef(best);
   const recordMessageShownRef = useRef(false);
-  const victoryRef = useRef(false);
+  const challengeFinishedRef = useRef(false);
+  const challengeIntroPendingRef = useRef(false);
+  const resultSavedRef = useRef(false);
+  const resumeAfterConfirmRef = useRef(false);
   const progressRef = useRef({ lines: 0, level: 1 });
   const messageQueueRef = useRef<string[]>([]);
   const messageTimerRef = useRef<number | null>(null);
@@ -126,7 +156,7 @@ function GameSurface() {
   const runAction = useCallback((action?: () => void) => {
     if (!active || !action) return;
     action();
-    setMoves((current) => current + 1);
+    if (navigator.vibrate && window.matchMedia("(max-width: 700px)").matches) navigator.vibrate(8);
   }, [active]);
 
   useEffect(() => {
@@ -184,23 +214,33 @@ function GameSurface() {
     setMotivation(null);
   }, []);
 
+  const saveResult = useCallback((finalScore: number) => {
+    if (resultSavedRef.current || finalScore <= 0) return;
+    resultSavedRef.current = true;
+    const entry: LocalScore = { id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, name: cleanNickname(nickname), score: finalScore, mode, createdAt: Date.now() };
+    const nextScores = [...readLeaderboard(), entry].sort((a, b) => b.score - a.score || a.createdAt - b.createdAt).slice(0, 10);
+    try { window.localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(nextScores)); } catch { /* Keep the run playable if storage is unavailable. */ }
+    setLeaderboard(nextScores);
+  }, [mode, nickname]);
+
   useEffect(() => {
+    if (!hasStarted) return;
     if (score <= bestRef.current) return;
     bestRef.current = score;
     const timeout = window.setTimeout(() => {
       try {
-        window.localStorage.setItem("portfolio-tetris-best", String(score));
+        window.localStorage.setItem(`portfolio-tetris-best-${mode}`, String(score));
       } catch {
         // Keep the current session playable if storage is unavailable.
       }
       setBest(score);
       if (!recordMessageShownRef.current) {
         recordMessageShownRef.current = true;
-        queueMessage("YOU'VE OUTDONE YOURSELF.");
+        queueMessage("YOU DID IT!");
       }
     }, 0);
     return () => window.clearTimeout(timeout);
-  }, [queueMessage, score]);
+  }, [hasStarted, mode, queueMessage, score]);
 
   useEffect(() => {
     const previous = progressRef.current;
@@ -209,35 +249,74 @@ function GameSurface() {
     progressRef.current = { lines: state.cleared, level };
 
     const messages: string[] = [];
-    if (linesCleared === 1) messages.push("SMALL WINS MATTER.");
-    if (linesCleared > 1 && linesCleared < 4) messages.push("LOOK AT YOU GO!");
-    if (linesCleared === 4) messages.push("HARD WORK PAYS OFF.");
-    if (levelUp) messages.push("KEEP GROWING.");
+    if (hasStarted && linesCleared === 1) messages.push("NICE START!");
+    if (hasStarted && linesCleared > 1 && linesCleared < 4) messages.push("KEEP BUILDING!");
+    if (hasStarted && linesCleared >= 4) messages.push("UNSTOPPABLE!");
+    if (hasStarted && levelUp) messages.push("KEEP GROWING.");
     if (messages.length) {
       const timeout = window.setTimeout(() => messages.forEach(queueMessage), 0);
       return () => window.clearTimeout(timeout);
     }
-  }, [level, queueMessage, state.cleared]);
+  }, [hasStarted, level, queueMessage, state.cleared]);
 
   useEffect(() => {
-    if (victoryRef.current || state.cleared < 20 || state.status !== GameStatus.PLAYING) return;
-    const timeout = window.setTimeout(() => {
-      victoryRef.current = true;
-      setVictory(true);
-      actions.onPause?.();
-    }, 0);
-    return () => window.clearTimeout(timeout);
-  }, [actions, state.cleared, state.status]);
+    if (hasStarted && state.status === GameStatus.FINISHED) saveResult(score);
+  }, [hasStarted, saveResult, score, state.status]);
+
+  const finishChallenge = useCallback(() => {
+    if (challengeFinishedRef.current) return;
+    challengeFinishedRef.current = true;
+    setChallengeComplete(true);
+    actions.onPause?.();
+    queueMessage("LEGENDARY MOVE!");
+    saveResult(score);
+  }, [actions, queueMessage, saveResult, score]);
+
+  useEffect(() => {
+    if (mode !== "challenge" || !hasStarted || !active || state.countdown || challengeFinishedRef.current) return;
+    const timer = window.setInterval(() => {
+      setChallengeRemaining((remaining) => {
+        if (remaining <= 1) {
+          window.clearInterval(timer);
+          window.setTimeout(finishChallenge, 0);
+          return 0;
+        }
+        return remaining - 1;
+      });
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [active, finishChallenge, hasStarted, mode, state.countdown]);
 
   useEffect(() => () => {
     if (messageTimerRef.current !== null) window.clearTimeout(messageTimerRef.current);
   }, []);
 
   useEffect(() => {
-    if (!state.countdown) return;
-    const timeout = window.setTimeout(() => actions.onFinishedCountdown?.(), 900);
+    if (!state.countdown || !hasStarted) return;
+    if (mode !== "challenge" || !challengeIntroPendingRef.current) {
+      setChallengeCountdown("");
+      const timeout = window.setTimeout(() => actions.onFinishedCountdown?.(), 650);
+      return () => window.clearTimeout(timeout);
+    }
+    const labels = ["3", "2", "1", "GO!"];
+    let index = 0;
+    let timeout: number;
+    const advance = () => {
+      setChallengeCountdown(labels[index]);
+      if (index === labels.length - 1) {
+        timeout = window.setTimeout(() => {
+          challengeIntroPendingRef.current = false;
+          setChallengeCountdown("");
+          actions.onFinishedCountdown?.();
+        }, 500);
+        return;
+      }
+      index += 1;
+      timeout = window.setTimeout(advance, 750);
+    };
+    timeout = window.setTimeout(advance, 0);
     return () => window.clearTimeout(timeout);
-  }, [actions, state.countdown]);
+  }, [actions, hasStarted, mode, state.countdown]);
 
   useEffect(() => {
     const onVisibilityChange = () => {
@@ -247,18 +326,50 @@ function GameSurface() {
     return () => document.removeEventListener("visibilitychange", onVisibilityChange);
   }, [actions, state.status]);
 
-  const restart = useCallback(() => {
+  const startGame = useCallback((selectedMode: GameMode = mode) => {
     unlockAudio();
     clearMessages();
-    setMoves(0);
-    setVictory(false);
-    victoryRef.current = false;
+    setMode(selectedMode);
+    setNickname(cleanNickname(nickname));
+    setHasStarted(true);
+    setShowLeaderboard(false);
+    challengeFinishedRef.current = false;
+    challengeIntroPendingRef.current = selectedMode === "challenge";
+    resultSavedRef.current = false;
+    setChallengeComplete(false);
+    setChallengeRemaining(CHALLENGE_SECONDS);
+    setChallengeCountdown("");
+    setConfirmRestart(false);
     recordMessageShownRef.current = false;
     progressRef.current = { lines: 0, level: 1 };
+    const initialBest = readBestScore(selectedMode);
+    bestRef.current = initialBest;
+    setBest(initialBest);
     play();
-    queueMessage("EVERY GREAT THING STARTS WITH ONE MOVE.");
     window.setTimeout(() => gameRef.current?.focus(), 0);
-  }, [clearMessages, play, queueMessage, unlockAudio]);
+  }, [clearMessages, mode, nickname, play, unlockAudio]);
+
+  const requestRestart = useCallback(() => {
+    resumeAfterConfirmRef.current = active || paused;
+    if (active) actions.onPause?.();
+    setConfirmRestart(true);
+  }, [actions, active, paused]);
+
+  const cancelRestart = useCallback(() => {
+    setConfirmRestart(false);
+    if (resumeAfterConfirmRef.current) actions.onUnpause?.();
+  }, [actions]);
+
+  const shareScore = useCallback(async () => {
+    const text = `${cleanNickname(nickname)} scored ${score.toLocaleString()} in ${mode === "challenge" ? "MARS CHALLENGE" : "CLASSIC MODE"} on TETRIS × MARS!`;
+    try {
+      if (navigator.share) await navigator.share({ title: "TETRIS × MARS", text });
+      else { await navigator.clipboard.writeText(text); setShareNotice("SCORE COPIED!"); }
+    } catch {
+      setShareNotice("SCORE READY TO SHARE");
+    }
+    window.setTimeout(() => setShareNotice(""), 2200);
+  }, [mode, nickname, score]);
   const togglePause = useCallback(() => {
     if (state.status === GameStatus.PLAYING) actions.onPause?.();
     else if (state.status === GameStatus.PAUSED) actions.onUnpause?.();
@@ -301,6 +412,8 @@ function GameSurface() {
         if (dx < 0) runAction(actions.onMoveLeft);
         else runAction(actions.onMoveRight);
       } else if (dy > 0) runAction(actions.onTick);
+    } else if (dy < -22) {
+      runAction(actions.onRotate);
     } else if (dy > 16) {
       const duration = performance.now() - gesture.startedAt;
       if (dy >= 85 && duration <= 320) runAction(actions.onHardDrop);
@@ -364,14 +477,15 @@ function GameSurface() {
   const nextShape = state.board?.shapeNext;
   const nextRotation = state.board?.rotateNext ?? 0;
   const nextCells = nextShape ? SHAPES_SMALL[nextShape][nextRotation] ?? SHAPES_SMALL[nextShape][0] : [];
-  const progress = Math.min(100, (state.cleared / 20) * 100);
+  const progress = mode === "challenge" ? ((CHALLENGE_SECONDS - challengeRemaining) / CHALLENGE_SECONDS) * 100 : ((state.cleared % 10) / 10) * 100;
 
   return (
     <div ref={gameRef} className={styles.game} tabIndex={0} aria-label="Tetris game. Use arrow keys to play, space to drop, and P to pause.">
       <div className={styles.mobileHud}>
         <div className={styles.mobileHudTop}>
-          <div className={`${styles.mobileHudCard} ${styles.movesCard}`}><span>MOVES</span><strong>{String(moves).padStart(2, "0")}</strong></div>
-          <div className={`${styles.mobileHudCard} ${styles.goalCard}`}><span>GOAL</span><strong>Clear <i>20</i> Lines</strong></div>
+          <div className={`${styles.mobileHudCard} ${styles.mobileScoreCard}`}><span>SCORE</span><strong>{String(score).padStart(6, "0")}</strong></div>
+          <div className={`${styles.mobileHudCard} ${styles.levelCard}`}><span>LEVEL</span><strong>{String(level).padStart(2, "0")}</strong></div>
+          <div className={`${styles.mobileHudCard} ${mode === "challenge" ? styles.timerCard : styles.bestCard}`}><span>{mode === "challenge" ? "TIME" : "BEST"}</span><strong>{mode === "challenge" ? `0:${String(challengeRemaining).padStart(2, "0")}` : String(best).padStart(6, "0")}</strong></div>
           <div className={styles.mobileNextCard}>
             <span className={styles.panelLabel}>NEXT</span>
             <div className={styles.preview} aria-label={`Next piece ${nextShape ?? "loading"}`}>
@@ -382,10 +496,9 @@ function GameSurface() {
           </div>
         </div>
         <div className={styles.mobileHudDetails}>
-          <div><span>SCORE</span><strong>{String(score).padStart(6, "0")}</strong></div>
-          <div><span>LINES</span><strong>{String(state.cleared).padStart(2, "0")} / 20</strong></div>
-          <div><span>LEVEL</span><strong>{String(level).padStart(2, "0")}</strong></div>
-          <div className={styles.progressTrack} role="progressbar" aria-label="Lines cleared toward goal" aria-valuemin={0} aria-valuemax={20} aria-valuenow={Math.min(state.cleared, 20)}><span style={{ width: `${progress}%` }} /></div>
+          <div><span>MODE</span><strong>{mode === "challenge" ? "MARS CHALLENGE" : "CLASSIC"}</strong></div>
+          <div><span>LINES</span><strong>{String(state.cleared).padStart(2, "0")}</strong></div>
+          <div className={styles.progressTrack} role="progressbar" aria-label={mode === "challenge" ? "Challenge time elapsed" : "Progress toward next level"} aria-valuemin={0} aria-valuemax={mode === "challenge" ? CHALLENGE_SECONDS : 10} aria-valuenow={mode === "challenge" ? CHALLENGE_SECONDS - challengeRemaining : state.cleared % 10}><span style={{ width: `${progress}%` }} /></div>
         </div>
       </div>
       <main className={styles.layout}>
@@ -407,21 +520,26 @@ function GameSurface() {
                 })
               )}
             </div>
-            {(paused || finished || victory || state.countdown || state.status === GameStatus.IDLE) && (
+            {(paused || finished || state.countdown || state.status === GameStatus.IDLE) && (
               <div className={`${styles.overlay} ${finished ? styles.finishOverlay : ""} ${state.status === GameStatus.IDLE ? styles.welcomeOverlay : ""}`}>
-                {state.countdown ? <strong>GET READY</strong> : state.status === GameStatus.IDLE ? (
-                  <button className={styles.overlayButton} type="button" onClick={restart}>START BUILDING <span aria-hidden="true">&rarr;</span></button>
-                ) : victory ? (
+                {state.countdown ? <strong className={challengeCountdown ? styles.countdownNumber : ""}>{challengeCountdown || "GET READY"}</strong> : challengeComplete ? (
                   <>
-                    <strong>YOU BUILT IT.</strong>
-                    <span>20 lines cleared. Keep growing.</span>
-                    <button className={styles.overlayButton} type="button" onClick={restart}>PLAY AGAIN <span aria-hidden="true">&rarr;</span></button>
+                    <strong>LEGENDARY MOVE!</strong>
+                    <span>60 seconds. One seriously good run.</span>
+                    <div className={styles.resultScore}><small>{cleanNickname(nickname)} - MARS CHALLENGE</small><b>{score.toLocaleString()}</b><small>FINAL SCORE</small></div>
+                    {shareNotice && <span className={styles.shareNotice}>{shareNotice}</span>}
+                    <div className={styles.overlayActions}><button className={styles.overlayButton} type="button" onClick={() => startGame("challenge")}>RETRY</button><button className={styles.overlayButton} type="button" onClick={shareScore}><Share2 aria-hidden="true" /> SHARE SCORE</button></div>
+                    <button className={styles.textButton} type="button" onClick={() => { setHasStarted(false); setLeaderboard(readLeaderboard()); setShowLeaderboard(true); }}>LOCAL TOP 10</button>
                   </>
+                ) : state.status === GameStatus.IDLE ? (
+                  <button className={styles.overlayButton} type="button" onClick={() => startGame("classic")}>START BUILDING <span aria-hidden="true">→</span></button>
                 ) : finished ? (
                   <>
-                    <strong>PROGRESS NEVER STOPS.</strong>
-                    <span>Not every piece falls into place. Keep going.</span>
-                    <button className={styles.overlayButton} type="button" onClick={restart}>TRY AGAIN <span aria-hidden="true">&rarr;</span></button>
+                    <strong>{mode === "challenge" ? "LEGENDARY MOVE!" : "PROGRESS NEVER STOPS."}</strong>
+                    <span>{mode === "challenge" ? "Your Mars Challenge run is complete." : "Not every piece falls into place. Keep going."}</span>
+                    <div className={styles.resultScore}><small>{cleanNickname(nickname)} - {mode === "challenge" ? "MARS CHALLENGE" : "CLASSIC"}</small><b>{score.toLocaleString()}</b><small>FINAL SCORE</small></div>
+                    {shareNotice && <span className={styles.shareNotice}>{shareNotice}</span>}
+                    <div className={styles.overlayActions}><button className={styles.overlayButton} type="button" onClick={() => startGame(mode)}>TRY AGAIN</button><button className={styles.overlayButton} type="button" onClick={shareScore}><Share2 aria-hidden="true" /> SHARE SCORE</button></div>
                   </>
                 ) : paused ? (
                   <>
@@ -429,7 +547,7 @@ function GameSurface() {
                     <span>Take a breath. You can pick it up again.</span>
                     <div className={styles.overlayActions}>
                       <button className={styles.overlayButton} type="button" onClick={() => { togglePause(); gameRef.current?.focus(); }}>RESUME</button>
-                      <button className={styles.overlayButton} type="button" onClick={restart}>RESTART</button>
+                      <button className={styles.overlayButton} type="button" onClick={requestRestart}>RESTART</button>
                     </div>
                   </>
                 ) : null}
@@ -442,7 +560,9 @@ function GameSurface() {
         </section>
 
         <aside className={styles.sidebar} aria-label="Game information and controls">
+          <div className={styles.modeLabel}>{mode === "challenge" ? "MARS CHALLENGE" : "CLASSIC MODE"} · {cleanNickname(nickname)}</div>
           <div className={styles.scorePanel}><span>SCORE</span><strong>{String(score).padStart(6, "0")}</strong></div>
+          {mode === "challenge" && <div className={styles.challengeClock}><span>TIME LEFT</span><strong>00:{String(challengeRemaining).padStart(2, "0")}</strong></div>}
           <div className={styles.statsGrid}>
             <div className={styles.stat}><span>LEVEL</span><strong>{String(level).padStart(2, "0")}</strong></div>
             <div className={styles.stat}><span>LINES</span><strong>{String(state.cleared).padStart(3, "0")}</strong></div>
@@ -465,19 +585,36 @@ function GameSurface() {
             <p><kbd>P</kbd> PAUSE</p>
           </div>
           <div className={styles.buttonRow}>
-            <button type="button" className={styles.gameButton} onClick={restart} aria-label="Restart game">RESTART</button>
+            <button type="button" className={styles.gameButton} onClick={requestRestart} aria-label="Restart game">RESTART</button>
             <button type="button" className={styles.gameButton} onClick={() => { togglePause(); gameRef.current?.focus(); }} disabled={!active && !paused} aria-label={paused ? "Resume game" : "Pause game"}>{paused ? "RESUME" : "PAUSE"}</button>
             <button type="button" className={styles.gameButton} onClick={() => { setSoundEnabled((enabled) => !enabled); if (!soundEnabled) { unlockAudio(); window.setTimeout(() => playSound("start"), 80); } }} aria-label={soundEnabled ? "Turn sound off" : "Turn sound on"}>{soundEnabled ? "SOUND ON" : "SOUND OFF"}</button>
           </div>
+          <button type="button" className={styles.gameButton} onClick={() => { if (active) actions.onPause?.(); setLeaderboard(readLeaderboard()); setHasStarted(false); setShowLeaderboard(true); }}>LOCAL TOP 10</button>
         </aside>
       </main>
 
+      <nav className={styles.mobileControls} aria-label="Touch game controls">
+        <button type="button" onClick={() => { unlockAudio(); runAction(actions.onMoveLeft); }} disabled={!active} aria-label="Move piece left"><ArrowLeft aria-hidden="true" /><span>LEFT</span></button>
+        <button type="button" onClick={() => { unlockAudio(); runAction(actions.onRotate); }} disabled={!active} aria-label="Rotate piece"><RotateCw aria-hidden="true" /><span>ROTATE</span></button>
+        <button type="button" onClick={() => { unlockAudio(); runAction(actions.onMoveRight); }} disabled={!active} aria-label="Move piece right"><ArrowRight aria-hidden="true" /><span>RIGHT</span></button>
+        <button type="button" onClick={() => { unlockAudio(); runAction(actions.onHardDrop); }} disabled={!active} aria-label="Hard drop piece"><ArrowDownToLine aria-hidden="true" /><span>DROP</span></button>
+      </nav>
+
       <div className={styles.mobileFooter}>
-        <button type="button" className={styles.soundButton} onClick={() => { setSoundEnabled((enabled) => !enabled); if (!soundEnabled) { unlockAudio(); window.setTimeout(() => playSound("start"), 80); } }} aria-label={soundEnabled ? "Turn sound off" : "Turn sound on"} aria-pressed={soundEnabled}>{soundEnabled ? <Volume2 aria-hidden="true" /> : <VolumeX aria-hidden="true" />}<span>{soundEnabled ? "SOUND" : "MUTED"}</span></button>
-        <button type="button" className={styles.pauseButton} onClick={() => { unlockAudio(); togglePause(); }} disabled={!active && (!paused || victory)} aria-label={victory ? "Game complete" : paused ? "Resume game" : "Pause game"}>
+        <button type="button" className={styles.pauseButton} onClick={() => { unlockAudio(); togglePause(); }} disabled={!active && !paused} aria-label={paused ? "Resume game" : "Pause game"}>
           {paused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
         </button>
       </div>
+      {confirmRestart && (
+        <div className={styles.confirmBackdrop} role="presentation">
+          <section className={styles.confirmDialog} role="dialog" aria-modal="true" aria-labelledby="restart-confirm-title">
+            <p className={styles.eyebrow}>NEW RUN</p>
+            <h2 id="restart-confirm-title">RESTART THIS GAME?</h2>
+            <p>Your current run will end. Your saved best score stays safe.</p>
+            <div className={styles.overlayActions}><button type="button" className={styles.overlayButton} onClick={() => startGame(mode)}>RESTART</button><button type="button" className={styles.secondaryButton} onClick={cancelRestart}>KEEP PLAYING</button></div>
+          </section>
+        </div>
+      )}
       <span className={styles.srOnly}>{shapes.join(", ")} pieces</span>
     </div>
   );

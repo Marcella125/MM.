@@ -7,14 +7,28 @@
   --arcade-orange: #ff9a53;
   --arcade-mint: #45d9a0;
   --arcade-purple: #8d6bff;
+  position: relative;
   display: grid;
   width: 100%;
   height: 100%;
   min-height: 0;
   grid-template-rows: minmax(0, 1fr);
   outline: none;
+  overflow: hidden;
   color: var(--arcade-navy);
   background: #dcebff;
+}
+
+.mobileFooter {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transform: translateY(-50%);
 }
 
 @media (min-width: 701px) {
@@ -73,6 +87,22 @@
 .overlayButton { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 0 12px; border: 1px solid var(--arcade-blue); background: var(--arcade-blue); color: #fff; box-shadow: 3px 3px 0 var(--arcade-lime); font: 800 9px/1 var(--font-mono), "Courier New", monospace; letter-spacing: .06em; cursor: pointer; }
 .overlayButton:hover { background: #1035c5; }
 .overlayActions { display: flex; justify-content: center; gap: 10px; }
+.resultScore { display: grid; min-width: min(100%, 180px); gap: 4px; padding: 8px 14px; border: 1px solid rgb(22 68 245 / 35%); border-radius: 8px; background: #fff; color: var(--arcade-navy); }
+.resultScore small { color: var(--arcade-blue); font: 800 7px/1.2 var(--font-mono), "Courier New", monospace; letter-spacing: .1em; }
+.resultScore b { color: var(--arcade-blue); font: 950 clamp(22px, 3vw, 34px)/1 var(--font-mono), "Courier New", monospace; }
+.overlay .shareNotice { color: var(--arcade-lime); font-weight: 900; }
+.overlayActions .overlayButton { display: inline-flex; align-items: center; gap: 5px; }
+.overlayActions .overlayButton svg { width: 13px; height: 13px; }
+.countdownNumber { color: var(--arcade-lime); font-size: clamp(28px, 7vw, 64px) !important; text-shadow: 0 0 22px rgb(223 255 0 / 42%); animation: count-pop 400ms steps(4, end) both; }
+.confirmBackdrop { position: absolute; inset: 0; z-index: 10; display: grid; place-items: center; padding: 18px; background: rgb(7 25 63 / 58%); backdrop-filter: blur(8px); }
+.confirmDialog { display: grid; width: min(100%, 360px); gap: 10px; padding: 22px; border: 1px solid rgb(22 68 245 / 40%); border-radius: 14px; background: #f3f9ff; box-shadow: 0 15px 50px rgb(7 25 63 / 28%); }
+.confirmDialog h2 { margin: 0; color: var(--arcade-navy); font: 950 19px/1 var(--font-ui), Arial, sans-serif; }
+.confirmDialog > p:not(.eyebrow) { margin: 0; color: #526685; font: 600 11px/1.45 var(--font-ui), Arial, sans-serif; }
+.mobileControls { display: none; }
+.modeLabel { color: var(--arcade-blue); font: 850 9px/1.3 var(--font-mono), "Courier New", monospace; letter-spacing: .1em; }
+.challengeClock { display: grid; gap: 5px; padding: 10px 13px; border: 1px solid rgb(255 67 188 / 45%); border-radius: 9px; background: linear-gradient(135deg, rgb(255 67 188 / 12%), rgb(223 255 0 / 18%)); }
+.challengeClock span { color: #a62991; font: 900 9px/1 var(--font-mono), "Courier New", monospace; letter-spacing: .13em; }
+.challengeClock strong { color: var(--arcade-navy); font: 950 clamp(24px, 2.8vw, 38px)/1 var(--font-mono), "Courier New", monospace; font-variant-numeric: tabular-nums; }
 .messageRail { display: flex; min-height: 29px; align-items: center; justify-content: center; width: 100%; }
 .motivation { position: relative; margin: 0; padding: 6px 8px 6px 14px; color: var(--arcade-blue); font: 800 9px/1.25 var(--font-mono), "Courier New", monospace; letter-spacing: .055em; text-align: center; animation: pixel-arrive 220ms steps(3, end) both; }
 .motivation::before { position: absolute; top: 50%; left: 3px; width: 5px; height: 5px; background: var(--arcade-pink); content: ""; transform: translateY(-50%); box-shadow: 4px 3px 0 var(--arcade-lime); }
@@ -98,6 +128,7 @@
 .gameButton:disabled { opacity: .45; cursor: not-allowed; }
 .gameButton:not(:disabled):hover { background: var(--arcade-blue); color: white; }
 .mobileHud, .mobileHudTop, .mobileHudDetails, .mobileFooter, .mobileNextCard { display: none; }
+.mobileFooter { display: flex; }
 .srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .game :is(button):focus-visible { outline: 3px solid var(--arcade-purple); outline-offset: 3px; }
 
@@ -117,17 +148,17 @@
 }
 
 @media (max-width: 700px) {
-  .game { display: flex; min-width: 0; height: 100%; min-height: 0; flex-direction: column; gap: 6px; background: transparent; overscroll-behavior: none; user-select: none; -webkit-user-select: none; }
+  .game { display: flex; min-width: 0; height: 100%; min-height: 0; flex-direction: column; gap: 4px; background: transparent; overscroll-behavior: none; user-select: none; -webkit-user-select: none; }
   .mobileHud { display: grid; min-width: 0; flex: none; gap: 5px; }
-  .mobileHudTop { display: grid; min-width: 0; min-height: 48px; grid-template-columns: minmax(64px, .78fr) minmax(0, 1.35fr) 52px; gap: 5px; }
+  .mobileHudTop { display: grid; min-width: 0; min-height: 48px; grid-template-columns: minmax(0, 1.12fr) minmax(44px, .65fr) minmax(0, .95fr) 56px; gap: 6px; }
   .mobileHudCard { display: flex; min-width: 0; flex-direction: column; justify-content: center; gap: 3px; padding: 5px 9px; border: 1px solid #0c2868; border-radius: 9px; background: linear-gradient(145deg, rgb(22 68 245 / 94%), rgb(18 51 109 / 94%)); box-shadow: 0 3px 0 rgb(8 28 77 / 20%), inset 0 1px 0 rgb(255 255 255 / 22%); color: #fff; font-family: var(--font-ui), Arial, sans-serif; }
-  .mobileHudCard > span { color: rgb(255 255 255 / 85%); font-size: 8px; font-weight: 850; line-height: 1; letter-spacing: .06em; text-shadow: 0 1px 2px rgb(0 0 0 / 35%); }
-  .mobileHudCard > strong { overflow: hidden; color: #fff; font-size: clamp(14px, 4vw, 19px); font-weight: 950; line-height: 1; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 2px 2px rgb(0 0 0 / 32%); }
-  .goalCard { border-color: #1744a2; background: linear-gradient(145deg, rgb(22 68 245 / 92%), rgb(38 101 213 / 92%)); }
-  .goalCard > strong { font-size: clamp(11px, 3.4vw, 15px); }
-  .goalCard > strong i { color: var(--arcade-lime); font-style: normal; }
-  .mobileHudDetails { display: grid; min-width: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: auto 4px; align-items: center; gap: 4px 8px; padding: 3px 5px 1px; border-bottom: 1px solid rgb(22 68 245 / 18%); }
-  .mobileHudDetails > div:not(.progressTrack) { display: flex; min-width: 0; justify-content: space-between; gap: 3px; color: var(--arcade-navy); font: 800 7px/1 var(--font-mono), "Courier New", monospace; white-space: nowrap; }
+  .mobileHudCard > span { color: rgb(255 255 255 / 90%); font-size: 9px; font-weight: 850; line-height: 1; letter-spacing: .07em; text-shadow: 0 1px 2px rgb(0 0 0 / 35%); }
+  .mobileHudCard > strong { overflow: hidden; color: #fff; font-size: clamp(15px, 4.4vw, 19px); font-weight: 950; line-height: 1; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 2px 2px rgb(0 0 0 / 32%); }
+  .mobileScoreCard { background: linear-gradient(145deg, #1644f5, #12336d); }
+  .mobileScoreCard > strong, .levelCard > strong, .bestCard > strong, .timerCard > strong { font: 900 clamp(13px, 3.8vw, 16px)/1 var(--font-mono), "Courier New", monospace; font-variant-numeric: tabular-nums; }
+  .timerCard { border-color: #b61e8b; background: linear-gradient(145deg, #ff43bc, #a928a4); }
+  .mobileHudDetails { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto 4px; align-items: center; gap: 4px 8px; padding: 3px 5px 1px; border-bottom: 1px solid rgb(22 68 245 / 18%); }
+  .mobileHudDetails > div:not(.progressTrack) { display: flex; min-width: 0; justify-content: space-between; gap: 3px; color: var(--arcade-navy); font: 800 8px/1 var(--font-mono), "Courier New", monospace; white-space: nowrap; }
   .mobileHudDetails span { color: var(--arcade-blue); }
   .mobileHudDetails strong { overflow: hidden; color: var(--arcade-navy); font-size: 8px; font-weight: 900; text-overflow: ellipsis; }
   .progressTrack { height: 4px; overflow: hidden; border-radius: 4px; background: rgb(22 68 245 / 13%); }
@@ -150,7 +181,13 @@
   .board { gap: 1px; padding: 0; background-color: #071b48; background-size: calc(100% / 10) calc(100% / 20); }
   .board .cell { border-radius: 3px; transition: filter 100ms ease-out, background-color 100ms ease-out; }
   .boardColumn .messageRail { grid-column: 1; grid-row: 2; min-height: 18px; }
-  .mobileNextCard { display: grid; min-width: 0; grid-row: 1; grid-column: 3; align-content: center; justify-items: center; gap: 2px; padding: 2px; border: 1px solid rgb(10 38 103 / 70%); border-radius: 7px; background: linear-gradient(145deg, rgb(22 68 245 / 80%), rgb(18 51 109 / 92%)); color: #fff; }
+  .mobileControls { display: grid; min-width: 0; flex: none; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; padding: 0 2px; }
+  .mobileControls button { display: flex; min-width: 0; min-height: 46px; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: 1px solid rgb(22 68 245 / 35%); border-radius: 9px; background: linear-gradient(180deg, #fff, #e8f1ff); color: var(--arcade-blue); box-shadow: 0 3px 0 rgb(18 51 109 / 14%); font: 850 8px/1 var(--font-mono), "Courier New", monospace; letter-spacing: .05em; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+  .mobileControls button svg { width: 19px; height: 19px; stroke-width: 2.5; }
+  .mobileControls button:nth-child(4) { border-color: #0c36cd; background: linear-gradient(145deg, #3262ff, #1644f5 60%, #1236c7); color: #fff; box-shadow: 0 3px 0 #0d2c91; }
+  .mobileControls button:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 rgb(18 51 109 / 14%); }
+  .mobileControls button:disabled { opacity: .48; }
+  .mobileNextCard { display: grid; min-width: 0; grid-row: 1; grid-column: 4; align-content: center; justify-items: center; gap: 2px; padding: 2px; border: 1px solid rgb(10 38 103 / 70%); border-radius: 7px; background: linear-gradient(145deg, rgb(22 68 245 / 80%), rgb(18 51 109 / 92%)); color: #fff; }
   .mobileNextCard .panelLabel { color: var(--arcade-lime); font-size: 7px; text-shadow: 0 1px 2px #12336d; }
   .mobileNextCard .preview { width: min(100%, 42px); padding: 2px; gap: 1px; border: 0; border-radius: 4px; background-color: rgb(243 249 255 / 78%); }
   .celli, .cellj, .celll, .cello, .cells, .cellt, .cellz { border-radius: 3px; box-shadow: inset 1px 1px 0 rgb(255 255 255 / 62%), inset -1px -1px 0 rgb(0 0 0 / 18%), 0 0 4px rgb(75 175 255 / 26%); }
@@ -162,27 +199,32 @@
   .overlay > span { max-width: 24ch; font-size: 10px; line-height: 1.4; }
   .overlayButton { min-height: 40px; padding-inline: 10px; font-size: 9px; }
   .overlayActions { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; }
-  .mobileFooter { display: flex; min-width: 0; min-height: calc(46px + env(safe-area-inset-bottom)); flex: none; align-items: center; justify-content: flex-end; gap: 9px; padding: 0 2px env(safe-area-inset-bottom); }
+  .mobileFooter { right: max(2px, env(safe-area-inset-right)); min-width: 0; min-height: 0; flex: none; justify-content: center; gap: 8px; padding: 0; }
   .mobileFooter button { display: inline-flex; min-height: 40px; align-items: center; justify-content: center; gap: 6px; border: 1px solid rgb(22 68 245 / 30%); background: linear-gradient(180deg, #fff 0%, #eaf3ff 100%); color: var(--arcade-blue); box-shadow: 0 3px 0 rgb(18 51 109 / 13%), 0 6px 14px rgb(22 68 245 / 12%), inset 0 1px 0 #fff; touch-action: manipulation; transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease; }
-  .mobileFooter .soundButton { width: 64px; min-width: 64px; height: 42px; border-radius: 12px; padding: 0 5px; font: 850 8px/1 var(--font-mono), "Courier New", monospace; letter-spacing: .04em; transform: translateY(-12px); }
-  .mobileFooter .soundButton svg { width: 16px; height: 16px; stroke-width: 2.2; }
-  .mobileFooter .pauseButton { display: grid; width: 64px; min-width: 64px; height: 42px; padding: 0; place-items: center; border-color: #0c36cd; border-radius: 12px; background: linear-gradient(145deg, #3262ff, #1644f5 60%, #1236c7); color: #fff; box-shadow: 0 4px 0 #0d2c91, 0 7px 15px rgb(22 68 245 / 28%), inset 0 1px 0 rgb(255 255 255 / 30%); transform: translateY(-12px); }
-  .mobileFooter .pauseButton svg { width: 20px; height: 20px; stroke-width: 2.6; }
+  .mobileFooter .pauseButton { display: grid; width: 40px; min-width: 40px; min-height: 32px; height: 32px; padding: 0; place-items: center; border-color: #0c36cd; border-radius: 9px; background: linear-gradient(145deg, #3262ff, #1644f5 60%, #1236c7); color: #fff; box-shadow: 0 3px 0 #0d2c91, 0 5px 12px rgb(22 68 245 / 25%), inset 0 1px 0 rgb(255 255 255 / 30%); }
+  .mobileFooter .pauseButton svg { width: 15px; height: 15px; stroke-width: 2.6; }
   .mobileFooter button:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 1px 0 rgb(18 51 109 / 13%), 0 2px 6px rgb(22 68 245 / 12%); }
-  .mobileFooter .soundButton:active:not(:disabled) { transform: translateY(-10px); }
-  .mobileFooter .pauseButton:active:not(:disabled) { transform: translateY(-10px); }
+  .mobileFooter .pauseButton:active:not(:disabled) { transform: translateY(2px); }
   .mobileFooter button:focus-visible { outline: 3px solid var(--arcade-purple); outline-offset: 3px; }
   .mobileFooter button:disabled { opacity: .62; }
 }
 
 @media (max-width: 700px) and (orientation: landscape) {
-  .mobileHudTop { min-height: 40px; }
+  .mobileHudTop { min-height: 38px; }
   .mobileHudCard { padding-block: 3px; }
+  .mobileHudDetails { padding-block: 1px; }
+  .mobileControls { gap: 5px; }
+  .mobileControls button { min-height: 36px; flex-direction: row; }
+  .mobileControls button svg { width: 15px; height: 15px; }
+  .mobileFooter { min-height: 0; }
+  .mobileFooter .pauseButton { width: 36px; min-width: 36px; min-height: 28px; height: 28px; }
 }
 
 @keyframes clear-flash { 0% { filter: brightness(2.8); } 100% { filter: brightness(1); } }
+@keyframes count-pop { from { opacity: .3; transform: scale(.72); } to { opacity: 1; transform: scale(1); } }
 
 @media (prefers-reduced-motion: reduce) {
   .overlay, .motivation { animation: none; }
   .progressTrack > span, .board .cell { transition: none; }
+  .countdownNumber { animation: none; }
 }

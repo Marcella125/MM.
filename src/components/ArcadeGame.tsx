@@ -23,12 +23,6 @@ export default function ArcadeGame() {
   useEffect(() => {
     const onOpenArcade = () => {
       openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-      if (window.matchMedia("(max-width: 700px)").matches && !document.fullscreenElement) {
-        const requestFullscreen = document.documentElement.requestFullscreen;
-        if (typeof requestFullscreen === "function") {
-          void requestFullscreen.call(document.documentElement, { navigationUI: "hide" }).catch(() => {});
-        }
-      }
       setOpen(true);
     };
     window.addEventListener("portfolio:open-arcade", onOpenArcade);
@@ -63,7 +57,6 @@ export default function ArcadeGame() {
       if (event.key === "Escape") {
         event.preventDefault();
         setOpen(false);
-        if (document.fullscreenElement) void document.exitFullscreen().catch(() => {});
       }
     };
     document.addEventListener("keydown", onKeyDown);
@@ -84,7 +77,6 @@ export default function ArcadeGame() {
 
   const close = () => {
     setOpen(false);
-    if (document.fullscreenElement) void document.exitFullscreen().catch(() => {});
   };
 
   const dialog = open ? (

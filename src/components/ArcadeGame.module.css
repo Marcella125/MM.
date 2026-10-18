@@ -20,13 +20,13 @@
 
 @media (max-width: 700px) {
   .experience { width: 100%; height: 100vh; height: 100dvh; min-height: 100vh; min-height: 100dvh; overflow: hidden; overscroll-behavior: none; background: #dcebff url("/assets/mobile%20bg%20game.png") center bottom / auto 125% no-repeat; }
-  .topbar { min-height: calc(48px + env(safe-area-inset-top)); grid-template-columns: 1fr auto; gap: 10px; padding: env(safe-area-inset-top) 16px 0; background: transparent; }
+  .topbar { min-height: calc(44px + env(safe-area-inset-top)); grid-template-columns: 1fr auto; gap: 10px; padding: env(safe-area-inset-top) 16px 0; background: transparent; }
   .logo { display: none; }
-  .mobileBrand { display: block; width: clamp(126px, 39vw, 168px); height: auto; max-height: 40px; object-fit: contain; object-position: left center; }
+  .mobileBrand { display: block; width: clamp(142px, 42vw, 176px); height: auto; max-height: 40px; object-fit: contain; object-position: left center; }
   .exitButton { gap: 6px; min-height: 38px; font-size: 8px; }
   .exitButton span { display: none; }
   .exitButton svg { width: 17px; height: 17px; }
-  .gameArea { flex: 1; min-width: 0; min-height: 0; padding: 0 10px 0; overflow: visible; overscroll-behavior: none; }
+  .gameArea { flex: 1; min-width: 0; min-height: 0; padding: 0 8px 4px; overflow: visible; overscroll-behavior: none; }
 }
 
 @media (max-width: 700px) and (orientation: landscape) {
