@@ -5,6 +5,7 @@ import { ArrowUp, Mail, Phone } from "lucide-react";
 import type { MouseEvent } from "react";
 import { assetPath } from "@/src/lib/paths";
 import ScrollReveal from "./ScrollReveal";
+import SectionHeadingReveal from "./SectionHeadingReveal";
 import { GithubLogo, InstagramLogo, LinkedinLogo } from "./SocialIcons";
 import styles from "./PortfolioSections.module.css";
 
@@ -36,11 +37,11 @@ export default function ContactSection() {
       <div className={styles.contactInner}>
         <div className={styles.contactLayout}>
           <ScrollReveal className={styles.contactIntro}>
-            <h2 className={styles.contactTitle} id="contact-heading">
+            <SectionHeadingReveal className={styles.contactTitle} id="contact-heading">
               <span className={styles.contactLine}>Good ideas</span>
               <span className={styles.contactLine}>sound better</span>
               <span className={styles.contactLine}><span className={styles.contactHighlight}>together.</span></span>
-            </h2>
+            </SectionHeadingReveal>
             <p className={styles.contactDescription}>
               Have a project, a collaboration<br className={styles.desktopBreak} /> or just want to say hi?<br />
               <a href="mailto:marcellamoussa74@gmail.com">I&apos;d love to hear from you.</a>

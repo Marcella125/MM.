@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import SectionLabel from "./SectionLabel";
+import SectionHeadingReveal from "./SectionHeadingReveal";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import Link from "next/link";
 import { assetPath } from "@/src/lib/paths";
@@ -71,10 +72,10 @@ export default function ProjectsSection() {
         >
           <div>
             <SectionLabel>Selected work</SectionLabel>
-            <h2 className={styles.title} id="projects-heading">
+            <SectionHeadingReveal className={styles.title} id="projects-heading">
               <span className={styles.titleLine}>Some of the things</span>
               <span className={styles.titleAccent}>I&apos;ve built.</span>
-            </h2>
+            </SectionHeadingReveal>
           </div>
           <p className={styles.lede}>
             Websites and applications built with clean interfaces, thoughtful interactions, and solid engineering.

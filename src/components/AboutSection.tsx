@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, type MotionValue, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 import { assetPath } from "@/src/lib/paths";
+import SectionHeadingReveal from "./SectionHeadingReveal";
 import SectionLabel from "./SectionLabel";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import styles from "./AboutSection.module.css";
@@ -40,9 +41,9 @@ const chapters = [
   {
     eyebrow: "The experience",
     title: ["BUILDING", "AT TASMEEM."],
-    description: "At Tasmeem in Beirut, I developed full-stack applications and responsive websites for multiple clients. I built CMS platforms and admin dashboards for inventory, bookings, customer data, content, and business operations, with accessible, responsive interfaces and API, database, and third-party integrations for e-commerce, rentals, and business sites.",
+    description: "At Tasmeem in Beirut, I developed full-stack applications and responsive websites for multiple clients. I built CMS platforms and admin dashboards for inventory, bookings, customer data, content, and business operations, with accessible, responsive interfaces and API, database, and third-party integrations for rental platforms and business websites.",
     detail: "TASMEEM · FULL STACK DEVELOPER · JAN — SEPT 2026",
-    tags: ["CMS & DASHBOARDS", "API INTEGRATION", "UI/UX", "E-COMMERCE"],
+    tags: ["CMS & DASHBOARDS", "API INTEGRATION", "UI/UX"],
   },
 ] as const;
 
@@ -216,7 +217,7 @@ function MobileChapterCard({ index, reducedMotion }: { index: number; reducedMot
       transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
-        className={`${styles.mobileCardVisual} ${index === 0 ? styles.mobilePortraitVisual : ""}`}
+        className={`${styles.mobileCardVisual} ${index === 0 ? styles.mobilePortraitVisual : ""} ${index === 4 ? styles.tasmeemMobileVisual : ""}`}
         aria-hidden="true"
         initial={reducedMotion ? false : { scale: 1.08 }}
         whileInView={{ scale: 1 }}
@@ -294,18 +295,14 @@ export default function AboutSection() {
     <section className={styles.section} id="about" aria-labelledby="about-heading" ref={sectionRef}>
       <header className={styles.mobileHeading}>
         <SectionLabel>About / the story</SectionLabel>
-        <motion.h2
+        <SectionHeadingReveal
           id="about-heading"
-          initial={reducedMotion ? false : { opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
           About <span>me.</span>
-        </motion.h2>
+        </SectionHeadingReveal>
       </header>
       <div className={styles.stage}>
-        <div className={styles.visualPanel} aria-hidden="true">
+        <div className={`${styles.visualPanel}${activeChapter === 4 ? ` ${styles.tasmeemPanel}` : ""}`} aria-hidden="true">
           {chapters.map((chapter, index) => (
             <ChapterVisual
               key={chapter.eyebrow}

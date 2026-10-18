@@ -41,6 +41,7 @@
 }
 
 .visualPanel { background: #dcecff; }
+.tasmeemPanel { background: transparent; }
 .contentPanel { background: var(--background); }
 
 .visualScene {
@@ -97,7 +98,7 @@
 .kloudrScene { background: #dcecff; }
 
 .fekraScene { background: #dcecff; }
-.tasmeemScene { background: #f3f9ff; }
+.tasmeemScene { background: transparent; }
 
 .sectionLabel {
   margin-bottom: clamp(26px, 4vh, 38px);
@@ -268,6 +269,7 @@
     overflow: hidden;
     background: #dcecff;
   }
+  .tasmeemMobileVisual { background: transparent; }
   .mobilePortraitVisual {
     display: grid;
     place-items: center;

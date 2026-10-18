@@ -512,6 +512,10 @@ button {
     box-shadow 0.2s ease;
 }
 
+.arcade-mobile-button {
+  display: none;
+}
+
 .menu-button:hover {
   color: var(--blue-deep);
   transform: translateY(-1px);
@@ -1909,7 +1913,7 @@ button {
   }
 
   .site-header {
-    grid-template-columns: minmax(92px, 1fr) auto auto;
+    grid-template-columns: minmax(92px, 1fr) auto auto auto;
     align-items: center;
     gap: 14px;
     min-height: 52px;
@@ -2057,6 +2061,31 @@ button {
     height: 44px;
   }
 
+  .arcade-mobile-button {
+    display: grid;
+    order: 3;
+    position: relative;
+    z-index: 65;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--blue);
+    box-shadow: none;
+  }
+
+  .arcade-mobile-button:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+  }
+
+  body.is-menu-open .arcade-mobile-button {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .sound-waveform {
     width: 32px;
     height: 23px;
@@ -2070,13 +2099,13 @@ button {
 
   .menu-button {
     display: grid;
-    order: 3;
+    order: 4;
     position: relative;
     z-index: 65;
   }
 
   body.is-menu-open .menu-button {
-    grid-column: 3;
+    grid-column: 4;
     justify-self: end;
     z-index: 240;
   }

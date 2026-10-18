@@ -7,6 +7,7 @@ import ContactSection from "@/src/components/ContactSection";
 import SkillsSection from "@/src/components/SkillsSection";
 import CinematicSectionStack from "@/src/components/CinematicSectionStack";
 import stackStyles from "@/src/components/CinematicSectionStack.module.css";
+import ArcadeGame from "@/src/components/ArcadeGame";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <ProjectsSection />
         <ContactSection />
       </CinematicSectionStack>
+      <ArcadeGame />
     </main>
   );
 }

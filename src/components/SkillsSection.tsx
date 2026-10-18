@@ -26,6 +26,7 @@ import { VscAzure } from "react-icons/vsc";
 import AzureAISearchIcon from "./icons/AzureAISearchIcon";
 import AzureOpenAIIcon from "./icons/AzureOpenAIIcon";
 import SectionLabel from "./SectionLabel";
+import SectionHeadingReveal from "./SectionHeadingReveal";
 import { useHydratedReducedMotion } from "./useHydratedReducedMotion";
 import styles from "./SkillsSection.module.css";
 
@@ -179,24 +180,9 @@ export default function SkillsSection() {
         <header className={styles.heading}>
           <div>
             <SectionLabel>What I use</SectionLabel>
-            <motion.div
-              className={styles.headingMask}
-              initial={reducedMotion ? false : "hidden"}
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.45 }}
-            >
-              <motion.h2
-                id="skills-heading"
-                variants={reducedMotion ? {
-                  hidden: { y: "0%" },
-                  visible: { y: "0%" },
-                } : {
-                  hidden: { y: "105%" },
-                  visible: { y: "0%" },
-                }}
-                transition={{ duration: 0.75, ease }}
-              >TOOLS I <span>KNOW.</span></motion.h2>
-            </motion.div>
+            <SectionHeadingReveal id="skills-heading">
+              TOOLS I <span>KNOW.</span>
+            </SectionHeadingReveal>
           </div>
           <p>From the first line of CSS to the systems behind the screen, these are the tools I use to bring ideas to life.</p>
         </header>

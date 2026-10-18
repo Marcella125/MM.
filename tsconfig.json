@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@tetris/*": ["./src/components/tetris/vendor/src/*"]
     }
   },
   "include": [

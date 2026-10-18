@@ -2,6 +2,7 @@
 
 import { Code2, GraduationCap, PanelsTopLeft } from "lucide-react";
 import SectionLabel from "./SectionLabel";
+import SectionHeadingReveal from "./SectionHeadingReveal";
 import { StoryStep } from "./StoryScroll";
 import styles from "./ExperienceSection.module.css";
 
@@ -49,7 +50,7 @@ export default function ExperienceSection() {
         <header className={styles.header}>
           <div>
             <SectionLabel>My journey</SectionLabel>
-            <h2 id="experience-heading">Education <span>&amp;</span> Experience</h2>
+            <SectionHeadingReveal id="experience-heading">Education <span>&amp;</span> Experience</SectionHeadingReveal>
           </div>
           <p className={styles.headerCopy}>The places that shaped how I learn, solve problems, and build.</p>
         </header>

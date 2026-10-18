@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import {
   ArrowRight,
   Code2,
+  Gamepad2,
   Menu,
   Music,
   Send,
@@ -23,7 +24,8 @@ const navItems = [
   { label: "HOME", index: "01", href: "#work", Icon: Code2 },
   { label: "ABOUT", index: "02", href: "#about", Icon: Sparkle },
   { label: "PROJECTS", index: "03", href: "#projects", Icon: Music },
-  { label: "CONTACT", index: "04", href: "#contact", Icon: Send },
+  { label: "ARCADE", index: "04", href: "#arcade", Icon: Gamepad2 },
+  { label: "CONTACT", index: "05", href: "#contact", Icon: Send },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -83,6 +85,13 @@ export default function Header() {
 
   function handleNavLinkClick(event: MouseEvent<HTMLAnchorElement>, href: string) {
     setIsMenuOpen(false);
+
+    if (href === "#arcade" && isHome) {
+      event.preventDefault();
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      window.dispatchEvent(new Event("portfolio:open-arcade"));
+      return;
+    }
 
     if (!isHome || href === "#work" || window.matchMedia("(min-width: 1101px)").matches) {
       return;
@@ -229,6 +238,16 @@ export default function Header() {
           </span>
         </motion.button>
       </div>
+
+      <Link
+        className="arcade-mobile-button"
+        href={isHome ? "#arcade" : "/#arcade"}
+        aria-label="Open Tetris arcade"
+        title="Open Tetris arcade"
+        onClick={(event) => handleNavLinkClick(event, "#arcade")}
+      >
+        <Gamepad2 size={21} strokeWidth={2.3} aria-hidden="true" />
+      </Link>
 
       <button
         className="menu-button"
