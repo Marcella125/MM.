@@ -90,7 +90,6 @@ function SkillCard({
   active,
   quiet,
   reducedMotion,
-  onHover,
 }: {
   group: (typeof skillGroups)[number];
   index: number;
@@ -98,16 +97,8 @@ function SkillCard({
   active: boolean;
   quiet: boolean;
   reducedMotion: boolean;
-  onHover: (index: number | null) => void;
 }) {
   const drift = useTransform(progress, [0, 1], index % 2 === 0 ? [-7, 7] : [7, -7]);
-
-  function moveCard(event: PointerEvent<HTMLElement>) {
-    if (reducedMotion || event.pointerType !== "mouse") return;
-    const bounds = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.style.setProperty("--pointer-x", `${event.clientX - bounds.left}px`);
-    event.currentTarget.style.setProperty("--pointer-y", `${event.clientY - bounds.top}px`);
-  }
 
   function moveSkill(event: PointerEvent<HTMLLIElement>) {
     if (reducedMotion || event.pointerType !== "mouse") return;
@@ -123,7 +114,6 @@ function SkillCard({
       className={styles.card}
       data-active={active}
       data-quiet={quiet}
-      tabIndex={0}
       initial={reducedMotion ? false : "hidden"}
       whileInView="visible"
       viewport={{ once: false, amount: 0.28 }}
@@ -134,11 +124,6 @@ function SkillCard({
         hidden: { opacity: 0, y: 28 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.52, delay: index * 0.065, ease, delayChildren: 0.12, staggerChildren: 0.035 } },
       }}
-      onPointerEnter={(event) => { if (event.pointerType === "mouse") onHover(index); }}
-      onPointerLeave={() => onHover(null)}
-      onPointerMove={moveCard}
-      onFocusCapture={() => onHover(index)}
-      onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) onHover(null); }}
     >
       <div className={styles.cardTop}>
         <motion.span animate={active && !reducedMotion ? { x: 5 } : { x: 0 }} transition={{ type: "spring", stiffness: 350, damping: 24 }}>{group.number}</motion.span>
@@ -181,8 +166,7 @@ export default function SkillsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const [scrollActive, setScrollActive] = useState(0);
-  const [hovered, setHovered] = useState<number | null>(null);
-  const activeIndex = hovered ?? scrollActive;
+  const activeIndex = scrollActive;
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
     const next = Math.min(skillGroups.length - 1, Math.max(0, Math.floor(value * skillGroups.length)));
@@ -227,7 +211,6 @@ export default function SkillsSection() {
               active={activeIndex === index}
               quiet={activeIndex !== index}
               reducedMotion={reducedMotion}
-              onHover={setHovered}
             />
           ))}
         </div>

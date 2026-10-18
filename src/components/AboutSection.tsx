@@ -26,21 +26,28 @@ const chapters = [
   {
     eyebrow: "The product",
     title: ["BUILDING", "AT KLOUDR."],
-    description: "At Kloudr, I helped build Kira, an AI knowledge assistant, working across React interfaces, FastAPI services, Azure OpenAI, and AI Search.",
-    detail: "KLOUDR · FULL-STACK DEVELOPER",
+    description: "As a Full-Stack Developer Intern at Kloudr, I built a FastAPI backend integrating Azure OpenAI and Cognitive Search, plus a responsive React frontend with Markdown, code blocks, typing indicators, and error handling. I configured secure frontend-to-backend communication and deployed, tested, and monitored the app on Azure App Services.",
+    detail: "KLOUDR · FULL-STACK DEVELOPER INTERN · JUN — AUG 2025 · BEIRUT",
     tags: ["REACT", "FASTAPI", "AZURE AI"],
   },
   {
     eyebrow: "The craft",
     title: ["CREATING", "AT FEKRA."],
-    description: "At Fekra Media Agency, I developed responsive websites and full-stack features, from interface implementation through testing and delivery.",
-    detail: "FEKRA MEDIA AGENCY · WEB DEVELOPER",
+    description: "As a Web Developer Intern at Fekra Media Agency, I developed full-stack client websites and responsive platforms using React, Next.js, Node.js, and Python. I also customized Shopify sites and built user-friendly interfaces with a focus on performance, usability, and clean UI/UX.",
+    detail: "FEKRA MEDIA AGENCY · WEB DEVELOPER INTERN · NOV 2025 — DEC 2026 · BEIRUT",
     tags: ["NEXT.JS", "NODE.JS", "SHOPIFY"],
+  },
+  {
+    eyebrow: "The experience",
+    title: ["BUILDING", "AT TASMEEM."],
+    description: "At Tasmeem in Beirut, I developed full-stack applications and responsive websites for multiple clients. I built CMS platforms and admin dashboards for inventory, bookings, customer data, content, and business operations, with accessible, responsive interfaces and API, database, and third-party integrations for e-commerce, rentals, and business sites.",
+    detail: "TASMEEM · FULL STACK DEVELOPER · JAN — SEPT 2026",
+    tags: ["CMS & DASHBOARDS", "API INTEGRATION", "UI/UX", "E-COMMERCE"],
   },
 ] as const;
 
-const transitions = [[0.18, 0.28], [0.48, 0.58], [0.78, 0.88]] as const;
-const chapterImages = ["/assets/profile.jpeg", "/assets/usek.png", "/assets/kloudr.png", "/assets/fekra.png"] as const;
+const transitions = [[0.15, 0.23], [0.36, 0.44], [0.57, 0.65], [0.78, 0.86]] as const;
+const chapterImages = ["/assets/profile.jpeg", "/assets/usek.png", "/assets/kloudr.png", "/assets/fekra.png", "/assets/Tasmeem.png"] as const;
 
 function smoothStep(value: number, start: number, end: number) {
   const t = Math.min(1, Math.max(0, (value - start) / (end - start)));
@@ -68,7 +75,7 @@ function ChapterVisual({ index, progress, active, reducedMotion }: {
   const scale = useTransform(pose, ({ incoming, outgoing }) => 1.025 - 0.025 * incoming - 0.035 * outgoing);
   const clipPath = useTransform(pose, ({ incoming }) => `inset(${(1 - incoming) * 100}% 0 0 0)`);
   const artworkY = useTransform(pose, ({ incoming, outgoing }) => 10 * (1 - incoming) - 10 * outgoing);
-  const visualClasses = [styles.portraitScene, styles.usekScene, styles.kloudrScene, styles.fekraScene];
+  const visualClasses = [styles.portraitScene, styles.usekScene, styles.kloudrScene, styles.fekraScene, styles.tasmeemScene];
 
   return (
     <motion.div

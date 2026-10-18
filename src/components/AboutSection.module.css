@@ -86,7 +86,7 @@
 .portraitImage { object-fit: cover; object-position: 50% 42%; filter: saturate(0.8) contrast(1.04); }
 
 @media (min-width: 1101px) {
-  .section { height: 330svh; overflow: visible; }
+  .section { height: 410svh; overflow: visible; }
   .stage { position: sticky; top: var(--header-clearance); height: calc(100svh - var(--header-clearance)); }
   .portraitFrame { max-width: min(56%, 400px); height: 64%; }
 }
@@ -97,6 +97,7 @@
 .kloudrScene { background: #dcecff; }
 
 .fekraScene { background: #dcecff; }
+.tasmeemScene { background: #f3f9ff; }
 
 .sectionLabel {
   margin-bottom: clamp(26px, 4vh, 38px);
@@ -206,7 +207,7 @@
 
 
 @media (max-width: 1100px) {
-  .section { height: 330svh; overflow: visible; }
+  .section { height: 410svh; overflow: visible; }
   .stage { position: sticky; top: var(--header-clearance); height: calc(100svh - var(--header-clearance)); }
   .chapterTitle { font-size: var(--editorial-heading-size); }
   .chapterDescription { font-size: clamp(14px, 1.5vw, 17px); }

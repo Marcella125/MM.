@@ -72,8 +72,8 @@ export default function ProjectsSection() {
           <div>
             <SectionLabel>Selected work</SectionLabel>
             <h2 className={styles.title} id="projects-heading">
-              <span className={styles.titleLine}>Things I&apos;ve</span>
-              <span className={styles.titleAccent}>built.</span>
+              <span className={styles.titleLine}>Some of the things</span>
+              <span className={styles.titleAccent}>I&apos;ve built.</span>
             </h2>
           </div>
           <p className={styles.lede}>

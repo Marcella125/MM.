@@ -46,11 +46,11 @@
 .lede { max-width: 520px; margin: 0; color: #435068; font-size: clamp(13px, 1.05vw, 16px); line-height: 1.65; }
 
 .projectGrid { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 1.5vw, 20px); height: 100%; min-height: 0; padding: 8px 12px 12px; overflow: hidden; }
-.projectReveal { --project-accent: var(--blue); position: relative; width: 100%; height: 100%; min-width: 0; min-height: 0; border-radius: 8px; }
-.projectLink { display: block; width: 100%; height: 100%; border-radius: 8px; color: inherit; text-decoration: none; cursor: pointer; }
-.projectLink:focus-visible { outline: 3px solid var(--project-accent); outline-offset: -6px; }
+.projectReveal { --project-accent: var(--blue); position: relative; width: 100%; height: 100%; min-width: 0; min-height: 0; border-radius: 16px; }
+.projectLink { display: block; width: 100%; height: 100%; border-radius: 16px; color: inherit; text-decoration: none; cursor: pointer; }
+.projectLink:focus-visible { outline: 3px solid var(--project-accent); outline-offset: -3px; }
 .projectLink:hover .project,
-.projectLink:focus-visible .project { border-color: #070707; }
+.projectLink:focus-visible .project { border-color: #14213b; }
 
 .project {
   --card-background: #eaf4ff;
@@ -67,12 +67,12 @@
   height: 100%;
   padding: clamp(16px, 1.5vw, 24px);
   overflow: hidden;
-  border: 2px solid var(--project-accent);
-  border-radius: 8px;
-  background: var(--card-background);
+  border: 1px solid #83aaff;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f8fbff 0%, #edf6ff 58%, #e5f1ff 100%);
   color: var(--card-text);
-  box-shadow: 9px 9px 0 rgba(18, 56, 255, 0.14);
-  transition: border-color 360ms ease, box-shadow 360ms ease;
+  box-shadow: 0 5px 16px rgba(18, 56, 255, 0.09);
+  transition: border-color 360ms ease, box-shadow 360ms ease, transform 360ms ease;
 }
 
 .project::before {
@@ -80,6 +80,7 @@
   inset: 0 0 auto;
   height: 6px;
   background: linear-gradient(90deg, var(--project-accent) 0 78%, var(--card-secondary) 78% 100%);
+  border-radius: 14px 14px 0 0;
   content: "";
   pointer-events: none;
 }
@@ -87,7 +88,7 @@
 .project::after {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.3), transparent 55%);
+  background: radial-gradient(circle at 84% 18%, rgba(255, 255, 255, 0.72), transparent 48%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 420ms ease;
@@ -101,11 +102,11 @@
 .projectContent h3 { margin: 0; font-family: var(--font-ui), Arial, sans-serif; font-size: clamp(34px, 4.7vw, 68px); font-weight: 700; line-height: 0.96; letter-spacing: -0.055em; text-transform: uppercase; }
 .projectContent > p { max-width: 440px; margin: 12px 0 0; color: var(--card-muted); font-size: clamp(12px, 1vw, 16px); line-height: 1.4; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
-.tags span { padding: 5px 8px; border: 1px solid var(--card-line); background: var(--card-tag-background); color: var(--project-accent); font-family: var(--font-mono), monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; transition: transform 360ms ease, background-color 360ms ease; }
+.tags span { padding: 5px 8px; border: 1px solid var(--card-line); border-radius: 4px; background: rgba(243, 249, 255, 0.8); color: var(--project-accent); font-family: var(--font-mono), monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; transition: transform 360ms ease, background-color 360ms ease; }
 .projectCta { display: inline-flex; align-items: center; gap: 8px; margin-top: clamp(20px, 2.5vw, 32px); color: var(--blue); font-family: var(--font-mono), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
 .projectCta > span { font-size: 16px; transition: transform 300ms ease; }
 .projectArtwork { position: absolute; right: clamp(18px, 3vw, 42px); bottom: clamp(12px, 2vw, 28px); z-index: 1; display: block; width: min(39%, 300px); aspect-ratio: 1; pointer-events: none; }
-.projectArtwork img { object-fit: contain; filter: drop-shadow(0 14px 18px rgba(18, 56, 255, 0.16)); }
+.projectArtwork img { object-fit: contain; filter: drop-shadow(0 12px 18px rgba(18, 56, 255, 0.14)); }
 .projectArtwork img { transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1); }
 
 @media (min-width: 1101px) {
@@ -115,7 +116,7 @@
   .title { font-size: var(--editorial-heading-size); }
   .lede { max-width: 420px; margin-top: clamp(28px, 5vh, 48px); font-size: clamp(14px, 1.1vw, 17px); }
   .projectGrid { width: 100%; padding: 8px 12px 12px; isolation: isolate; }
-  .project { padding: clamp(16px, 1.5vw, 22px); border-radius: 14px; }
+  .project { padding: clamp(16px, 1.5vw, 22px); border-radius: 16px; }
   .projectTop { padding-bottom: 10px; border-bottom: 1px solid var(--card-line); }
   .projectContent { width: 62%; margin-top: clamp(12px, 1.7vh, 18px); }
   .projectContent h3 { font-size: clamp(36px, 2.8vw, 52px); }
@@ -126,7 +127,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .project:hover { border-color: #070707; }
+  .project:hover { border-color: #14213b; }
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
@@ -145,11 +146,9 @@
 }
 
 @media (min-width: 1101px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .project {
-    transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1), border-color 360ms ease;
-  }
+  .project { transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1), border-color 360ms ease; }
   .project:hover,
-  .projectLink:hover .project { box-shadow: 14px 14px 0 var(--blue); transform: translate(-6px, -6px); }
+  .projectLink:hover .project { box-shadow: 0 9px 22px rgba(18, 56, 255, 0.14); transform: translateY(-2px); }
   .tags { transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1); }
   .project:hover .tags { transform: translateY(-4px); }
 }
