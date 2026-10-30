@@ -120,6 +120,7 @@
   .projectTop { padding-bottom: 10px; border-bottom: 1px solid var(--card-line); }
   .projectContent { width: 62%; margin-top: clamp(12px, 1.7vh, 18px); }
   .projectContent h3 { font-size: clamp(36px, 2.8vw, 52px); }
+  .project[data-project-slug="rong-xing"] .projectContent h3 { font-size: clamp(30px, 2.45vw, 46px); white-space: nowrap; }
   .projectContent > p { max-width: 100%; margin-top: 8px; font-size: clamp(11px, 0.85vw, 14px); }
   .tags { margin-top: clamp(10px, 1.5vh, 16px); }
   .projectCta { margin-top: clamp(10px, 1.5vh, 16px); }

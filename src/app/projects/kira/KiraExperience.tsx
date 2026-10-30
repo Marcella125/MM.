@@ -49,7 +49,7 @@ export default function KiraExperience() {
       <div className={styles.heroGrid} aria-hidden="true" />
       <div className={styles.heroTop}>
         <Link href="/#projects" className={styles.back}><ArrowLeft size={16} /> BACK TO PROJECTS</Link>
-        <span>SELECTED WORK / 01 — 04</span>
+        <span>SELECTED WORK / 03 — 04</span>
       </div>
       <div className={styles.heroMain}>
         <div className={styles.heroCopy}>
@@ -107,6 +107,6 @@ export default function KiraExperience() {
       </div>
     </section>
 
-    <ProjectFooter index="01" current="KIRA" statement={<>KIRA<br />BUILT FROM<br /><em>KNOWLEDGE.</em></>} next="FEMI" nextHref="/projects/femi" />
+    <ProjectFooter index="03" current="KIRA" statement={<>KIRA<br />BUILT FROM<br /><em>KNOWLEDGE.</em></>} next="FEMI" nextHref="/projects/femi" />
   </main>;
 }

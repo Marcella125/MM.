@@ -10,10 +10,10 @@ import { assetPath } from "@/src/lib/paths";
 import styles from "./PortfolioSections.module.css";
 
 const projects = [
-  { index: "01", title: "Kira", type: "AI product", copy: "AI Knowledge Assistant", tags: ["AI", "Azure", "Full Stack"], image: "/assets/kira.png" },
-  { index: "02", title: "Femi", type: "Health technology", copy: "AI-Powered Health Platform", tags: ["Health Tech", "AI", "Full Stack"], image: "/assets/femi.png" },
-  { index: "03", title: "Rong Xing", type: "Corporate website", copy: "Trading and business website", tags: ["Web", "Frontend", "Responsive"], image: "/assets/rong%20xing.png" },
-  { index: "04", title: "Rushd", type: "Research & policy", copy: "Islamic ethics & technology", tags: ["Bilingual", "Interactive", "RTL"], image: "/assets/rushd.png" },
+  { index: "01", slug: "rong-xing", title: "Rong Xing", type: "Corporate website", copy: "Trading and business website", tags: ["Web", "Frontend", "Responsive"], image: "/assets/rong%20xing.png" },
+  { index: "02", slug: "rushd", title: "Rushd", type: "Research & policy", copy: "Islamic ethics & technology", tags: ["Bilingual", "Interactive", "RTL"], image: "/assets/rushd.png" },
+  { index: "03", slug: "kira", title: "Kira", type: "AI product", copy: "AI Knowledge Assistant", tags: ["AI", "Azure", "Full Stack"], image: "/assets/kira.png" },
+  { index: "04", slug: "femi", title: "Femi", type: "Health technology", copy: "AI-Powered Health Platform", tags: ["Health Tech", "AI", "Full Stack"], image: "/assets/femi.png" },
 ] as const;
 
 function ProjectCard({ project, index }: {
@@ -25,6 +25,7 @@ function ProjectCard({ project, index }: {
     <motion.article
       className={styles.project}
       data-project-index={project.index}
+      data-project-slug={project.slug}
       initial={reducedMotion ? false : { opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -50,7 +51,7 @@ function ProjectCard({ project, index }: {
 
   return (
     <div className={styles.projectReveal}>
-      <Link className={styles.projectLink} href={`/projects/${project.index === "03" ? "rong-xing" : project.title.toLowerCase()}`} aria-label={`Explore ${project.title} project`}>
+      <Link className={styles.projectLink} href={`/projects/${project.slug}`} aria-label={`Explore ${project.title} project`}>
           {card}
       </Link>
     </div>

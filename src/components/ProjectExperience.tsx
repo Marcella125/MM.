@@ -15,7 +15,7 @@ type ProjectKey = "femi" | "rong-xing" | "rushd";
 
 const projects = {
   femi: {
-    index: "02", title: "FEMI", category: "HEALTH TECHNOLOGY", subtitle: "AI-Powered Health Platform",
+    index: "04", title: "FEMI", category: "HEALTH TECHNOLOGY", subtitle: "AI-Powered Health Platform",
     color: "#9f2058", wash: "#ffe1f2", base: "#ffffff", highlight: "#ffe1f2", heroBackground: "#9f2058", heroForeground: "#ffffff", heroHighlight: "#ffe1f2", principleBackground: "#9f2058", intro: ["A MORE", "THOUGHTFUL", "HEALTH SPACE."],
     description: "A PCOS companion with a home dashboard, cycle calendar, health insights, reminders, blood test tools, and Bloom AI to help users explore their health data.",
     facets: ["PCOS CARE", "BLOOM AI", "FULL STACK"],
@@ -38,7 +38,7 @@ const projects = {
     statement: ["FEMI", "CARE WITH", "CLARITY."], next: "RONG XING", nextHref: "/projects/rong-xing",
   },
   "rong-xing": {
-    index: "03", title: "RONG XING", category: "CORPORATE WEBSITE", subtitle: "Trading and Business Website",
+    index: "01", title: "RONG XING", category: "CORPORATE WEBSITE", subtitle: "Trading and Business Website",
     color: "#1c2f4c", wash: "#d4ae69", base: "#ffffff", highlight: "#d4ae69", heroBackground: "#1c2f4c", heroForeground: "#ffffff", heroHighlight: "#d4ae69", principleBackground: "#1c2f4c", intro: ["BUSINESS", "WITHOUT", "BORDERS."],
     description: "A responsive company website presenting Guangzhou Rongxing's services, global reach, gallery, and contact information.",
     facets: ["GLOBAL TRADE", "MOTION", "RESPONSIVE"],
@@ -57,7 +57,7 @@ const projects = {
     statement: ["RONG XING", "A WORLD IN", "MOTION."], next: "RUSHD", nextHref: "/projects/rushd",
   },
   rushd: {
-    index: "04", title: "RUSHD", category: "RESEARCH & POLICY WEBSITE", subtitle: "Exploring technology, ethics, and Islamic thought",
+    index: "02", title: "RUSHD", category: "RESEARCH & POLICY WEBSITE", subtitle: "Exploring technology, ethics, and Islamic thought",
     color: "#081713", wash: "#53d8d0", base: "#ffffff", highlight: "#53d8d0", heroBackground: "#081713", heroForeground: "#ffffff", heroHighlight: "#53d8d0", principleBackground: "#081713", intro: ["WHERE", "ETHICS MEETS", "INNOVATION."],
     description: "Rushd Center brings interdisciplinary research and policy into public view, examining emerging technologies through Islamic ethical thought and contemporary expertise.",
     facets: ["RESEARCH", "ETHICS", "TECHNOLOGY"],
