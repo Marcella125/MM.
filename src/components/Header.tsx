@@ -152,7 +152,7 @@ export default function Header() {
       >
         {navItems.map(({ label, index, href, Icon }) => (
           <MotionLink
-            className="nav-link"
+            className={`nav-link${href === "#arcade" ? " nav-link-arcade" : ""}`}
             href={isHome ? href : `/${href}`}
             key={`${label}-${index}`}
             initial="rest"
@@ -238,16 +238,6 @@ export default function Header() {
           </span>
         </motion.button>
       </div>
-
-      <Link
-        className="arcade-mobile-button"
-        href={isHome ? "#arcade" : "/#arcade"}
-        aria-label="Open Tetris arcade"
-        title="Open Tetris arcade"
-        onClick={(event) => handleNavLinkClick(event, "#arcade")}
-      >
-        <Gamepad2 size={21} strokeWidth={2.3} aria-hidden="true" />
-      </Link>
 
       <button
         className="menu-button"

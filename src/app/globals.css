@@ -512,10 +512,6 @@ button {
     box-shadow 0.2s ease;
 }
 
-.arcade-mobile-button {
-  display: none;
-}
-
 .menu-button:hover {
   color: var(--blue-deep);
   transform: translateY(-1px);
@@ -1990,6 +1986,10 @@ button {
     backdrop-filter: blur(10px);
   }
 
+  .nav-link-arcade {
+    display: none;
+  }
+
   .nav-icon-badge {
     display: grid;
     place-items: center;
@@ -2059,31 +2059,6 @@ button {
   .sound-button {
     width: 44px;
     height: 44px;
-  }
-
-  .arcade-mobile-button {
-    display: grid;
-    order: 3;
-    position: relative;
-    z-index: 65;
-    width: 40px;
-    height: 40px;
-    place-items: center;
-    border: 0;
-    background: transparent;
-    color: var(--blue);
-    box-shadow: none;
-  }
-
-  .arcade-mobile-button:focus-visible {
-    outline: 3px solid var(--blue);
-    outline-offset: 3px;
-  }
-
-  body.is-menu-open .arcade-mobile-button {
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
   }
 
   .sound-waveform {

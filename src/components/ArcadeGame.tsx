@@ -27,6 +27,7 @@ export default function ArcadeGame() {
 
   useEffect(() => {
     const onOpenArcade = () => {
+      if (window.matchMedia("(max-width: 840px)").matches) return;
       openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       setOpen(true);
     };
@@ -44,6 +45,7 @@ export default function ArcadeGame() {
 
   useEffect(() => {
     if (!open) return;
+    const mobileQuery = window.matchMedia("(max-width: 840px)");
     scrollPositionRef.current = window.scrollY;
     bodyStyleRef.current = {
       position: document.body.style.position,
@@ -64,9 +66,14 @@ export default function ArcadeGame() {
         setOpen(false);
       }
     };
+    const onViewportChange = (event: MediaQueryListEvent) => {
+      if (event.matches) setOpen(false);
+    };
     document.addEventListener("keydown", onKeyDown);
+    mobileQuery.addEventListener("change", onViewportChange);
     return () => {
       document.removeEventListener("keydown", onKeyDown);
+      mobileQuery.removeEventListener("change", onViewportChange);
       const previous = bodyStyleRef.current;
       if (previous) {
         document.body.style.position = previous.position;
