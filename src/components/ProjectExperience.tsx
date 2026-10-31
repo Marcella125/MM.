@@ -91,7 +91,11 @@ function Marker({ number, label, title }: { number: string; label: string; title
 
 export default function ProjectExperience({ project }: { project: ProjectKey }) {
   const data = projects[project];
-  const liveSiteUrl = project === "rushd" ? "https://rushd.center/" : null;
+  const liveSiteUrl = project === "rong-xing"
+    ? "https://guanzhouronxing.com/"
+    : project === "rushd"
+      ? "https://rushd.center/"
+      : null;
   const reduced = useHydratedReducedMotion();
   const [activeContribution, setActiveContribution] = useState<number | null>(null);
   const [activeShot, setActiveShot] = useState(0);
