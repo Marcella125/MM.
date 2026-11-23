@@ -106,7 +106,7 @@ export default function Hero() {
           </div>
 
           <p className="hero-kicker">
-            CREATIVE DEVELOPER
+            FULL-STACK DEVELOPER
           </p>
         </motion.div>
         </StoryExit>
