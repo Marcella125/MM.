@@ -1,8 +1,8 @@
 .exitButton:focus-visible { outline: 3px solid #8d6bff; outline-offset: 3px; }
 .experience, .experience * { box-sizing: border-box; }
 
-.experience { position: fixed; inset: 0; z-index: 1000; display: flex; width: 100vw; height: 100dvh; min-height: 100dvh; flex-direction: column; overflow: hidden; background: #dcebff; color: #102550; isolation: isolate; animation: arcade-enter 220ms ease-out both; }
-.topbar { position: relative; z-index: 3; display: grid; min-height: 66px; grid-template-columns: 1fr auto; align-items: center; gap: 16px; padding: max(7px, env(safe-area-inset-top)) clamp(34px, 3.3vw, 52px) 7px; background: #dcebff; }
+.experience { position: fixed; inset: 0; z-index: 1000; display: flex; width: 100vw; height: 100dvh; min-height: 100dvh; flex-direction: column; overflow: hidden; background: radial-gradient(circle at 10% 18%, rgb(223 255 0 / 78%) 0, transparent 26%), radial-gradient(circle at 90% 82%, rgb(22 68 245 / 24%) 0, transparent 32%), linear-gradient(135deg, #ffffff 0%, #dcecff 52%, #fffbd1 100%); color: #102550; isolation: isolate; animation: arcade-enter 220ms ease-out both; }
+.topbar { position: relative; z-index: 3; display: grid; min-height: 66px; grid-template-columns: 1fr auto; align-items: center; gap: 16px; padding: max(7px, env(safe-area-inset-top)) clamp(34px, 3.3vw, 52px) 7px; background: transparent; }
 .logo { display: block; width: 64px; height: auto; }
 .exitButton { display: inline-flex; align-items: center; justify-self: end; gap: 12px; min-height: 42px; padding: 0; border: 0; background: transparent; color: #111; font: 800 10px/1 var(--font-mono), "Courier New", monospace; letter-spacing: .06em; cursor: pointer; }
 .exitButton span { color: #1644f5; }
@@ -11,15 +11,10 @@
 .loading { display: grid; width: 100%; height: 100%; place-items: center; color: #1644f5; font: 800 13px/1 var(--font-mono), "Courier New", monospace; letter-spacing: .15em; }
 .mobileBrand { display: none; }
 
-@media (min-width: 701px) {
-  .experience { background: #dcebff var(--arcade-desktop-bg) center / cover no-repeat; }
-  .topbar { background: transparent; }
-}
-
 @keyframes arcade-enter { from { opacity: 0; } to { opacity: 1; } }
 
 @media (max-width: 700px) {
-  .experience { width: 100%; height: 100vh; height: 100dvh; min-height: 100vh; min-height: 100dvh; overflow: hidden; overscroll-behavior: none; background: #dcebff var(--arcade-mobile-bg) center bottom / auto 125% no-repeat; }
+  .experience { width: 100%; height: 100vh; height: 100dvh; min-height: 100vh; min-height: 100dvh; overflow: hidden; overscroll-behavior: none; background: radial-gradient(circle at 8% 12%, rgb(223 255 0 / 72%) 0, transparent 28%), radial-gradient(circle at 92% 88%, rgb(22 68 245 / 22%) 0, transparent 34%), linear-gradient(155deg, #ffffff 0%, #dcecff 52%, #fffbd1 100%); }
   .topbar { min-height: calc(44px + env(safe-area-inset-top)); grid-template-columns: 1fr auto; gap: 10px; padding: env(safe-area-inset-top) 16px 0; background: transparent; }
   .logo { display: none; }
   .mobileBrand { display: block; width: clamp(142px, 42vw, 176px); height: auto; max-height: 40px; object-fit: contain; object-position: left center; }
@@ -27,10 +22,6 @@
   .exitButton span { display: none; }
   .exitButton svg { width: 17px; height: 17px; }
   .gameArea { flex: 1; min-width: 0; min-height: 0; padding: 0 8px 4px; overflow: visible; overscroll-behavior: none; }
-}
-
-@media (max-width: 700px) and (orientation: landscape) {
-  .experience { background-size: auto 150%; background-position: center 62%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
